@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.AppendixMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.Appendix" id="AppendixResultMap">
+		<id column="id" property="id"/>
+		<result column="week_report_id" property="weekReportId"/>
+		<result column="nos_key" property="nosKey"/>
+		<result column="name" property="name"/>
+		<result column="url" property="url"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
+	<sql id="selectedAppendixColumns">
+		id,
+		week_report_id,
+		nos_key,
+		name,
+		url,
+		modify_time,
+		create_time
+	</sql>
+	
+	
+	<select id="getAppendixByWeekReportId" resultMap="AppendixResultMap">
+		select
+		<include refid="selectedAppendixColumns"></include>
+		from tb_Appendix
+		where week_report_id=#{weekReportId}
+	</select>
+	
+	
+	<select id="getAppendix" resultMap="AppendixResultMap">
+		select
+		<include refid="selectedAppendixColumns"></include>
+		from tb_Appendix
+		where id=#{id}
+	</select>
+	
+	
+	<insert id="addAppendix" parameterType="com.netease.okr.model.entity.Appendix" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_Appendix(
+			id,
+			<if test="weekReportId!=null">week_report_id,</if>
+			<if test="name!=null and name!=''">name,</if>
+			<if test="nosKey!=null and nosKey!=''">nos_key,</if>
+			<if test="url!=null and url!=''">url,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="weekReportId!=null">#{content},</if>
+			<if test="name!=null and name!=''">#{name},</if>
+			<if test="nosKey!=null and nosKey!=''">#{nosKey},</if>
+			<if test="url!=null and url!=''">#{url},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	
+	<update id="updateAppendix" parameterType="java.util.List">
+		
+		<foreach collection="list" item="item" index="index" separator=";">
+			update tb_Appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
+		</foreach>
+		 
+	</update>
+	
+	<delete id="deleteAppendix">
+		delete from tb_Appendix where id=#{id}
+	</delete>
+	
+	<delete id="deleteAppendixByWeekReportId">
+		delete from tb_Appendix where week_report_id=#{weekReportId}
+	</delete>
+	
+	
+</mapper>

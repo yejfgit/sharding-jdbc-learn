@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- generate staff no job -->
+	<!-- <bean name="generateStaffNoJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.netease.entrant.quartz.job.GenerateStaffNoJob" />
+		<property name="jobDataMap">
+			<map>
+				<entry key="staffNoService" value-ref="staffNoServiceImpl" />
+			</map>
+		</property>
+		<property name="durability" value="true" /> 
+	</bean>
+	<bean id="generateStaffNoJobTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="generateStaffNoJobDetail" />
+		<property name="cronExpression" value="0 0 4 ? * *" />
+	</bean> -->
+	
+	
+
+	<!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+	<bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- <property name="jobDetails">
+			<list>
+				<ref bean="generateStaffNoJobDetail" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="generateStaffNoJobTrigger" />
+
+			</list>
+		</property> -->
+	</bean>
+
+</beans>

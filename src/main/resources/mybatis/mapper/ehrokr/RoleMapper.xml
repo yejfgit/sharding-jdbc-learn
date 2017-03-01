@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.RoleMapper">
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+	<resultMap id="RoleResultMap" type="com.netease.okr.model.entity.security.Role">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="name_cn" property="nameCn"/>
+	</resultMap>
+
+	<select id="getAllRoles" resultMap="RoleResultMap">
+		select id,
+		name,
+		name_cn nameCn
+		from tb_role
+	</select>
+	
+	<select id="getRoleByName" resultMap="RoleResultMap">
+		select id,
+		name,
+		name_cn nameCn
+		from tb_role
+		<where>
+			<if test="name!=null and name!=''">name=#{name}</if>
+		</where>
+	</select>
+</mapper>

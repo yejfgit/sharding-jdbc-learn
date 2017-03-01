@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.ObjectivesMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_code" property="objectivesCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByoId"></collection>
+	</resultMap>
+	
+	<sql id="selectedObjectivesColumns">
+		id,
+		objectives_name,
+		objectives_dsc,
+		objectives_code,
+		user_id,
+		is_valid,
+		modify_time,
+		create_time
+	</sql>
+	
+	<select id="getObjectivesById" resultMap="ObjectivesResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where id=#{id}
+	</select>
+	
+	<select id="getMyOkrList" resultMap="ObjectivesResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where is_valid = 1 and user_id=#{userId}
+	</select>
+	
+	<select id="getAllMyOkrListCount" resultType="int">
+		select
+		count(1)
+		from tb_objectives
+		where user_id=#{userId}
+	</select>
+	
+	
+	<insert id="addObjectives" parameterType="com.netease.okr.model.entity.Objectives" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_objectives(
+			id,
+			<if test="objectivesName!=null and objectivesName!=''">objectives_name,</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc,</if>
+			<if test="objectivesCode!=null and objectivesCode!=''">objectives_code,</if>
+			<if test="userId!=null">user_id,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="objectivesName!=null and objectivesName!=''">#{objectivesName},</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">#{objectivesDsc},</if>
+			<if test="objectivesCode!=null and objectivesCode!=''">#{objectivesCode},</if>
+			<if test="userId!=null">#{userId},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	
+	<update id="updateObjectives" parameterType="com.netease.okr.model.entity.Objectives">
+		update tb_objectives
+		<set> 
+			<if test="objectivesName!=null and objectivesName!=''">objectives_name = #{objectivesName},</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc = #{objectivesDsc},</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	<delete id="deleteObjectives">
+		update tb_objectives set is_valid = 0 where id=#{id}
+	</delete>
+	
+	
+</mapper>

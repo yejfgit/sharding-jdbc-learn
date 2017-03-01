@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.WeekReportMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.WeekReport" id="WeekReportResultMap">
+		<id column="id" property="id"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+		<result column="year" property="year"/>
+		<result column="month" property="month"/>
+		<result column="week" property="week"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByWeekReportId"></collection>
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixByWeekReportId"></collection>
+	</resultMap>
+	
+	<sql id="selectedWeekReportColumns">
+		t.id,
+		t.content,
+		t.status,
+		t.year,
+		t.month,
+		t.week,
+		t.modify_time,
+		t.create_time
+	</sql>
+	
+	
+	<select id="getWeekReportListByKeyResultId" resultMap="WeekReportResultMap">
+		select
+		<include refid="selectedWeekReportColumns"></include>
+		from tb_week_report t
+		left join tb_week_report_rel tl on t.id = tl.week_report_id
+		where tl.key_result_id=#{keyResultId}
+	</select>
+	
+	<insert id="addWeekReport" parameterType="com.netease.okr.model.entity.WeekReport" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_week_report(
+			id,
+			<if test="content!=null and content!=''">content,</if>
+			<if test="year!=null and year!=''">year,</if>
+			<if test="month!=null and month!=''">month,</if>
+			<if test="week!=null and week!=''">week,</if>
+			<if test="status!=null">status,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="content!=null and content!=''">#{content},</if>
+			<if test="year!=null and year!=''">#{year},</if>
+			<if test="month!=null and month!=''">#{month},</if>
+			<if test="week!=null and week!=''">#{week},</if>
+			<if test="status!=null">#{status},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	<insert id="addWeekReportRel" parameterType="java.util.List">
+		INSERT INTO tb_week_report_rel(key_result_id,week_report_id,create_time,modify_time) VALUES 
+		<foreach collection="list" item="item" index="index" separator=",">
+			 (#{item.keyResultId},#{item.weekReportId},now(),now())
+		</foreach>
+	</insert>
+	
+	<delete id="deleteWeekReportRel">
+		DELETE FROM tb_week_report_rel WHERE week_report_id = #{weekReportId}
+	</delete>
+	
+	
+	<update id="updateWeekReport" parameterType="com.netease.okr.model.entity.WeekReport">
+		update tb_week_report
+		<set> 
+			<if test="content!=null and content!=''">content = #{content},</if>
+			<if test="year!=null and year!=''">year = #{content},</if>
+			<if test="month!=null and month!=''">month = #{month},</if>
+			<if test="week!=null and week!=''">week = #{week},</if>
+			<if test="status!=null">status = #{status},</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+</mapper>

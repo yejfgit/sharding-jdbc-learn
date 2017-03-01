@@ -1,0 +1,91 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.KeyResultMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.KeyResult" id="KeyResultResultMap">
+		<id column="id" property="id"/>
+		<result column="key_result_name" property="keyResultName"/>
+		<result column="key_result_code" property="keyResultCode"/>
+		<result column="objectives_id" property="objectivesId"/>
+		<result column="status" property="status"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
+	<sql id="selectedKeyResultColumns">
+		t.id,
+		t.key_result_name,
+		t.key_result_code,
+		t.objectives_id,
+		t.status,
+		t.is_valid,
+		t.modify_time,
+		t.create_time
+	</sql>
+	
+	
+	<select id="getKeyResultListByoId" resultMap="KeyResultResultMap">
+		select
+		<include refid="selectedKeyResultColumns"></include>
+		from tb_key_result  t
+		where is_valid = 1 and objectives_id=#{objectivesId}
+	</select>
+	
+	<select id="getKeyResultListByWeekReportId" resultMap="KeyResultResultMap">
+		select
+		<include refid="selectedKeyResultColumns"></include>
+		from tb_key_result t
+		left join tb_week_report_rel tl on t.id = tl.key_result_id
+		where  tl.week_report_id=#{weekReportId}
+	</select>
+	
+	
+	<select id="getALLKeyResultListCountByoId" resultType="int">
+		select
+		count(1)
+		from tb_key_result
+		where objectives_id=#{objectivesId}
+	</select>
+	
+	
+	<insert id="addKeyResult" parameterType="com.netease.okr.model.entity.KeyResult" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_key_result(
+			id,
+			<if test="keyResultName!=null and keyResultName!=''">key_result_name,</if>
+			<if test="keyResultCode!=null and keyResultCode!=''">key_result_code,</if>
+			<if test="objectivesId!=null">objectives_id,</if>
+			<if test="status!=null">status,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="keyResultName!=null and keyResultName!=''">#{keyResultName},</if>
+			<if test="keyResultCode!=null and keyResultCode!=''">#{keyResultCode},</if>
+			<if test="objectivesId!=null">#{objectivesId},</if>
+			<if test="status!=null">#{status},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	<update id="updateKeyResult" parameterType="com.netease.okr.model.entity.KeyResult">
+		update tb_key_result
+		<set> 
+			<if test="keyResultName!=null and keyResultName!=''">key_result_name = #{keyResultName},</if>
+			<if test="status!=null">status = #{status},</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	<delete id="deleteKeyResult">
+		update tb_key_result set is_valid = 0 where id=#{id}
+	</delete>
+	
+	
+</mapper>
