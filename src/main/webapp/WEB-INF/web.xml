@@ -141,7 +141,7 @@
 	</session-config>
 	
 	<welcome-file-list>
-		<welcome-file>/person.html</welcome-file>
+		<welcome-file>/openid.do</welcome-file>
 	</welcome-file-list>
 	
 	
