@@ -9,12 +9,12 @@ public class JsonUtil {
 	public static JsonResponse toJsonObj(Object obj){
 		JsonResponse res = new JsonResponse(); 
 		try {
-			res.setData(JSON.toJSONString(obj));
-			res.setCode(ConstantsUtil.RESPONSE_SUCCESS);
+			res.setData(obj);
+			res.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_SUCCESS);
 		} catch (Exception e) {
 			// TODO: handle exception
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED);
 			LoggerUtil.error("",e);
 		}

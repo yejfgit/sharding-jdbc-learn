@@ -20,6 +20,7 @@
 				<value>classpath:database.properties</value>
 				<value>classpath:config.properties</value>
 				<value>classpath:nos.properties</value>
+				<value>classpath:redis.properties</value>
 			</list>
 		</property>
 	</bean>

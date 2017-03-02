@@ -11,6 +11,8 @@ public interface WeekReportService {
 
 	public JsonResponse addWeekReports(String type, List<WeekReport> weekReport);
 
+	public JsonResponse updateWeekReports(String type, WeekReport weekReports);
+
 
 
 }

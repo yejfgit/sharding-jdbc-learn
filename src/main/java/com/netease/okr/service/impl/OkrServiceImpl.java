@@ -61,7 +61,7 @@ public class OkrServiceImpl implements OkrService {
 		
 		if(MyStringUtil.isBlank(type)||objectives==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&objectives.getId()==null)){
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【type为空或获得objectives信息错误】");
 			
 			LoggerUtil.info(JSON.toJSONString(res));
@@ -86,7 +86,7 @@ public class OkrServiceImpl implements OkrService {
 			List<KeyResult> krs =  keyResultDao.getKeyResultListByoId(objectives.getId());
 			if(krs!=null&&krs.size()>0){
 				JsonResponse res = new JsonResponse(); 
-				res.setCode(ConstantsUtil.RESPONSE_FAILED);
+				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 				res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",存在关键事件及结果的目标不能删除");
 				LoggerUtil.info(JSON.toJSONString(res));
 				return res;
@@ -100,7 +100,7 @@ public class OkrServiceImpl implements OkrService {
 			return JsonUtil.toJsonObj(objectives);
 		}else{
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",操作失败type="+type);
 			
 			LoggerUtil.info(JSON.toJSONString(res));
@@ -123,7 +123,7 @@ public class OkrServiceImpl implements OkrService {
 		if(MyStringUtil.isBlank(type)||keyResult==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getId()==null)
 				||(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getObjectivesId()==null)){
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【type为空或获得关键指标信息（keyResult）错误】");
 			
 			LoggerUtil.info(JSON.toJSONString(res));
@@ -149,7 +149,7 @@ public class OkrServiceImpl implements OkrService {
 			List<WeekReport> wrs =  weekReportDao.getWeekReportListByKeyResultId(keyResult.getId());
 			if(wrs!=null&&wrs.size()>0){
 				JsonResponse res = new JsonResponse(); 
-				res.setCode(ConstantsUtil.RESPONSE_FAILED);
+				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 				res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",存在周报的关键事件及结果不能删除");
 				LoggerUtil.info(JSON.toJSONString(res));
 				return res;
@@ -162,7 +162,7 @@ public class OkrServiceImpl implements OkrService {
 			return JsonUtil.toJsonObj(keyResult);
 		}else{
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",操作失败type="+type);
 			
 			LoggerUtil.info(JSON.toJSONString(res));

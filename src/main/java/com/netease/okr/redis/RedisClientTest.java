@@ -1,50 +1,61 @@
 package com.netease.okr.redis;
-/*package com.netease.okr.redis;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
+import com.netease.okr.util.LoggerUtil;
 
-import com.alibaba.fastjson.JSON;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 
-public class RedisClient {
+public class RedisClientTest {
 
-	@Autowired
-	private StringRedisTemplate redisTemplate;// redis操作模板
+	private static JedisPool pool;
+    private static String host = "10.164.96.17";
+    private static int port = 26903;
+    private static int timeout = 60 * 1000;
 
-	public void put(String key, String value) {
-		if (key == null || "".equals(key)) {
-			return;
-		}
-		redisTemplate.opsForHash().put(key, key, value);
+    private static int maxActive = 100;
+    private static int maxIdle = 20;
+    private static long maxWait = 1000;
 
-	}
+    public static final int EXPIRE_TIME = 86400;
 
-	public void put(String key, Object value) {
-		if (key == null || "".equals(key)) {
-			return;
-		}
-		redisTemplate.opsForHash().put(key, key, JSON.toJSON(value));
+    private static org.slf4j.Logger logger_ = org.slf4j.LoggerFactory
+            .getLogger(RedisClient.class.getName());
 
-	}
+    public static void initPool() {
+        logger_.info("Init Redis Pool [{}]:[{}]", host, port);
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxIdle(maxActive);
+        config.setMaxIdle(maxIdle);
+        config.setMaxWaitMillis(maxWait);
+        config.setTestOnBorrow(false);
+        pool = new JedisPool(config, host, port, timeout);// 线程数量限制，IP地址，端口，超时时间
+    }
 
-	public <T> T get(String key, Class<T> className) {
-		Object obj = redisTemplate.opsForHash().get(key, key);
-		if (obj == null) {
-			return null;
-		}
-		return  JSON.parseObject("" + obj, className);
-	}
+    public static Jedis getJedis() {
+        if (pool == null)
+            initPool();
+        return pool.getResource();
+    }
+    
+    
+    public static String ping() {
+        String result = null;
 
-	public String get(String key) {
-		Object obj = redisTemplate.opsForHash().get(key, key);
-		if (obj == null) {
-			return null;
-		} else {
-			return String.valueOf(obj);
-		}
-	}
+        Jedis jedis = getJedis();
+        if (jedis == null) {
+            return result;
+        }
 
+        try {
+            result = jedis.ping();
+        } catch (Exception e) {
+            LoggerUtil.error(e.getMessage(), e);
+        } finally {
+            jedis.close();
+        }
+
+        return result;
+    }
 }
-*/

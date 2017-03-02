@@ -4,23 +4,25 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- <context:component-scan base-package="com.netease.okr.redis" /> -->
-	
-	<!-- redis配置 -->  
-    <!-- redis配置文件 -->  
-    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true" />  
-     
     <!-- redis连接池 -->  
-    <bean id="jedisConfig" class="redis.clients.jedis.JedisPoolConfig">   
+  <!--   <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">   
         <property name="maxTotal" value="${redis_max_active}"></property>  
         <property name="maxIdle" value="${redis_max_idle}"></property>  
         <property name="maxWaitMillis" value="${redis_max_wait}"></property>  
         <property name="testOnBorrow" value="${redis_test_on_borrow}"></property>  
-    </bean>  
+    </bean> --> 
+	
+	
+	 <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="100"/><!-- 最大闲置 -->
+        <property name="minIdle" value="10"/><!-- 最小闲置 -->
+        <property name="maxTotal" value="${redis_max_active}"></property>
+       <!--  <property name="testOnBorrow" value="true"/> --><!-- 可以获取 -->
+    </bean>
     
     <!-- redis 配置-->
 	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-		<constructor-arg index="0" ref="jedisConfig" />
+		<constructor-arg index="0" ref="jedisPoolConfig" />
 		<constructor-arg index="1" value="${redis_addr}" name="host" type="java.lang.String"/>
 	    <constructor-arg index="2" value="${redis_port}"  name="port" type="int"/>
 	    <constructor-arg index="3" value="${redis_max_wait}"  name="timeout" type="int"/>

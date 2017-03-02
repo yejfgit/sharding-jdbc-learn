@@ -62,7 +62,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 			saveWeekReportList(type,weekReports);
 		}else{
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【空信息】");
 			
 			LoggerUtil.info(res.toString());
@@ -70,6 +70,34 @@ public class WeekReportServiceImpl implements WeekReportService {
 		}
 		
 		return  JsonUtil.toJsonObj(weekReports);
+	}
+	
+	
+	/**
+	 * 
+	 * type="update" || “delete”
+	 * @author yejf
+	 * @param String type,WeekReport weekReport
+	 * @return JsonResponse
+	 * @throws DataAccessException 
+	 * */
+	@Override
+	public JsonResponse updateWeekReports(String type,WeekReport weekReports) {
+		
+		/*if(MyStringUtil.isNotBlank(type)&&weekReports!=null&&weekReports.size()>0){
+			saveWeekReportList(type,weekReports);
+		}else{
+			JsonResponse res = new JsonResponse(); 
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
+			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【空信息】");
+			
+			LoggerUtil.info(res.toString());
+			return res;
+		}
+		
+		return  JsonUtil.toJsonObj(weekReports);*/
+		
+		return null;
 	}
 	
 	/**

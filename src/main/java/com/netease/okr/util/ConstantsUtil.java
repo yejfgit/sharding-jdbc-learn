@@ -8,10 +8,10 @@ package com.netease.okr.util;
 public interface ConstantsUtil {
 	
 	/** 成功状态码. */
-	String RESPONSE_SUCCESS = "200";
+	String RESPONSE_SUCCESS_200 = "200";
 
 	/** 失败状态码. */
-	String RESPONSE_FAILED = "400";
+	String RESPONSE_FAILED_400 = "400";
 
 	/** 对被请求页面的访问被禁止. */
 	String RESPONSE_CODE_403 = "403";
@@ -40,10 +40,10 @@ public interface ConstantsUtil {
 	String OPREATE_TYPE_ADD = "add";//添加
 	String OPREATE_TYPE_UPDATE = "update";//更新
 	String OPREATE_TYPE_DEL = "delete";//删除
-	String OPREATE_TYPE_RELEASE = "release";//暂存
+	String OPREATE_TYPE_RELEASE = "release";//发布
 	String OPREATE_TYPE_SAVE = "save";//保存
-	Integer OPREATE_TYPE_RELEASE_STATUS = 0;//暂存状态
-	Integer OPREATE_TYPE_SAVE_STATUS = 1;//保存状态
+	Integer OPREATE_TYPE_RELEASE_STATUS = 1;//发布状态
+	Integer OPREATE_TYPE_SAVE_STATUS = 0;//暂存状态
 	
 	String SKEY = "a0b891c2d563e4f7-----------";//薪资加密
 	

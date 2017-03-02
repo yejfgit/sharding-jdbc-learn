@@ -35,7 +35,7 @@ public class WeekReportController extends BaseController {
 		if(weekReportRel==null||weekReportRel.getKeyResultId()==null){
 			
 			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【keyResultId为空】");
 			return res;
 			
@@ -58,6 +58,21 @@ public class WeekReportController extends BaseController {
 		
 		
 		return weekReportService.addWeekReports(type, weekReport);
+		
+	}
+	
+	
+	/**
+	 * 更新删除周报
+	 * @param  type="release" || “save”
+	 * @return JsonResponse
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/weekReport/updateWeekReport", method = RequestMethod.POST)
+	public JsonResponse addKeyResult(@RequestParam("type") String type,@RequestBody WeekReport weekReport) {
+		
+		
+		return weekReportService.updateWeekReports(type, weekReport);
 		
 	}
 	

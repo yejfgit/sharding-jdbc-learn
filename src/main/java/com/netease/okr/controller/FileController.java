@@ -64,7 +64,7 @@ public class FileController extends BaseController{
 		String fn = file.getOriginalFilename();
 		
 		if(fn.length()>30){
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg("附件名称不能超过30个字符");
 			return res;
 			//return res;
@@ -81,7 +81,7 @@ public class FileController extends BaseController{
 					}
 					Appendix appendix = fileService.upload(file);
 					if (appendix == null) {
-						res.setCode(ConstantsUtil.RESPONSE_FAILED);
+						res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 						res.setMsg("上传附件错误");
 					} else {
 						Appendix appTmp = new Appendix();
@@ -95,16 +95,48 @@ public class FileController extends BaseController{
 					LoggerUtil.uploadLogError("上传附件错误", e);
 				}
 			} else {
-				res.setCode(ConstantsUtil.RESPONSE_FAILED);
+				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 				res.setMsg("上传附件大小超过限制");
 			}
 		} else {
-			res.setCode(ConstantsUtil.RESPONSE_FAILED);
+			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 			res.setMsg("上传附件格式错误");
 		}
 		return res;
 	}
 
+	
+	@ResponseBody
+	@RequestMapping(value = "/delete")
+	public JsonResponse deleteFile(String id) {
+		JsonResponse res = new JsonResponse();
+		try {
+			String msg = "";
+			if(MyStringUtil.isNotBlank(id)){
+				msg = fileService.delete(Integer.parseInt(id));
+			}else{
+				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
+				res.setMsg("未得到附件id");
+				return res;
+			}
+			
+			if(MyStringUtil.isBlank(msg)){
+				res.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);
+				res.setMsg(ConstantsUtil.RESPONSE_MSG_SUCCESS);
+			}else{
+				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
+				res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED);
+			}
+		
+		} catch (Exception e) {
+			LoggerUtil.uploadLogError("删除附件错误", e);
+		}
+		
+		
+		return res;
+	}
+	
+	
 	/**
 	 * 判断附件大小
 	 * 
