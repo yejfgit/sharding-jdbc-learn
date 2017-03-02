@@ -430,7 +430,7 @@
 					<path>/</path>
 					<port>8188</port>
 					<uriEncoding>UTF-8</uriEncoding>
-					<url>http://localhost:8080/manager/html</url>
+					<url>http://localhost:8188/manager/html</url>
 					<server>tomcat7</server>
 				</configuration>
 			</plugin>
