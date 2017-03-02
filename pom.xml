@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<webAppName>ehrdata</webAppName>
+		<webAppName>ehrokr</webAppName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.1.5.RELEASE</org.springframework-version>
 		<org.springframework.security-version>3.2.6.RELEASE</org.springframework.security-version>
