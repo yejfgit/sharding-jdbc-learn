@@ -38,7 +38,7 @@ import com.netease.okr.util.UserContextUtil;
 @Controller
 public class OpenIdController {
 	
-	private static final String INDEX_PAGE_SUCCESS = "/public/app.html";
+	private static final String INDEX_PAGE_SUCCESS = "/public/app.html#/home";
 	
 	private static final String INDEX_PAGE_FAILED = "openid.do";
 	
