@@ -18,7 +18,6 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.UserContextUtil;
 
-
 public class LoggerFilter implements Filter {
 
 	@Override
@@ -27,23 +26,23 @@ public class LoggerFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String userName = null;
+
 		if (session != null) {
-			UserContext ucvo = (UserContext) req.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
-			User user  = null;
-			if (ucvo != null)
-				user  = (User) ucvo.getUser();
+			UserContext ucvo = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			if (ucvo != null) {
+				User user = (User) ucvo.getUser();
 				userName = user.getName();
 			}
 
+		}
+
 		MDC.put("userName", userName != null ? userName : "noLogin");
-		MDC.put("userIP",
-				new StringBuffer().append("[").append(IPUtil.getRemoteIp(req))
-						.append("]"));
+		MDC.put("userIP", new StringBuffer().append("[").append(IPUtil.getRemoteIp(req)).append("]"));
 
 		chain.doFilter(request, response);
 	}
