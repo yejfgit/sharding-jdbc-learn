@@ -13,10 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.MDC;
 
+import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.UserContextUtil;
-
 
 public class LoggerFilter implements Filter {
 
@@ -26,21 +26,23 @@ public class LoggerFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String userName = null;
+
 		if (session != null) {
-			User user = (User) UserContextUtil.getUserContext().getUser();
-			if (user != null)
+			UserContext ucvo = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			if (ucvo != null) {
+				User user = (User) ucvo.getUser();
 				userName = user.getName();
+			}
+
 		}
 
 		MDC.put("userName", userName != null ? userName : "noLogin");
-		MDC.put("userIP",
-				new StringBuffer().append("[").append(IPUtil.getRemoteIp(req))
-						.append("]"));
+		MDC.put("userIP", new StringBuffer().append("[").append(IPUtil.getRemoteIp(req)).append("]"));
 
 		chain.doFilter(request, response);
 	}
