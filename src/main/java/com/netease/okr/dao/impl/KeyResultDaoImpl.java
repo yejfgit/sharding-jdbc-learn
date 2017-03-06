@@ -9,11 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.netease.okr.dao.KeyResultDao;
-import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.mapper.okr.KeyResultMapper;
-import com.netease.okr.mapper.okr.ObjectivesMapper;
 import com.netease.okr.model.entity.KeyResult;
-import com.netease.okr.model.entity.Objectives;
 
 @Repository
 public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultDao {

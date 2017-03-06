@@ -1,5 +1,6 @@
 package com.netease.okr.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
+import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
-import com.netease.okr.model.entity.WeekReportRel;
+import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.MyDateUtils;
+import com.netease.okr.util.MyStringUtil;
+import com.netease.okr.util.UserContextUtil;
 
 
 @RestController
@@ -29,19 +34,42 @@ public class WeekReportController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/weekReport/getWeekReportListByKeyResultId", method = RequestMethod.POST)
-	public JsonResponse getWeekReportListByKeyResultId(@RequestBody WeekReportRel weekReportRel) {
+	@RequestMapping(value = "/weekReport/getWeekReportListByKeyResultId", method = RequestMethod.GET)
+	public JsonResponse getWeekReportListByKeyResultId(@RequestParam("keyResultId") Integer keyResultId) {
 		
-		if(weekReportRel==null||weekReportRel.getKeyResultId()==null){
-			
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【keyResultId为空】");
-			return res;
-			
+		if(keyResultId==null){
+			return JsonUtil.toJsonFail("【keyResultId为空】");
 		}
 		
-		List<WeekReport> weekReportList = weekReportService.getWeekReportListByKeyResultId(weekReportRel.getKeyResultId());
+		List<WeekReport> weekReportList = weekReportService.getWeekReportListByKeyResultId(keyResultId);
+		
+		return JsonUtil.toJsonObj(weekReportList);
+	}
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/weekReport/getWeekReportList", method = RequestMethod.GET)
+	public JsonResponse getWeekReportList(WeekReportQuery weekReportQuery) {
+		User user = (User) UserContextUtil.getUserContext().getUser();
+		
+		if(weekReportQuery==null){
+			weekReportQuery = new WeekReportQuery();
+			
+		}
+		//默认查询自己周报
+		if(weekReportQuery.getUserId()==null){
+			weekReportQuery.setUserId(user.getId());
+		}
+		
+		if(MyStringUtil.isBlank(weekReportQuery.getYear())){
+			weekReportQuery.setYear(MyDateUtils.formatYDate(new Date(),""));
+		}
+		
+		List<WeekReport> weekReportList = weekReportService.getWeekReportList(weekReportQuery);
 		
 		return JsonUtil.toJsonObj(weekReportList);
 	}

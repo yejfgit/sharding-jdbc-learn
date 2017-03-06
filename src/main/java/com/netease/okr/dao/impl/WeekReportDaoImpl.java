@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.mapper.okr.WeekReportMapper;
+import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.WeekReportRel;
 
@@ -42,10 +43,6 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 		return weekReportMapper.getWeekReportCountByUserId(userId);
 	}
 	
-	/*@Override
-	public Integer deleteObjectives(Integer id){
-		return weekReportMapper.deleteObjectives(id);
-	}*/
 	
 	@Override
 	public Integer updateWeekReport(WeekReport weekReport){
@@ -73,4 +70,9 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 		return weekReportMapper.deleteWeekReportRel(weekReportId);
 	};
 	
+	
+	@Override
+	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery) {
+		return weekReportMapper.getWeekReportList(weekReportQuery);
+	}
 }

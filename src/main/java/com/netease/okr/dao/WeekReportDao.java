@@ -2,6 +2,7 @@ package com.netease.okr.dao;
 
 import java.util.List;
 
+import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.WeekReportRel;
 
@@ -18,6 +19,8 @@ public interface WeekReportDao {
 	public Integer deleteWeekReportRel(Integer weekReportId);
 
 	public Integer getWeekReportCountByUserId(Integer userId);
+
+	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);
 
 
 
