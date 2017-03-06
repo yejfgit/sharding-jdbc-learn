@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.mapper.okr.WeekReportMapper;
-import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.WeekReportRel;
+import com.netease.okr.model.query.WeekReportQuery;
 
 @Repository
 public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekReportDao {

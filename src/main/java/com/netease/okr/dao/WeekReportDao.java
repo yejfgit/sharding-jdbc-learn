@@ -2,9 +2,9 @@ package com.netease.okr.dao;
 
 import java.util.List;
 
-import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.WeekReportRel;
+import com.netease.okr.model.query.WeekReportQuery;
 
 public interface WeekReportDao {
 

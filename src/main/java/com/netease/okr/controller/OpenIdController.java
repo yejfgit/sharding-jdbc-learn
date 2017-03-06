@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netease.okr.common.JsonResponse;
-import com.netease.okr.model.dto.common.UserContext;
+import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.ConstantsUtil;

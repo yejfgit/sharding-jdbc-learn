@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.netease.okr.common.PageBean;
 import com.netease.okr.dao.UserDao;
-import com.netease.okr.model.dto.UserQuery;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.query.UserQuery;
 import com.netease.okr.service.UserService;
 
 @Service

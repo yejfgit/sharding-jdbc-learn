@@ -3,8 +3,8 @@ package com.netease.okr.dao;
 import java.util.List;
 
 import com.netease.okr.common.PageBean;
-import com.netease.okr.model.dto.UserQuery;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.query.UserQuery;
 
 public interface UserDao {
 

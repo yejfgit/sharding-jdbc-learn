@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.common.PageBean;
 import com.netease.okr.dao.UserDao;
 import com.netease.okr.mapper.okr.UserMapper;
-import com.netease.okr.model.dto.UserQuery;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.query.UserQuery;
 
 @Repository
 public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {

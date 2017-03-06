@@ -1,4 +1,4 @@
-package com.netease.okr.model.dto;
+package com.netease.okr.model.query;
 
 import com.netease.okr.model.entity.WeekReport;
 
