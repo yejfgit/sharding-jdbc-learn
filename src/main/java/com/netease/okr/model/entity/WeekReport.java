@@ -35,6 +35,11 @@ public class WeekReport implements Serializable {
 	private String month;
 	
 	/**
+	 * 用户id
+	 * */
+	private Integer userId;
+	
+	/**
 	 * 周报周数
 	 * */
 	private String week;
@@ -111,6 +116,12 @@ public class WeekReport implements Serializable {
 	}
 	public void setAppendixList(List<Appendix> appendixList) {
 		this.appendixList = appendixList;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	
 

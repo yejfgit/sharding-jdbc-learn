@@ -54,6 +54,12 @@ public interface WeekReportMapper {
 	 */
 	public Integer deleteWeekReportRel(@Param(value = "weekReportId") Integer weekReportId)  throws DataAccessException;
 	
+	/**
+	 * 查询用户周报数量
+	 * @returnInteger
+	 * @throws DataAccessException
+	 */
+	public Integer getWeekReportCountByUserId(Integer userId);
 	
 	
 }

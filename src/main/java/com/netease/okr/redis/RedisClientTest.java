@@ -8,7 +8,9 @@ import redis.clients.jedis.JedisPoolConfig;
 
 
 public class RedisClientTest {
-
+	
+	private static JedisPool jedisPool;
+	
 	private static JedisPool pool;
     private static String host = "10.164.96.17";
     private static int port = 26903;
@@ -17,20 +19,31 @@ public class RedisClientTest {
     private static int maxActive = 100;
     private static int maxIdle = 20;
     private static long maxWait = 1000;
+    
+    private static String password = "";
 
     public static final int EXPIRE_TIME = 86400;
 
-    private static org.slf4j.Logger logger_ = org.slf4j.LoggerFactory
+	public static void setJedisPool(JedisPool jedisPool) {
+		RedisClientTest.jedisPool = jedisPool;
+	}
+
+
+	private static org.slf4j.Logger logger_ = org.slf4j.LoggerFactory
             .getLogger(RedisClient.class.getName());
 
     public static void initPool() {
         logger_.info("Init Redis Pool [{}]:[{}]", host, port);
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(maxActive);
+
+        config.setMaxTotal(maxActive);
         config.setMaxIdle(maxIdle);
         config.setMaxWaitMillis(maxWait);
-        config.setTestOnBorrow(false);
-        pool = new JedisPool(config, host, port, timeout);// 线程数量限制，IP地址，端口，超时时间
+        config.setTestOnBorrow(true);
+		config.setTestOnReturn(true);
+		config.setTestWhileIdle(true);
+        
+        pool = new JedisPool(config, host, port, timeout,password);// 线程数量限制，IP地址，端口，超时时间
     }
 
     public static Jedis getJedis() {
