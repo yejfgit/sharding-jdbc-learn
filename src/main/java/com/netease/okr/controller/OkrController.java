@@ -30,7 +30,7 @@ public class OkrController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.POST)
+	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.GET)
 	public JsonResponse getMyOkrList() {
 		
 		User user = (User) UserContextUtil.getUserContext().getUser();

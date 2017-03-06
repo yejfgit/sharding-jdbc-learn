@@ -25,7 +25,7 @@ public class DateInfoController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/date/getAllDate", method = RequestMethod.POST)
+	@RequestMapping(value = "/date/getAllDate", method = RequestMethod.GET)
 	public JsonResponse getAllDate() {
 		
 		List<DateInfo> dateInfos =dateInfoService.getAllDateInfo();
