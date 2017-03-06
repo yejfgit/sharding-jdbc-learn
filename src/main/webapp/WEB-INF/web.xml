@@ -83,13 +83,13 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- IP filter -->
+	<!-- logger filter -->
 	<filter>
-		<filter-name>IPFilter</filter-name>
-		<filter-class>com.netease.okr.filter.IPFilter</filter-class>
+		<filter-name>loggerFilter</filter-name>
+		<filter-class>com.netease.okr.filter.LoggerFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>IPFilter</filter-name>
+		<filter-name>loggerFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	

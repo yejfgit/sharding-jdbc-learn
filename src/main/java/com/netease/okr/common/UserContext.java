@@ -1,4 +1,4 @@
-package com.netease.okr.model.dto.common;
+package com.netease.okr.common;
 
 import java.util.List;
 

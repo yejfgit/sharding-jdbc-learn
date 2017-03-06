@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
-import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.service.WeekReportService;
-import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.MyDateUtils;
 import com.netease.okr.util.MyStringUtil;

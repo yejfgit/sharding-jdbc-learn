@@ -3,8 +3,8 @@ package com.netease.okr.service;
 import java.util.List;
 
 import com.netease.okr.common.JsonResponse;
-import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
+import com.netease.okr.model.query.WeekReportQuery;
 
 public interface WeekReportService {
 

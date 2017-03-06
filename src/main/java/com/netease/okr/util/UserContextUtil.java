@@ -1,6 +1,6 @@
 package com.netease.okr.util;
 
-import com.netease.okr.model.dto.common.UserContext;
+import com.netease.okr.common.UserContext;
 
 /**
  * @author yejf

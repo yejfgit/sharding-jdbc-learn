@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
-import com.netease.okr.model.dto.UserQuery;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.query.UserQuery;
 
 /**
  * @Description: mapper
