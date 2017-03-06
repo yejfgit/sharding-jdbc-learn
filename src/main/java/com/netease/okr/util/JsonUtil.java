@@ -19,7 +19,7 @@ public class JsonUtil {
 			LoggerUtil.error("",e);
 		}
 		
-		LoggerUtil.info(res.toString());
+		LoggerUtil.info(JSON.toJSONString(res));
 		
 		return res;
 	}
@@ -29,7 +29,7 @@ public class JsonUtil {
 		res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
 		res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":"+msg);
 		
-		LoggerUtil.info(res.toString());
+		LoggerUtil.info(JSON.toJSONString(res));
 		return res;
 	}
 	
