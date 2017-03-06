@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.MDC;
 
+import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.UserContextUtil;
@@ -32,10 +33,12 @@ public class LoggerFilter implements Filter {
 		HttpSession session = req.getSession();
 		String userName = null;
 		if (session != null) {
-			User user = (User) UserContextUtil.getUserContext().getUser();
-			if (user != null)
+			UserContext ucvo = (UserContext) req.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			User user  = null;
+			if (ucvo != null)
+				user  = (User) ucvo.getUser();
 				userName = user.getName();
-		}
+			}
 
 		MDC.put("userName", userName != null ? userName : "noLogin");
 		MDC.put("userIP",
