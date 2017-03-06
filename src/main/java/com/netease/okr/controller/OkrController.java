@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
-import com.netease.okr.model.dto.OkrQuery;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.OkrNum;
-import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
-import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.UserContextUtil;
 
 
 @RestController
@@ -34,21 +30,18 @@ public class OkrController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.POST)
-	public JsonResponse getMyOkrList(@RequestBody OkrQuery okrQuery) {
+	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.GET)
+	public JsonResponse getMyOkrList(Integer userId) {
 		
 		List<Objectives> okrList = new ArrayList<Objectives>();
 		
-		if(okrQuery!=null&&okrQuery.getUserId()!=null){
-			
-			okrList = okrService.getMyOkrList(okrQuery.getUserId());
+		if(userId!=null){
+			okrList = okrService.getMyOkrList(userId);
 		}else{
-			JsonResponse res = new JsonResponse();
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":userId为空");
-			return res;
+			
+			return JsonUtil.toJsonFail("【userId为空】");
+			
 		}
-		
 		
 		return JsonUtil.toJsonObj(okrList);
 	}
@@ -58,19 +51,15 @@ public class OkrController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/myOkr/getMyOkrNum", method = RequestMethod.POST)
-	public JsonResponse getMyOkrNum(@RequestBody OkrQuery okrQuery) {
+	@RequestMapping(value = "/myOkr/getMyOkrNum", method = RequestMethod.GET)
+	public JsonResponse getMyOkrNum(Integer userId) {
 		
 		OkrNum okrNum = new OkrNum();
 		
-		if(okrQuery!=null&&okrQuery.getUserId()!=null){
-			
-			okrNum = okrService.getMyOkrNum(okrQuery.getUserId());
+		if(userId!=null){
+			okrNum = okrService.getMyOkrNum(userId);
 		}else{
-			JsonResponse res = new JsonResponse();
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":userId为空");
-			return res;
+			return JsonUtil.toJsonFail("【userId为空】");
 		}
 		
 		

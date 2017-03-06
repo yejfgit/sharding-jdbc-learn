@@ -11,6 +11,7 @@ import com.netease.okr.common.JsonResponse;
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.mapper.okr.AppendixMapper;
 import com.netease.okr.mapper.okr.DateInfoMapper;
+import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.model.entity.KeyResult;
@@ -20,7 +21,6 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -50,6 +50,18 @@ public class WeekReportServiceImpl implements WeekReportService {
 	
 	
 	/**
+	 * @author yejf
+	 * @param WeekReportQuery
+	 * @return List<WeekReport>
+	 * @throws DataAccessException
+	 */
+	@Override
+	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery) {
+		return weekReportDao.getWeekReportList(weekReportQuery);
+	}
+	
+	
+	/**
 	 * 
 	 * type="release" || “save”
 	 * @author yejf
@@ -63,12 +75,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(MyStringUtil.isNotBlank(type)&&weekReports!=null&&weekReports.size()>0){
 			saveWeekReportList(type,weekReports);
 		}else{
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【空信息】");
-			
-			LoggerUtil.info(res.toString());
-			return res;
+			return JsonUtil.toJsonFail("【空信息】");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReports);
@@ -89,12 +96,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(MyStringUtil.isNotBlank(type)&&weekReport!=null&&weekReport.getId()!=null){
 			updateWeekReportList(type,weekReport);
 		}else{
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【空信息】");
-			
-			LoggerUtil.info(res.toString());
-			return res;
+			return JsonUtil.toJsonFail("【空信息】");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReport);

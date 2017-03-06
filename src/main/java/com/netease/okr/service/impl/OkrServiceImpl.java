@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.dao.ObjectivesDao;
@@ -19,7 +18,6 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -79,12 +77,7 @@ public class OkrServiceImpl implements OkrService {
 		int c = 0;
 		
 		if(MyStringUtil.isBlank(type)||objectives==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&objectives.getId()==null)){
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【type为空或获得objectives信息错误】");
-			
-			LoggerUtil.info(JSON.toJSONString(res));
-			return res;
+			return JsonUtil.toJsonFail("【type为空或获得objectives信息错误】");
 		}
 		
 		
@@ -104,11 +97,7 @@ public class OkrServiceImpl implements OkrService {
 			//检查是否存在关键事件及结果，存在不能删除
 			List<KeyResult> krs =  keyResultDao.getKeyResultListByoId(objectives.getId());
 			if(krs!=null&&krs.size()>0){
-				JsonResponse res = new JsonResponse(); 
-				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-				res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",存在关键事件及结果的目标不能删除");
-				LoggerUtil.info(JSON.toJSONString(res));
-				return res;
+				return JsonUtil.toJsonFail("【存在关键事件及结果的目标不能删除】");
 			}else{
 				c = objectivesDao.deleteObjectives(objectives.getId());
 			}
@@ -118,12 +107,8 @@ public class OkrServiceImpl implements OkrService {
 		if(c>0){
 			return JsonUtil.toJsonObj(objectives);
 		}else{
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",操作失败type="+type);
+			return JsonUtil.toJsonFail("【操作失败type="+type+"】");
 			
-			LoggerUtil.info(JSON.toJSONString(res));
-			return res;
 		}
 		
 	}
@@ -141,12 +126,7 @@ public class OkrServiceImpl implements OkrService {
 		
 		if(MyStringUtil.isBlank(type)||keyResult==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getId()==null)
 				||(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getObjectivesId()==null)){
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+"【type为空或获得关键指标信息（keyResult）错误】");
-			
-			LoggerUtil.info(JSON.toJSONString(res));
-			return res;
+			return JsonUtil.toJsonFail("【type为空或获得关键指标信息（keyResult）错误】");
 		}
 		
 		
@@ -167,11 +147,7 @@ public class OkrServiceImpl implements OkrService {
 			//检查是否存在周报，存在不能删除
 			List<WeekReport> wrs =  weekReportDao.getWeekReportListByKeyResultId(keyResult.getId());
 			if(wrs!=null&&wrs.size()>0){
-				JsonResponse res = new JsonResponse(); 
-				res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-				res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",存在周报的关键事件及结果不能删除");
-				LoggerUtil.info(JSON.toJSONString(res));
-				return res;
+				return JsonUtil.toJsonFail("【存在周报的关键事件及结果不能删除】");
 			}else{
 				c = keyResultDao.deleteKeyResult(keyResult.getId());
 			}
@@ -180,12 +156,7 @@ public class OkrServiceImpl implements OkrService {
 		if(c>0){
 			return JsonUtil.toJsonObj(keyResult);
 		}else{
-			JsonResponse res = new JsonResponse(); 
-			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+",操作失败type="+type);
-			
-			LoggerUtil.info(JSON.toJSONString(res));
-			return res;
+			return JsonUtil.toJsonFail("【addKeyResult操作失败type="+type+"】");
 		}
 		
 	}

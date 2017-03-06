@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
+import com.netease.okr.model.dto.WeekReportQuery;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.WeekReportRel;
 
@@ -60,6 +61,9 @@ public interface WeekReportMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer getWeekReportCountByUserId(Integer userId);
+	
+	
+	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);
 	
 	
 }

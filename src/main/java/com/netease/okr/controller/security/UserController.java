@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,8 +69,8 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.POST)
-	public JsonResponse queryUserList(@RequestBody UserQuery user,PageBean<User> page) {
+	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.GET)
+	public JsonResponse queryUserList(UserQuery user,PageBean<User> page) {
 		
 		List<User> users = userService.getUsers(user,page);
 		

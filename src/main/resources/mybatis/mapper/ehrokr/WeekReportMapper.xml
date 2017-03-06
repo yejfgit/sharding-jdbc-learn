@@ -32,6 +32,25 @@
 	</sql>
 	
 	
+	<sql id="weekReporWhere">
+		<where>
+			1=1 
+			<if test="year!=null and year!=''">  and t.year = #{month} </if>
+			<if test="month!=null and month!=''"> and t.month = #{month} </if>
+			<if test="userId!=null">and t.user_id = #{userId} </if>
+		</where>
+	</sql>
+	
+	
+	<select id="getWeekReportList" resultMap="WeekReportResultMap">
+		select 
+		<include refid="selectedWeekReportColumns"></include> 
+		from tb_week_report t
+		<include refid="weekReporWhere"></include> 
+		order by year desc,month desc,week desc
+	</select>
+	
+	
 	<select id="getWeekReportListByKeyResultId" resultMap="WeekReportResultMap">
 		select
 		<include refid="selectedWeekReportColumns"></include>
