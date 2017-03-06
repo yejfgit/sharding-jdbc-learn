@@ -34,12 +34,12 @@
 	    <property name="jedisPool" ref="jedisPool"/>
 	</bean>
 	
-	<bean id="redisConfigService" class="com.netease.rms.service.bean.JedisSentinel">
+	<!-- <bean id="redisConfigService" class="com.netease.rms.service.bean.JedisSentinel">
 		<property name="masterName" value="${redis.sentinel.master}" />
 		<property name="sentinelAddressList" value="${redis.sentinel.address}" />
 		<property name="timeout" value="3000" />
 		<property name="password" value="${redis.sentinel.password}" />
-	</bean>
+	</bean> -->
     
 
 </beans>
