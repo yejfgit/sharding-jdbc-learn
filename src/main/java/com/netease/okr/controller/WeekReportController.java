@@ -29,7 +29,7 @@ public class WeekReportController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/weekReport/getWeekReportListByKeyResultId", method = RequestMethod.GET)
+	@RequestMapping(value = "/weekReport/getWeekReportListByKeyResultId", method = RequestMethod.POST)
 	public JsonResponse getWeekReportListByKeyResultId(@RequestBody WeekReportRel weekReportRel) {
 		
 		if(weekReportRel==null||weekReportRel.getKeyResultId()==null){

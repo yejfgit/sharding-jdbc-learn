@@ -34,7 +34,7 @@ public class OkrController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.GET)
+	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.POST)
 	public JsonResponse getMyOkrList(@RequestBody OkrQuery okrQuery) {
 		
 		List<Objectives> okrList = new ArrayList<Objectives>();
@@ -58,7 +58,7 @@ public class OkrController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/myOkr/getMyOkrNum", method = RequestMethod.GET)
+	@RequestMapping(value = "/myOkr/getMyOkrNum", method = RequestMethod.POST)
 	public JsonResponse getMyOkrNum(@RequestBody OkrQuery okrQuery) {
 		
 		OkrNum okrNum = new OkrNum();

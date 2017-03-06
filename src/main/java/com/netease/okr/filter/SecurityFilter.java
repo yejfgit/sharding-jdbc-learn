@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.netease.okr.model.dto.common.UserContext;
+import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -34,7 +35,7 @@ public class SecurityFilter implements Filter {
 
 			LoggerUtil.info("SecurityFilter url="+toUrl);
 			
-			/*ucvo = new UserContext();
+			ucvo = new UserContext();
 			User user = new User();
 			user.setId(742);
 			user.setName("叶金福");
@@ -42,13 +43,13 @@ public class SecurityFilter implements Filter {
 			user.setCorpMail("hzyejinfu@corp.netease.com");
 			user.setDeptL1Id("D002");
 			ucvo.setUser(user);
-			hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, ucvo);*/
+			hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, ucvo);
 			
-			if (ucvo == null&&toUrl.indexOf("receiveOpenId.do") == -1&&toUrl.indexOf("index.do") == -1
+			/*if (ucvo == null&&toUrl.indexOf("receiveOpenId.do") == -1&&toUrl.indexOf("index.do") == -1
 					&&toUrl.indexOf("openid.do") == -1&&toUrl.indexOf("logout.do") == -1) {
 				request.getRequestDispatcher("/timeout.do").forward(request, response);
 				return;
-			}
+			}*/
 			
 			UserContextUtil.initUserContext(ucvo);
 			chain.doFilter(request, response);

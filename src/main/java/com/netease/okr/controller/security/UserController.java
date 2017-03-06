@@ -70,7 +70,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.POST)
 	public JsonResponse queryUserList(@RequestBody UserQuery user,PageBean<User> page) {
 		
 		List<User> users = userService.getUsers(user,page);
