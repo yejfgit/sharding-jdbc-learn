@@ -238,7 +238,7 @@ public class OpenIdController {
 		LoggerUtil.info("超时或未登录");
 		JsonResponse jsonResponse = new JsonResponse();
 		jsonResponse.setCode(ConstantsUtil.RESPONSE_TIMEOUT);
-		jsonResponse.setData("/openid");
+		jsonResponse.setData("/openid.do");
 		jsonResponse.setMsg("长时间未操作或未登录。");
 		return jsonResponse;
 	}

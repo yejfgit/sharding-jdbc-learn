@@ -17,6 +17,8 @@ public interface WeekReportDao {
 
 	public Integer deleteWeekReportRel(Integer weekReportId);
 
+	public Integer getWeekReportCountByUserId(Integer userId);
+
 
 
 }

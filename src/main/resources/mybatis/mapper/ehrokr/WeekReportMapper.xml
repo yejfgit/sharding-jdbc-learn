@@ -11,6 +11,7 @@
 		<result column="year" property="year"/>
 		<result column="month" property="month"/>
 		<result column="week" property="week"/>
+		<result column="user_id" property="userId"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
 		
@@ -26,6 +27,7 @@
 		t.month,
 		t.week,
 		t.modify_time,
+		t.user_id,
 		t.create_time
 	</sql>
 	
@@ -38,6 +40,15 @@
 		where tl.key_result_id=#{keyResultId}
 	</select>
 	
+	
+	<select id="getWeekReportCountByUserId" resultType="int">
+		select 
+		count(1)
+		from tb_week_report t
+		where t.user_id = #{userId}
+	</select>
+	
+	
 	<insert id="addWeekReport" parameterType="com.netease.okr.model.entity.WeekReport" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_week_report(
 			id,
@@ -46,6 +57,7 @@
 			<if test="month!=null and month!=''">month,</if>
 			<if test="week!=null and week!=''">week,</if>
 			<if test="status!=null">status,</if>
+			<if test="userId!=null">userId,</if>
 			create_time,
 			modify_time
 		)
@@ -56,6 +68,7 @@
 			<if test="month!=null and month!=''">#{month},</if>
 			<if test="week!=null and week!=''">#{week},</if>
 			<if test="status!=null">#{status},</if>
+			<if test="userId!=null">#{userId},</if>
 			now(),
 			now()
 		)

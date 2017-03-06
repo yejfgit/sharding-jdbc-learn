@@ -3,7 +3,7 @@
 
 <mapper namespace="com.netease.okr.mapper.okr.UserMapper">
 	
-	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 	
 	<resultMap id="UserResultMap" type="com.netease.okr.model.entity.security.User" >
 		<id column="id" property="id" />

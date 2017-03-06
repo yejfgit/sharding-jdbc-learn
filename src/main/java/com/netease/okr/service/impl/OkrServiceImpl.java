@@ -13,6 +13,7 @@ import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.OkrNum;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
@@ -43,6 +44,24 @@ public class OkrServiceImpl implements OkrService {
 	@Override
 	public List<Objectives> getMyOkrList(Integer userId) {
 		return objectivesDao.getMyOkrList(userId);
+	}
+	
+	
+
+	/**
+	 * @author yejf
+	 * @param userId
+	 * @return List<Objectives>
+	 * @throws DataAccessException
+	 */
+	@Override
+	public OkrNum getMyOkrNum(Integer userId) {
+		OkrNum okrNum= new OkrNum();
+		okrNum.setUserId(userId);
+		
+		okrNum.setOkrNum(objectivesDao.getAllMyOkrListCount(userId));
+		okrNum.setWeekReportNum(weekReportDao.getWeekReportCountByUserId(userId));
+		return okrNum;
 	}
 	
 	

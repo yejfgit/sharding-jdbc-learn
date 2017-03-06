@@ -15,12 +15,13 @@ public interface ConstantsUtil {
 
 	/** 对被请求页面的访问被禁止. */
 	String RESPONSE_CODE_403 = "403";
+	
+	/** 对被请求页面的访问被禁止. */
+	String RESPONSE_TIMEOUT = "302";
 
 	/** 系统异常状态码. */
 	String RESPONSE_CODE_500 = "500";
 
-	/** session超时. */
-	String RESPONSE_TIMEOUT = "TIMEOUT";
 	
 	String RESPONSE_MSG_SUCCESS = "ok";
 	
