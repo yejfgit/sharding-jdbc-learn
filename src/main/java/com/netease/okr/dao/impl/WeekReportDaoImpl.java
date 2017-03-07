@@ -56,8 +56,11 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	 * @throws DataAccessException
 	 */
 	@Override
-	public Integer addWeekReportRel(List<WeekReportRel> weekReportRelList)  {
-		return weekReportMapper.addWeekReportRel(weekReportRelList);
+	public Integer addWeekReportRel(List<WeekReportRel> list)  {
+		if(list==null||list.size()<1){
+			return 0;
+		}
+		return weekReportMapper.addWeekReportRel(list);
 	};
 	
 	/**

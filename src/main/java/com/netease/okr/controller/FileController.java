@@ -42,6 +42,7 @@ public class FileController extends BaseController{
 		typeAppendixList.add("doc");
 		typeAppendixList.add("docx");
 		typeAppendixList.add("pdf");
+		typeAppendixList.add("xlsx");
 		typeAppendixList.add("rar");
 		typeAppendixList.add("zip");
 	}

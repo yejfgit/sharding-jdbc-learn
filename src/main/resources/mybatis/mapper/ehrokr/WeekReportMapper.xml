@@ -76,7 +76,7 @@
 			<if test="month!=null and month!=''">month,</if>
 			<if test="week!=null and week!=''">week,</if>
 			<if test="status!=null">status,</if>
-			<if test="userId!=null">userId,</if>
+			<if test="userId!=null">user_id,</if>
 			create_time,
 			modify_time
 		)
@@ -94,9 +94,14 @@
 	</insert>
 	
 	<insert id="addWeekReportRel" parameterType="java.util.List">
-		INSERT INTO tb_week_report_rel(key_result_id,week_report_id,create_time,modify_time) VALUES 
+		insert into tb_week_report_rel(key_result_id, week_report_id, create_time, modify_time) values 
 		<foreach collection="list" item="item" index="index" separator=",">
-			 (#{item.keyResultId},#{item.weekReportId},now(),now())
+			 (
+			 #{item.keyResultId},
+			 #{item.weekReportId},
+			 now(),
+			 now()
+			 )
 		</foreach>
 	</insert>
 	
@@ -113,6 +118,7 @@
 			<if test="month!=null and month!=''">month = #{month},</if>
 			<if test="week!=null and week!=''">week = #{week},</if>
 			<if test="status!=null">status = #{status},</if>
+			<if test="userId!=null">user_id = #{userId},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}
