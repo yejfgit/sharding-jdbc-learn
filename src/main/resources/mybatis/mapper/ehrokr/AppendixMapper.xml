@@ -28,7 +28,7 @@
 	<select id="getAppendixByWeekReportId" resultMap="AppendixResultMap">
 		select
 		<include refid="selectedAppendixColumns"></include>
-		from tb_Appendix
+		from tb_appendix
 		where week_report_id=#{weekReportId}
 	</select>
 	
@@ -36,13 +36,13 @@
 	<select id="getAppendix" resultMap="AppendixResultMap">
 		select
 		<include refid="selectedAppendixColumns"></include>
-		from tb_Appendix
+		from tb_appendix
 		where id=#{id}
 	</select>
 	
 	
 	<insert id="addAppendix" parameterType="com.netease.okr.model.entity.Appendix" useGeneratedKeys="true" keyProperty="id">
-		insert into tb_Appendix(
+		insert into tb_appendix(
 			id,
 			<if test="weekReportId!=null">week_report_id,</if>
 			<if test="name!=null and name!=''">name,</if>
@@ -66,17 +66,17 @@
 	<update id="updateAppendix" parameterType="java.util.List">
 		
 		<foreach collection="list" item="item" index="index" separator=";">
-			update tb_Appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
+			update tb_appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
 		</foreach>
 		 
 	</update>
 	
 	<delete id="deleteAppendix">
-		delete from tb_Appendix where id=#{id}
+		delete from tb_appendix where id=#{id}
 	</delete>
 	
 	<delete id="deleteAppendixByWeekReportId">
-		delete from tb_Appendix where week_report_id=#{weekReportId}
+		delete from tb_appendix where week_report_id=#{weekReportId}
 	</delete>
 	
 	
