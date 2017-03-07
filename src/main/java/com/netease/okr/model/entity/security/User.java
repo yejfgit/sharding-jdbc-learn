@@ -30,6 +30,8 @@ public class User implements Serializable {
 	private Date createTime;
 	private Date passwordUpdateTime;
 	
+	private String empType;
+	private Integer state;
 	
 	private String deptL1Name;
 	private String deptL2Name;
@@ -231,6 +233,22 @@ public class User implements Serializable {
 
 	public void setDeptL3Name(String deptL3Name) {
 		this.deptL3Name = deptL3Name;
+	}
+
+	public String getEmpType() {
+		return empType;
+	}
+
+	public void setEmpType(String empType) {
+		this.empType = empType;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 

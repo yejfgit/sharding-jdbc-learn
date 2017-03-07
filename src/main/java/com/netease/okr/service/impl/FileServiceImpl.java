@@ -61,7 +61,7 @@ public class FileServiceImpl implements FileService {
 			file.transferTo(tempFile);
 
 			Appendix appendix = uploadUrlCommon(tempFile, fileName);
-			//tempFile.delete();
+			tempFile.delete();
 			return appendix ;
 		} catch (IllegalStateException e) {
 			LoggerUtil.error("上传文件异常", e);
