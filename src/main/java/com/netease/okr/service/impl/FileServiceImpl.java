@@ -38,7 +38,15 @@ public class FileServiceImpl implements FileService {
 		String realPath =ConstantsUtil.FILE_TMP_DIR_PATH + File.separator
 				+ UUID.randomUUID() + fileName;
 		File tempFile = new File(realPath);
-		tempFile.getParentFile().mkdirs();
+		LoggerUtil.info("mkdir befor");
+		try {
+			tempFile.getParentFile().mkdirs();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		LoggerUtil.info("mkdir after");
 		
 		try {
 			file.transferTo(tempFile);
