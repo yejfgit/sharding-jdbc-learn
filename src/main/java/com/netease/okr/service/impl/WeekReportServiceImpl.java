@@ -212,7 +212,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 			}
 			
 		}
-		appendixMapper.updateAppendix(appendixs);
+		if(appendixs!=null&&appendixs.size()>0){
+			appendixMapper.updateAppendix(appendixs);
+		}
 		
 	}
 	

@@ -45,7 +45,7 @@ public interface WeekReportMapper {
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public Integer addWeekReportRel(List<WeekReportRel> weekReportRelList)  throws DataAccessException;
+	public Integer addWeekReportRel(@Param(value = "list") List<WeekReportRel> list)  throws DataAccessException;
 	
 	
 	/**
