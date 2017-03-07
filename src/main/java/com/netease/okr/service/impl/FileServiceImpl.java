@@ -36,7 +36,7 @@ public class FileServiceImpl implements FileService {
 		
 		String fileName = file.getOriginalFilename();
 		
-		String realPath =ConstantsUtil.FILE_TMP_DIR_PATH + File.separator
+		String realPath =System.getProperty(ConstantsUtil.REAL_PATH)+ConstantsUtil.FILE_TMP_DIR_PATH + File.separator
 				+ UUID.randomUUID() + fileName;
 		File tempFile = new File(realPath);
 		
