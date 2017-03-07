@@ -105,9 +105,9 @@
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-	<!-- <listener>
+	<listener>
 		<listener-class>com.netease.okr.listener.InitListener</listener-class>
-	</listener> -->
+	</listener>
 	
 	<!-- 配置Spring MVC 控制器 -->
 	<servlet>

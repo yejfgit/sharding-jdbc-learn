@@ -33,8 +33,11 @@ public interface ConstantsUtil {
 	
 	String HR_DEPT_CODE = "D002";//人力资源部
 	
+	/** 系统根目录. */
+	String REAL_PATH = "REAL_PATH";
+	
 	/** 文件上传临时目录. */
-	public static final String FILE_TMP_DIR_PATH = "/data/upload/okr";
+	String FILE_TMP_DIR_PATH = "/data/upload/okr";
 	
 	Integer STATUS_YES = 1;//有效
 	
