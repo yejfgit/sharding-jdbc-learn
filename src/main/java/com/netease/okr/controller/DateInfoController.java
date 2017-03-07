@@ -30,12 +30,6 @@ public class DateInfoController extends BaseController {
 		
 		List<DateInfo> dateInfos =dateInfoService.getAllDateInfo();
 		
-		String s = null;
-		
-		if(s.equals("1")){
-			int i = 1;
-		}
-		
 		return JsonUtil.toJsonObj(dateInfos);
 	}
 	
