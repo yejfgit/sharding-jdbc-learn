@@ -38,20 +38,12 @@ public class FileServiceImpl implements FileService {
 		String realPath =ConstantsUtil.FILE_TMP_DIR_PATH + File.separator
 				+ UUID.randomUUID() + fileName;
 		File tempFile = new File(realPath);
-		LoggerUtil.info("mkdir befor");
-		try {
-			tempFile.getParentFile().mkdirs();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		LoggerUtil.info("mkdir after");
+		tempFile.getParentFile().mkdirs();
 		
 		try {
 			file.transferTo(tempFile);
-			String fname = file.getOriginalFilename();
-			Appendix appendix = uploadUrlCommon(tempFile, fname);
+
+			Appendix appendix = uploadUrlCommon(tempFile, fileName);
 			//tempFile.delete();
 			return appendix ;
 		} catch (IllegalStateException e) {
@@ -105,7 +97,6 @@ public class FileServiceImpl implements FileService {
 		String msg = nosBaseService.upload(nosKey, file);
 		if (StringUtils.isNotEmpty(msg))
 			return null;
-		file.delete();
 
 		URL longNosUrl = nosBaseService.generatePresignedUrl(nosKey, fname);
 		
