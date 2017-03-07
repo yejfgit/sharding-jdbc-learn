@@ -1,7 +1,10 @@
 package com.netease.okr.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,7 +43,7 @@ public class OpenIdController {
 	
 	private static final String INDEX_PAGE_SUCCESS = "/public/app.html#/home";
 	
-	private static final String INDEX_PAGE_FAILED = "openid.do";
+	private static final String INDEX_PAGE_FAILED = "/openid.do";
 	
 	/** 用户相关接口.  */
 	@Autowired
@@ -49,23 +52,28 @@ public class OpenIdController {
 	/**
 	 * 登录页
 	 * @return
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	@RequestMapping("/index")
-	public String index() {
+	public String index(HttpServletRequest request, ServletResponse response) throws ServletException, IOException {
 		
 		try {
-			User user = (User) UserContextUtil.getUserContext().getUser();
+			HttpServletRequest hsrq = (HttpServletRequest) request;
+			UserContext userContext = (UserContext) hsrq.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
 			
-			if(user!=null){
+			if(userContext!=null&&userContext.getUser()!=null){
 				return "redirect:" + INDEX_PAGE_SUCCESS;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			return "redirect:" + INDEX_PAGE_FAILED;
+			e.printStackTrace();
+			request.getRequestDispatcher(INDEX_PAGE_FAILED).forward(request, response);
+			
 		}
 		
-		
-		return "redirect:" + INDEX_PAGE_FAILED;
+		request.getRequestDispatcher(INDEX_PAGE_FAILED).forward(request, response);
+		return null;
 	}
 
 	/**
