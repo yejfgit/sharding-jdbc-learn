@@ -35,12 +35,29 @@ public class FileServiceImpl implements FileService {
 	public Appendix upload(MultipartFile file) throws DataAccessException {
 		
 		String fileName = file.getOriginalFilename();
+		
 		String realPath =ConstantsUtil.FILE_TMP_DIR_PATH + File.separator
 				+ UUID.randomUUID() + fileName;
 		File tempFile = new File(realPath);
-		tempFile.getParentFile().mkdirs();
 		
 		try {
+			if(!tempFile.getParentFile().exists()) {  
+	            //如果目标文件所在的目录不存在，则创建父目录  
+				LoggerUtil.info("目标文件所在目录不存在，准备创建它！");  
+	            if(!tempFile.getParentFile().mkdirs()) {  
+	            	LoggerUtil.info("创建目标文件所在目录失败！");  
+	            }  
+	        }  
+			
+			if (!tempFile.exists()) {
+				LoggerUtil.info("目标文件不存在，准备创建它！");  
+				if(!tempFile.createNewFile()) {  
+					LoggerUtil.info("创建目标文件失败！");  
+	            } 
+			}
+			
+			LoggerUtil.info("创建文件成功");
+			
 			file.transferTo(tempFile);
 
 			Appendix appendix = uploadUrlCommon(tempFile, fileName);
