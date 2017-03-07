@@ -10,6 +10,8 @@
 		<result column="name" property="name" />
 		<result column="u_no" property="uNo"  />
 		<result column="corp_mail" property="corpMail"  />
+		<result column="emp_type" property="empType"  />
+		<result column="state" property="state"  />
 		<result column="is_valid" property="isValid"  />
 		<result column="dept_l1_id" property="deptL1Id"  />
 		<result column="dept_l2_id" property="deptL2Id"  />
@@ -30,6 +32,8 @@
 		u.id,
 		u.name,
 		u.u_no,
+		u.emp_type,
+		u.state,
 		u.corp_mail,
 		u.is_valid,
 		u.dept_l1_id,
@@ -48,6 +52,7 @@
 	
 	<sql id="userWhere">
 		<where>
+			u.state in (0,1)
 			<if test="deptId!=null and deptId!=''"> (u.dept_l1_id = #{deptId} or u.dept_l2_id = #{deptId} or u.dept_l3_id = #{deptId} ) </if>
 			<if test="desp!=null and desp!=''">and (u.name like "%"#{desp}"%" or u.u_no like "%"#{desp}"%") </if>
 		</where>
@@ -60,10 +65,6 @@
 		left outer join tb_dept d3 on d3.id=u.dept_l3_id
 	</sql>
 	
-	
-	<sql id="paging"><if test="page!=null">order by ${page.orderBy} ${page.order}
-		limit #{page.first, jdbcType=INTEGER}, #{page.pageSize, jdbcType=INTEGER}</if>
-	</sql>
 
 	<select id="getUserByUNo" resultMap="UserResultMap">
 		select 
@@ -85,9 +86,6 @@
 		from tb_user u
 		<include refid="joinCon"></include> 
 		where u.name=#{name}
-		<if test="isLock == true">
-			for update
-		</if>
 	</select>
 	
 	
@@ -97,6 +95,7 @@
 		from tb_user u
 		<include refid="joinCon"></include> 
 		<include refid="userWhere"></include> 
+		order by emp_type
 	</select>
 	
 	
@@ -138,6 +137,8 @@
 		insert into tb_user(
 			<if test="uNo!=null and uNo!=''">u_no,</if>
 			<if test="corpMail!=null and corpMail!=''">corp_mail,</if>
+			<if test="empType!=null and empType!=''">emp_type,</if>
+			<if test="state!=null">state,</if>
 			<if test="deptL1Id!=null and deptL1Id!='' ">dept_l1_id,</if>
 			<if test="deptL2Id!=null and deptL2Id!='' ">dept_l2_id,</if>
 			<if test="deptL3Id!=null and deptL3Id!='' ">dept_l3_id,</if>
@@ -152,6 +153,8 @@
 		values(
 			<if test="uNo!=null and uNo!=''">#{uNo},</if>
 			<if test="corpMail!=null and corpMail!=''">#{corpMail},</if>
+			<if test="empType!=null and empType!=''">#{empType},</if>
+			<if test="state!=null">#{state},</if>
 			<if test="deptL1Id!=null and deptL1Id!=''">#{deptL1Id},</if>
 			<if test="deptL2Id!=null and deptL2Id!=''">#{deptL2Id},</if>
 			<if test="deptL3Id!=null and deptL3Id!=''">#{deptL3Id},</if>
@@ -174,6 +177,12 @@
 			</if>
 			<if test="uNo != null and uNo!=''">
 				u_no=#{uNo},
+			</if>
+			<if test="empType != null and empType!=''">
+				emp_type=#{empType},
+			</if>
+			<if test="state != null">
+				state=#{state},
 			</if>
 			<if test="corpMail != null and corpMail!=''">
 				corp_mail=#{corpMail},

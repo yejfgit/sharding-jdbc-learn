@@ -112,6 +112,8 @@ public class EhrDataServiceImpl implements EhrDateService {
 	
 	private void setUserInfo(Employee emp,User user){
 		user.setName(emp.getName());
+		user.setEmpType(emp.getType());
+		user.setState(emp.getState());
 		user.setuNo(emp.getId());
 		user.setCorpMail(emp.getCorpMail());
 		user.setDeptL1Id(emp.getDept1()==null?"":emp.getDept1().getCode());
