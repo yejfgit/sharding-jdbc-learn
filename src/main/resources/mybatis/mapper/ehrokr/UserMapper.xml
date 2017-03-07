@@ -19,6 +19,9 @@
 		<result column="nos_key" property="nosKey"  />
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
+		<result column="deptL1Name" property="deptL1Name"  />
+		<result column="deptL2Name" property="deptL2Name"  />
+		<result column="deptL3Name" property="deptL3Name"  />
 		
 		<collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" />
 	</resultMap>
@@ -36,14 +39,25 @@
 		u.photo_url,
 		u.nos_key,
 		u.modify_time,
-		u.create_time
+		u.create_time,
+		d1.name deptL1Name,
+		d2.name deptL2Name,
+		d3.name deptL3Name
+
 	</sql>
 	
 	<sql id="userWhere">
 		<where>
 			<if test="deptId!=null and deptId!=''"> (u.dept_l1_id = #{deptId} or u.dept_l2_id = #{deptId} or u.dept_l3_id = #{deptId} ) </if>
-			<if test="desc!=null and desc!=''">and (u.name like "%"#{desc}"%" or u.u_no like "%"#{desc}"%") </if>
+			<if test="desp!=null and desp!=''">and (u.name like "%"#{desp}"%" or u.u_no like "%"#{desp}"%") </if>
 		</where>
+	</sql>
+	
+	
+	<sql id="joinCon">
+		left outer join tb_dept d1 on d1.id=u.dept_l1_id
+		left outer join tb_dept d2 on d2.id=u.dept_l2_id
+		left outer join tb_dept d3 on d3.id=u.dept_l3_id
 	</sql>
 	
 	
@@ -55,6 +69,7 @@
 		select 
 		<include refid="selectedUserColumns"></include>
 		from tb_user u
+		<include refid="joinCon"></include> 
 		where u.u_no=#{uNo}
 	</select>
 
@@ -68,6 +83,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
+		<include refid="joinCon"></include> 
 		where u.name=#{name}
 		<if test="isLock == true">
 			for update
@@ -79,6 +95,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
+		<include refid="joinCon"></include> 
 		<include refid="userWhere"></include> 
 	</select>
 	
@@ -94,6 +111,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
+		<include refid="joinCon"></include> 
 		where u.corp_mail=#{corpMail}
 	</select>
 	
@@ -101,6 +119,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
+		<include refid="joinCon"></include>
 		where (u.dept_l1_id=#{deptId} or u.dept_l2_id=#{deptId} or u.dept_l3_id=#{deptId})
 	</select>
 	

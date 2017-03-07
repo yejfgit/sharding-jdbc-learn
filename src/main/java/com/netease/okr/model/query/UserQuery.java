@@ -10,7 +10,7 @@ public class UserQuery extends User  {
 	private static final long serialVersionUID = -8712719274950446353L;
 	
 	private String deptId;
-	private String desc;
+	private String desp;
 	
 	
 
@@ -22,12 +22,13 @@ public class UserQuery extends User  {
 		this.deptId = deptId;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDesp() {
+		return desp;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesp(String desp) {
+		this.desp = desp;
 	}
+
 
 }

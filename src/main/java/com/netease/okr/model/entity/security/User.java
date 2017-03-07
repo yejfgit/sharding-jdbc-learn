@@ -29,6 +29,11 @@ public class User implements Serializable {
 	private Date modifyTime;
 	private Date createTime;
 	private Date passwordUpdateTime;
+	
+	
+	private String deptL1Name;
+	private String deptL2Name;
+	private String deptL3Name;
 	 
 	private List<Role> userRoles = new ArrayList<Role>();
 
@@ -202,6 +207,30 @@ public class User implements Serializable {
 
 	public void setNosKey(String nosKey) {
 		this.nosKey = nosKey;
+	}
+
+	public String getDeptL1Name() {
+		return deptL1Name;
+	}
+
+	public void setDeptL1Name(String deptL1Name) {
+		this.deptL1Name = deptL1Name;
+	}
+
+	public String getDeptL2Name() {
+		return deptL2Name;
+	}
+
+	public void setDeptL2Name(String deptL2Name) {
+		this.deptL2Name = deptL2Name;
+	}
+
+	public String getDeptL3Name() {
+		return deptL3Name;
+	}
+
+	public void setDeptL3Name(String deptL3Name) {
+		this.deptL3Name = deptL3Name;
 	}
 
 
