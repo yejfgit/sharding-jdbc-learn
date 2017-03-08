@@ -6,14 +6,16 @@ public class WeekReportList  {
 	
 	private String type;//接口类型
 	
-	private List<WeekReport> weekReport;
+	private List<WeekReport> weekList;
 
-	public List<WeekReport> getWeekReport() {
-		return weekReport;
+
+
+	public List<WeekReport> getWeekList() {
+		return weekList;
 	}
 
-	public void setWeekReport(List<WeekReport> weekReport) {
-		this.weekReport = weekReport;
+	public void setWeekList(List<WeekReport> weekList) {
+		this.weekList = weekList;
 	}
 
 	public String getType() {

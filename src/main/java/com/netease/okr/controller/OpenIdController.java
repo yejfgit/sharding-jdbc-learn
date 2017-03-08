@@ -228,20 +228,17 @@ public class OpenIdController {
 	 *            the request
 	 * @return the string
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	public JsonResponse logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.getSession().invalidate();
-		String redirectUrl = "/openid.do";
-		try {
-			request.getRequestDispatcher(redirectUrl).forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		
+		JsonResponse jsonResponse = new JsonResponse();
+		jsonResponse.setCode(ConstantsUtil.RESPONSE_TIMEOUT);
+		jsonResponse.setData("/openid.do");
+		jsonResponse.setMsg("退出。");
+		
+		return jsonResponse;
 	}
 
 
@@ -255,7 +252,7 @@ public class OpenIdController {
 	public JsonResponse timeout() {
 		LoggerUtil.info("超时或未登录");
 		JsonResponse jsonResponse = new JsonResponse();
-		jsonResponse.setCode(ConstantsUtil.RESPONSE_TIMEOUT);
+		jsonResponse.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);
 		jsonResponse.setData("/openid.do");
 		jsonResponse.setMsg("长时间未操作或未登录。");
 		return jsonResponse;
