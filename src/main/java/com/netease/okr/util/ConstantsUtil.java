@@ -53,6 +53,9 @@ public interface ConstantsUtil {
 	
 	String IV_PARAMETER = "0123456789abcdef-----------";//薪资加密
 	
+	
+	String LOGIN_KEY = "sfaY39DdsdfyD8ADFd";
+	
 	String OBJECTIVES_CODE_PRE = "O";
 	
 	String OBJECTIVES_NAME_PRE = "目标";

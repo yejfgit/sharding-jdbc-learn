@@ -16,6 +16,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
 
@@ -71,6 +72,13 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.GET)
 	public JsonResponse queryUserList(UserQuery user,PageBean<User> page) {
+		User curUser = (User) UserContextUtil.getUserContext().getUser();
+		
+		//默认查询本一级部门下人员
+		if(user==null||MyStringUtil.isBlank(user.getDeptId())){
+			user.setDeptId(curUser.getDeptL1Id());
+		}
+		
 		
 		List<User> users = userService.getUsers(user,page);
 		

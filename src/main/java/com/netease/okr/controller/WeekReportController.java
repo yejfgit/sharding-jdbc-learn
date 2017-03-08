@@ -38,7 +38,7 @@ public class WeekReportController extends BaseController {
 	public JsonResponse getWeekReportListByKeyResultId(@RequestParam("keyResultId") Integer keyResultId) {
 		
 		if(keyResultId==null){
-			return JsonUtil.toJsonFail("【keyResultId为空】");
+			return JsonUtil.toJsonFail("keyResultId为空");
 		}
 		
 		List<WeekReport> weekReportList = weekReportService.getWeekReportListByKeyResultId(keyResultId);

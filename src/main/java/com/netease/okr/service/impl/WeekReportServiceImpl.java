@@ -76,7 +76,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(weekReportList!=null&&weekReportList.getWeekList()!=null&&weekReportList.getWeekList().size()>0){
 			saveWeekReportList(weekReportList);
 		}else{
-			return JsonUtil.toJsonFail("【空信息】");
+			return JsonUtil.toJsonFail("空信息");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReportList);
@@ -97,7 +97,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(weekReport!=null&&weekReport.getId()!=null&&MyStringUtil.isNotBlank(weekReport.getType())){
 			updateWeekReport(weekReport);
 		}else{
-			return JsonUtil.toJsonFail("【空信息】");
+			return JsonUtil.toJsonFail("空信息");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReport);

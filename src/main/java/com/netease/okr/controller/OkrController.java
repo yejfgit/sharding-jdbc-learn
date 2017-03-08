@@ -61,7 +61,7 @@ public class OkrController extends BaseController {
 		if(userId!=null){
 			okrNum = okrService.getMyOkrNum(userId);
 		}else{
-			return JsonUtil.toJsonFail("【userId为空】");
+			return JsonUtil.toJsonFail("userId为空");
 		}
 		
 		

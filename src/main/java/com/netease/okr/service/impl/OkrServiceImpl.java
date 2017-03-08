@@ -108,7 +108,7 @@ public class OkrServiceImpl implements OkrService {
 		if(c>0){
 			return JsonUtil.toJsonObj(objectives);
 		}else{
-			return JsonUtil.toJsonFail("【操作失败type="+type+" and objectivesId="+objectives.getId()+"】");
+			return JsonUtil.toJsonFail("操作失败type="+type+" and objectivesId="+objectives.getId()+"");
 			
 		}
 		
@@ -127,7 +127,7 @@ public class OkrServiceImpl implements OkrService {
 		
 		if(keyResult==null||MyStringUtil.isBlank(keyResult.getType())||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(keyResult.getType())&&keyResult.getId()==null)
 				||(ConstantsUtil.OPREATE_TYPE_ADD.equals(keyResult.getType())&&keyResult.getObjectivesId()==null)){
-			return JsonUtil.toJsonFail("【type为空或获得关键指标信息（keyResult）错误】");
+			return JsonUtil.toJsonFail("type为空或获得关键指标信息（keyResult）错误");
 		}
 		
 		String type = keyResult.getType();
@@ -149,7 +149,7 @@ public class OkrServiceImpl implements OkrService {
 			//检查是否存在周报，存在不能删除
 			List<WeekReport> wrs =  weekReportDao.getWeekReportListByKeyResultId(keyResult.getId());
 			if(wrs!=null&&wrs.size()>0){
-				return JsonUtil.toJsonFail("【存在周报的关键事件及结果不能删除】");
+				return JsonUtil.toJsonFail("存在周报的关键事件及结果不能删除");
 			}else{
 				c = keyResultDao.deleteKeyResult(keyResult.getId());
 			}
@@ -158,7 +158,7 @@ public class OkrServiceImpl implements OkrService {
 		if(c>0){
 			return JsonUtil.toJsonObj(keyResult);
 		}else{
-			return JsonUtil.toJsonFail("【addKeyResult操作失败type="+type+"】");
+			return JsonUtil.toJsonFail("addKeyResult操作失败type="+type);
 		}
 		
 	}
