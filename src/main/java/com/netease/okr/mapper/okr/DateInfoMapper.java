@@ -40,4 +40,13 @@ public interface DateInfoMapper {
 	 */
 	public String getMonth(DateInfo dateInfo)  throws DataAccessException;
 	
+	/**
+	 * 获取时间id
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public Integer getDateId(DateInfo dateInfo)  throws DataAccessException;
+	
+	
+	
 }

@@ -51,4 +51,9 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	public Integer updateKeyResult(KeyResult keyResult){
 		return keyResultMapper.updateKeyResult(keyResult);
 	}
+	
+	@Override
+	public Integer updateKeyResultStatus(List<KeyResult> keyResults){
+		return keyResultMapper.updateKeyResultStatus(keyResults);
+	}
 }

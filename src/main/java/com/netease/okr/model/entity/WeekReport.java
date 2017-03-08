@@ -25,6 +25,17 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	private Integer status;
 	
 	/**
+	 * 用户id
+	 * */
+	private Integer userId;
+	
+	/**
+	 * 时间关系id
+	 * */
+	private Integer dateId;
+	
+	
+	/**
 	 * 周报年份
 	 * */
 	private String year;
@@ -34,15 +45,22 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	 * */
 	private String month;
 	
-	/**
-	 * 用户id
-	 * */
-	private Integer userId;
 	
 	/**
 	 * 周报周数
 	 * */
 	private String week;
+	
+	/**
+	 * 一周开始日期
+	 * */
+	private Date startDate;
+	
+	
+	/**
+	 * 一周结束日期
+	 * */
+	private Date endDate;
 	
 	/**
 	 *关键事件及结果 
@@ -107,6 +125,24 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public Integer getDateId() {
+		return dateId;
+	}
+	public void setDateId(Integer dateId) {
+		this.dateId = dateId;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	
 

@@ -8,7 +8,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.netease.okr.common.JsonResponse;
+import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.dao.WeekReportDao;
+import com.netease.okr.enums.KeyResultStatusEnum;
 import com.netease.okr.mapper.okr.AppendixMapper;
 import com.netease.okr.mapper.okr.DateInfoMapper;
 import com.netease.okr.model.entity.Appendix;
@@ -36,6 +38,10 @@ public class WeekReportServiceImpl implements WeekReportService {
 	
 	@Autowired
 	private DateInfoMapper dateInfoMapper;
+	
+
+	@Autowired
+	private KeyResultDao keyResultDao;
 	
 	
 	/**
@@ -155,9 +161,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 			DateInfo dateInfo = new DateInfo();
 			dateInfo.setYear(weekReport.getYear());
 			dateInfo.setWeek(weekReport.getWeek());
-			String month = dateInfoMapper.getMonth(dateInfo);
+			Integer dateId = dateInfoMapper.getDateId(dateInfo);
 			
-			weekReport.setMonth(month);
+			weekReport.setDateId(dateId);
 			if(weekReport.getId()!=null){
 				weekReportDao.updateWeekReport(weekReport);
 			}else{
@@ -182,6 +188,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 		List<WeekReportRel> weekReportRels = new ArrayList<WeekReportRel>();
 		if(keyResults!=null&&keyResults.size()>0){
 			for(KeyResult keyResult:keyResults){
+				//更新关键事件状态
+				keyResult.setStatus(KeyResultStatusEnum.STATUS2.getId());
+
 				WeekReportRel wrr = new WeekReportRel();
 				wrr.setKeyResultId(keyResult.getId());
 				wrr.setWeekReportId(weekReportId);
@@ -191,6 +200,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 		}
 		
 		deleteWeekReportRelList(weekReportId);
+		
+		//更新关键事件状态已开始
+		keyResultDao.updateKeyResultStatus(keyResults);
 		
 		weekReportDao.addWeekReportRel(weekReportRels);
 		
