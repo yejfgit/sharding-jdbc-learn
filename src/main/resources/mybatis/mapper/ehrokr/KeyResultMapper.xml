@@ -32,7 +32,7 @@
 		<include refid="selectedKeyResultColumns"></include>
 		from tb_key_result  t
 		where is_valid = 1 and objectives_id=#{objectivesId}
-		orderby t.key_result_code 
+		order by t.key_result_code 
 	</select>
 	
 	<select id="getKeyResultListByWeekReportId" resultMap="KeyResultResultMap">
