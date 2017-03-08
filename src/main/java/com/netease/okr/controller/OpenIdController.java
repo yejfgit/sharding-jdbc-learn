@@ -234,12 +234,16 @@ public class OpenIdController {
 		String redirectUrl = "/openid.do";
 		try {
 			request.getRequestDispatcher(redirectUrl).forward(request, response);
-		} catch (ServletException | IOException e) {
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 
 	/**
 	 * 超时，需要重新登录
