@@ -1,11 +1,9 @@
 package com.netease.okr.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
-public class Objectives implements Serializable {
-
+public class Objectives extends BaseEntity implements Serializable  {
 
 	/**
 	 * 
@@ -41,9 +39,6 @@ public class Objectives implements Serializable {
 	private Integer isValid;
 	
 
-	private Date modifyTime;
-	private Date createTime;
-	
 	
 	private List<KeyResult> keyResultList;
 	
@@ -83,18 +78,6 @@ public class Objectives implements Serializable {
 	}
 	public void setIsValid(Integer isValid) {
 		this.isValid = isValid;
-	}
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 	public List<KeyResult> getKeyResultList() {
 		return keyResultList;

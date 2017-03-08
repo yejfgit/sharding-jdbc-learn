@@ -232,7 +232,13 @@ public class OpenIdController {
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.getSession().invalidate();
 		String redirectUrl = "/openid.do";
-		return "redirect:" + redirectUrl;
+		try {
+			request.getRequestDispatcher(redirectUrl).forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

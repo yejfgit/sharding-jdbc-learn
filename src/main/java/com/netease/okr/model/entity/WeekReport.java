@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class WeekReport implements Serializable {
+public class WeekReport  extends BaseEntity implements Serializable {
 
 
 	/**
@@ -43,8 +43,6 @@ public class WeekReport implements Serializable {
 	 * 周报周数
 	 * */
 	private String week;
-	private Date modifyTime;
-	private Date createTime;
 	
 	/**
 	 *关键事件及结果 
@@ -91,19 +89,6 @@ public class WeekReport implements Serializable {
 	}
 	public void setWeek(String week) {
 		this.week = week;
-	}
-
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 	public List<KeyResult> getKeyResultList() {
 		return keyResultList;

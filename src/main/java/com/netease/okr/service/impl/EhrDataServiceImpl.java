@@ -59,54 +59,79 @@ public class EhrDataServiceImpl implements EhrDateService {
 	 * */
 	@Override
 	public void syncUser(){
-		EhrEmployee ehrEmployee = new EhrEmployee();
-		//根据查询条件获取员工列表
-		EmpParam param = new EmpParam();
-		param.setDept1Id(ConstantsUtil.HR_DEPT_CODE);//一级部门为:D002
-
-		List<Employee> empList =  ehrEmployee.getEmployee(param);//基本信息
 		
-		//保存用户
-		LoggerUtil.info("SyncUserTask saveUser begin");
-		String result = saveUser(empList);
-		LoggerUtil.info("SyncUserTask saveUser end reuslt = "+result);
+		//获取一级部门
+		EhrDepartment ehrDepartment = new EhrDepartment();
+		DeptParam deptParam = new DeptParam();
+		deptParam.setDeptLevel(ConstantsUtil.DEPT_LEVEL_L1);
+		deptParam.setState(ConstantsUtil.STATUS_YES);
+		List<Department> deptList = ehrDepartment.getDept(deptParam);
+		
+		if(deptList!=null&&deptList.size()>0){
+			for(Department dept:deptList){
+				saveUser(queryUser(dept.getId()));
+			}
+		}else {
+			LoggerUtil.info("同步用户获取一级部门数据为空");
+		}
+		
 	}
 	
+	private List<Employee> queryUser(String deptL1Id){
+		EhrEmployee ehrEmployee = new EhrEmployee();
+		//根据查询条件获取员工列表
+		EmpParam userParam = new EmpParam();
+		
+		if(!ConstantsUtil.HR_DEPT_CODE.equals(deptL1Id)) return null;
+		
+		userParam.setDept1Id(deptL1Id);//一级部门为:D002
+
+		List<Employee> empList =  ehrEmployee.getEmployee(userParam);//基本信息
+		
+		return empList;
+	}
 	
 	private String saveUser(List<Employee> empList){
+		LoggerUtil.info("SyncUserTask saveUser begin");
 		String result = "";
 		if(empList!=null&&empList.size()>0){
 			for(Employee emp:empList){
-				
-				User user = userDao.getUserByUNo(emp.getId());
-				if(user!=null){
-					//组装用户数据
-					setUserInfo(emp,user);
-					
-					if(MyStringUtil.isBlank(user.getPhotoUrl())){
+				//防止事物全部回滚
+				try {
+					User user = userDao.getUserByUNo(emp.getId());
+					if(user!=null){
+						//组装用户数据
+						setUserInfo(emp,user);
+						
+						if(MyStringUtil.isBlank(user.getPhotoUrl())){
+							//创建用户工牌照
+							createUserWorkCardImage(emp,user);
+						}
+						
+						int c = userDao.updateUser(user);
+						
+						LoggerUtil.info(emp.getId()+" updateUser result="+c);
+					}else{
+						user = new User();
+						//组装用户数据
+						setUserInfo(emp,user);
+						
 						//创建用户工牌照
 						createUserWorkCardImage(emp,user);
+						
+						int c = userDao.addUser(user);
+						
+						LoggerUtil.info(emp.getId()+" addUser result="+c);
 					}
-					
-					int c = userDao.updateUser(user);
-					
-					LoggerUtil.info(emp.getId()+" updateUser result="+c);
-				}else{
-					user = new User();
-					//组装用户数据
-					setUserInfo(emp,user);
-					
-					//创建用户工牌照
-					createUserWorkCardImage(emp,user);
-					
-					int c = userDao.addUser(user);
-					
-					LoggerUtil.info(emp.getId()+" addUser result="+c);
+				} catch (Exception e) {
+					// TODO: handle exception
+					LoggerUtil.error("员工【"+emp.getId()+"】更新数据失败", e);
 				}
+				
 				
 			}
 		}
-		
+		LoggerUtil.info("SyncUserTask saveUser end num ="+empList==null?0:empList.size());
 		return  result;
 	}
 	
@@ -153,12 +178,18 @@ public class EhrDataServiceImpl implements EhrDateService {
 			deptDao.deleteDept();
 			
 			for(Department department:deptList){
-				Dept dept = new Dept();
-				//组装部门数据
-				setDeptInfo(department,dept);
-				int c = deptDao.addDept(dept);
-				
-				LoggerUtil.info(department.getId()+" saveDept result="+c);
+				//防止事物全部回滚
+				try {
+					Dept dept = new Dept();
+					//组装部门数据
+					setDeptInfo(department,dept);
+					int c = deptDao.addDept(dept);
+					
+					LoggerUtil.info(department.getId()+" saveDept result="+c);
+				} catch (Exception e) {
+					// TODO: handle exception
+					LoggerUtil.error("部门【"+department.getId()+"】更新数据失败", e);
+				}
 			}
 		}
 		

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.WeekReport;
+import com.netease.okr.model.entity.WeekReportList;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.service.WeekReportService;
@@ -81,10 +82,10 @@ public class WeekReportController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/weekReport/addWeekReport", method = RequestMethod.POST)
-	public JsonResponse addKeyResult(@RequestParam("type") String type,@RequestBody List<WeekReport> weekReport) {
+	public JsonResponse addKeyResult(@RequestBody WeekReportList weekReportList) {
 		
 		
-		return weekReportService.addWeekReports(type, weekReport);
+		return weekReportService.addWeekReports(weekReportList);
 		
 	}
 	
@@ -96,10 +97,10 @@ public class WeekReportController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/weekReport/updateWeekReport", method = RequestMethod.POST)
-	public JsonResponse addKeyResult(@RequestParam("type") String type,@RequestBody WeekReport weekReport) {
+	public JsonResponse addKeyResult(@RequestBody WeekReport weekReport) {
 		
 		
-		return weekReportService.updateWeekReports(type, weekReport);
+		return weekReportService.updateWeekReports(weekReport);
 		
 	}
 	

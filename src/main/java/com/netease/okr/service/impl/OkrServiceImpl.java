@@ -71,15 +71,16 @@ public class OkrServiceImpl implements OkrService {
 	 * @throws DataAccessException
 	 */
 	@Override
-	public JsonResponse addObjectives(String type,Objectives objectives) {
+	public JsonResponse addObjectives(Objectives objectives) {
 		User user = (User) UserContextUtil.getUserContext().getUser();
 		
 		int c = 0;
 		
-		if(MyStringUtil.isBlank(type)||objectives==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&objectives.getId()==null)){
-			return JsonUtil.toJsonFail("【type为空或获得objectives信息错误】");
+		if(objectives==null||MyStringUtil.isBlank(objectives.getType())){
+			return JsonUtil.toJsonFail("【获得objectives信息错误】");
 		}
 		
+		String type = objectives.getType();
 		
 		if(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)){
 			
@@ -91,9 +92,9 @@ public class OkrServiceImpl implements OkrService {
 			
 			objectives.setUserId(user.getId());
 			c = objectivesDao.addObjectives(objectives);
-		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
+		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)&&objectives.getId()!=null){
 			c = objectivesDao.updateObjectives(objectives);
-		}else if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
+		}else if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)&&objectives.getId()!=null){
 			//检查是否存在关键事件及结果，存在不能删除
 			List<KeyResult> krs =  keyResultDao.getKeyResultListByoId(objectives.getId());
 			if(krs!=null&&krs.size()>0){
@@ -107,7 +108,7 @@ public class OkrServiceImpl implements OkrService {
 		if(c>0){
 			return JsonUtil.toJsonObj(objectives);
 		}else{
-			return JsonUtil.toJsonFail("【操作失败type="+type+"】");
+			return JsonUtil.toJsonFail("【操作失败type="+type+" and objectivesId="+objectives.getId()+"】");
 			
 		}
 		
@@ -121,14 +122,15 @@ public class OkrServiceImpl implements OkrService {
 	 * @throws DataAccessException
 	 */
 	@Override
-	public JsonResponse addKeyResult(String type,KeyResult keyResult) {
+	public JsonResponse addKeyResult(KeyResult keyResult) {
 		int c = 0;
 		
-		if(MyStringUtil.isBlank(type)||keyResult==null||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getId()==null)
-				||(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)&&keyResult.getObjectivesId()==null)){
+		if(keyResult==null||MyStringUtil.isBlank(keyResult.getType())||(!ConstantsUtil.OPREATE_TYPE_ADD.equals(keyResult.getType())&&keyResult.getId()==null)
+				||(ConstantsUtil.OPREATE_TYPE_ADD.equals(keyResult.getType())&&keyResult.getObjectivesId()==null)){
 			return JsonUtil.toJsonFail("【type为空或获得关键指标信息（keyResult）错误】");
 		}
 		
+		String type = keyResult.getType();
 		
 		if(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)){
 			

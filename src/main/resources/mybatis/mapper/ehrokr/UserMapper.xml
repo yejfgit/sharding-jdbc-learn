@@ -52,8 +52,9 @@
 	
 	<sql id="userWhere">
 		<where>
-			u.state in (0,1)
+			1 =1 
 			<if test="deptId!=null and deptId!=''"> and (u.dept_l1_id = #{deptId} or u.dept_l2_id = #{deptId} or u.dept_l3_id = #{deptId} ) </if>
+			and u.state in (0,1)
 			<if test="desp!=null and desp!=''">and (u.name like "%"#{desp}"%" or u.u_no like "%"#{desp}"%") </if>
 		</where>
 	</sql>

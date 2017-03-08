@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.WeekReport;
+import com.netease.okr.model.entity.WeekReportList;
 import com.netease.okr.model.entity.WeekReportRel;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
@@ -70,15 +71,15 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * @throws DataAccessException 
 	 * */
 	@Override
-	public JsonResponse addWeekReports(String type,List<WeekReport> weekReports) {
+	public JsonResponse addWeekReports(WeekReportList weekReportList) {
 		
-		if(MyStringUtil.isNotBlank(type)&&weekReports!=null&&weekReports.size()>0){
-			saveWeekReportList(type,weekReports);
+		if(weekReportList!=null&&weekReportList.getWeekReport()!=null&&weekReportList.getWeekReport().size()>0){
+			saveWeekReportList(weekReportList);
 		}else{
 			return JsonUtil.toJsonFail("【空信息】");
 		}
 		
-		return  JsonUtil.toJsonObj(weekReports);
+		return  JsonUtil.toJsonObj(weekReportList);
 	}
 	
 	
@@ -91,10 +92,10 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * @throws DataAccessException 
 	 * */
 	@Override
-	public JsonResponse updateWeekReports(String type,WeekReport weekReport) {
+	public JsonResponse updateWeekReports(WeekReport weekReport) {
 		
-		if(MyStringUtil.isNotBlank(type)&&weekReport!=null&&weekReport.getId()!=null){
-			updateWeekReportList(type,weekReport);
+		if(weekReport!=null&&weekReport.getId()!=null&&MyStringUtil.isNotBlank(weekReport.getType())){
+			updateWeekReport(weekReport);
 		}else{
 			return JsonUtil.toJsonFail("【空信息】");
 		}
@@ -107,8 +108,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 	/**
 	 * 更新周报周报
 	 * */
-	private void updateWeekReportList(String type,WeekReport weekReport){
+	private void updateWeekReport(WeekReport weekReport){
 		Integer weekReportId = weekReport.getId();
+		String type = weekReport.getType();
 		//删除
 		if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
 			
@@ -132,10 +134,13 @@ public class WeekReportServiceImpl implements WeekReportService {
 	/**
 	 * 保存周报
 	 * */
-	private void saveWeekReportList(String type,List<WeekReport> weekReports){
+	private void saveWeekReportList(WeekReportList weekReportList){
 		User user = (User) UserContextUtil.getUserContext().getUser();
 		
 		Integer status = -1;
+		String type = weekReportList.getType();
+		List<WeekReport> weekReports = weekReportList.getWeekReport();
+		
 		if(ConstantsUtil.OPREATE_TYPE_RELEASE.equals(type)&&weekReports!=null&&weekReports.size()>0){
 			status = ConstantsUtil.OPREATE_TYPE_RELEASE_STATUS;
 		}else if(ConstantsUtil.OPREATE_TYPE_SAVE.equals(type)&&weekReports!=null&&weekReports.size()>0){

@@ -25,7 +25,7 @@ public class SyncUserTask implements JobProcessor {
 	private TaskLockService taskLockService;
 	
 	/*@Scheduled(cron = "0 0/2 * * * ?")*/
-	@Scheduled(cron = "0 50 12,23 * * ?")
+	@Scheduled(cron = "0 50 23 * * ?")
 	public void handle() {
 		LoggerUtil.info("SyncUserTask--begin");
 		
@@ -33,11 +33,14 @@ public class SyncUserTask implements JobProcessor {
 			LoggerUtil.info(TaskTypeEnum.USER_SYNC.getRemark()+"获取任务锁失败，退出任务");
 			return;
 		}
-		
-		ehrDateService.syncUser();
-		
-		// 释放锁
-		taskLockService.releaseLock(TaskTypeEnum.USER_SYNC.getName());
+		try {
+			ehrDateService.syncUser();
+		} catch (Exception e) {
+			LoggerUtil.error("同步用户异常", e);
+		}finally{
+			// 释放锁
+			taskLockService.releaseLock(TaskTypeEnum.USER_SYNC.getName());
+		}
 		
 		LoggerUtil.info("SyncUserTask--end");
 		
