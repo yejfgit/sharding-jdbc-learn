@@ -26,7 +26,7 @@
 		t.create_time
 	</sql>
 	
-	
+	<!-- 根据目标id查询关键事件-->
 	<select id="getKeyResultListByoId" resultMap="KeyResultResultMap">
 		select
 		<include refid="selectedKeyResultColumns"></include>
@@ -35,6 +35,15 @@
 		order by t.key_result_code 
 	</select>
 	
+	<!-- 根据目标id查询关键事件【生成编号使用】(包含已删除)-->
+	<select id="getALLKeyResultListCountByoId" resultType="int">
+		select
+		count(1)
+		from tb_key_result
+		where objectives_id=#{objectivesId}
+	</select>
+	
+	<!-- 根据周报id查询关键事件-->
 	<select id="getKeyResultListByWeekReportId" resultMap="KeyResultResultMap">
 		select
 		<include refid="selectedKeyResultColumns"></include>
@@ -43,13 +52,6 @@
 		where  tl.week_report_id=#{weekReportId}
 	</select>
 	
-	
-	<select id="getALLKeyResultListCountByoId" resultType="int">
-		select
-		count(1)
-		from tb_key_result
-		where objectives_id=#{objectivesId}
-	</select>
 	
 	
 	<insert id="addKeyResult" parameterType="com.netease.okr.model.entity.KeyResult" useGeneratedKeys="true" keyProperty="id">
