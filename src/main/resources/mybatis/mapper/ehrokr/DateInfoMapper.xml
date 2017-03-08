@@ -27,11 +27,19 @@
 		select
 		<include refid="selectedDateInfoColumns"></include>
 		from tb_date_info
+		where 1=1
+		<![CDATA[ and start_date>date_add(now(),interval -2 month) and start_date<now() ]]>
 	</select>
 	
 	<select id="getMonth" resultType="java.lang.String" parameterType="com.netease.okr.model.entity.DateInfo">
 		select
 		month
+		from tb_date_info where year = #{year} and week = #{week}
+	</select>
+	
+	<select id="getDateId" resultType="int" parameterType="com.netease.okr.model.entity.DateInfo">
+		select
+		id
 		from tb_date_info where year = #{year} and week = #{week}
 	</select>
 	

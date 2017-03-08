@@ -8,12 +8,16 @@
 		<id column="id" property="id"/>
 		<result column="content" property="content"/>
 		<result column="status" property="status"/>
-		<result column="year" property="year"/>
-		<result column="month" property="month"/>
-		<result column="week" property="week"/>
 		<result column="user_id" property="userId"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
+		
+		<result column="date_id" property="dateId"/>
+		<result column="year" property="year"/>
+		<result column="month" property="month"/>
+		<result column="week" property="week"/>
+		<result column="start_date" property="startDate"  />
+		<result column="end_date" property="endDate"  />
 		
 		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByWeekReportId"></collection>
 		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixByWeekReportId"></collection>
@@ -23,12 +27,16 @@
 		t.id,
 		t.content,
 		t.status,
-		t.year,
-		t.month,
-		t.week,
 		t.modify_time,
 		t.user_id,
-		t.create_time
+		t.create_time,
+		t.date_id,
+		
+		d.year,
+		d.month,
+		d.week,
+		d.start_date,
+		d.end_date
 	</sql>
 	
 	
@@ -36,9 +44,13 @@
 		<where>
 			1=1 
 			<if test="userId!=null">and t.user_id = #{userId} </if>
-			<if test="year!=null and year!=''">  and t.year = #{year} </if>
-			<if test="month!=null and month!=''"> and t.month = #{month} </if>
+			<if test="year!=null and year!=''">  and d.year = #{year} </if>
+			<if test="month!=null and month!=''"> and d.month = #{month} </if>
 		</where>
+	</sql>
+	
+	<sql id="weekReporJoinCon">
+		left outer join tb_date_info d on d.id=t.date_id
 	</sql>
 	
 	
@@ -46,8 +58,9 @@
 		select 
 		<include refid="selectedWeekReportColumns"></include> 
 		from tb_week_report t
+		<include refid="weekReporJoinCon"></include> 
 		<include refid="weekReporWhere"></include> 
-		order by year desc,month desc,week desc
+		order by d.year desc,d.month desc,d.week desc
 	</select>
 	
 	
@@ -55,6 +68,7 @@
 		select
 		<include refid="selectedWeekReportColumns"></include>
 		from tb_week_report t
+		<include refid="weekReporJoinCon"></include> 
 		left join tb_week_report_rel tl on t.id = tl.week_report_id
 		where tl.key_result_id=#{keyResultId}
 	</select>
@@ -72,9 +86,7 @@
 		insert into tb_week_report(
 			id,
 			<if test="content!=null and content!=''">content,</if>
-			<if test="year!=null and year!=''">year,</if>
-			<if test="month!=null and month!=''">month,</if>
-			<if test="week!=null and week!=''">week,</if>
+			<if test="dateId!=null">date_id,</if>
 			<if test="status!=null">status,</if>
 			<if test="userId!=null">user_id,</if>
 			create_time,
@@ -83,9 +95,7 @@
 		values(
 			#{id},
 			<if test="content!=null and content!=''">#{content},</if>
-			<if test="year!=null and year!=''">#{year},</if>
-			<if test="month!=null and month!=''">#{month},</if>
-			<if test="week!=null and week!=''">#{week},</if>
+			<if test="dateId!=null">#{dateId},</if>
 			<if test="status!=null">#{status},</if>
 			<if test="userId!=null">#{userId},</if>
 			now(),
@@ -114,9 +124,7 @@
 		update tb_week_report
 		<set> 
 			<if test="content!=null and content!=''">content = #{content},</if>
-			<if test="year!=null and year!=''">year = #{content},</if>
-			<if test="month!=null and month!=''">month = #{month},</if>
-			<if test="week!=null and week!=''">week = #{week},</if>
+			<if test="dateId!=null">date_id = #{dateId},</if>
 			<if test="status!=null">status = #{status},</if>
 			<if test="userId!=null">user_id = #{userId},</if>
 			modify_time = now()

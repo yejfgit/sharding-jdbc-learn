@@ -16,5 +16,7 @@ public interface KeyResultDao {
 
 	public Integer updateKeyResult(KeyResult keyResult);
 
+	public Integer updateKeyResultStatus(List<KeyResult> keyResults);
+
 
 }

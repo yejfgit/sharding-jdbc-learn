@@ -60,7 +60,7 @@
 	</sql>
 	
 	
-	<sql id="joinCon">
+	<sql id="userJoinCon">
 		left outer join tb_dept d1 on d1.id=u.dept_l1_id
 		left outer join tb_dept d2 on d2.id=u.dept_l2_id
 		left outer join tb_dept d3 on d3.id=u.dept_l3_id
@@ -71,7 +71,7 @@
 		select 
 		<include refid="selectedUserColumns"></include>
 		from tb_user u
-		<include refid="joinCon"></include> 
+		<include refid="userJoinCon"></include> 
 		where u.u_no=#{uNo}
 	</select>
 
@@ -85,7 +85,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
-		<include refid="joinCon"></include> 
+		<include refid="userJoinCon"></include> 
 		where u.name=#{name}
 	</select>
 	
@@ -94,7 +94,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
-		<include refid="joinCon"></include> 
+		<include refid="userJoinCon"></include> 
 		<include refid="userWhere"></include> 
 		order by u.emp_type,u.u_no
 	</select>
@@ -111,7 +111,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
-		<include refid="joinCon"></include> 
+		<include refid="userJoinCon"></include> 
 		where u.corp_mail=#{corpMail}
 	</select>
 	
@@ -119,7 +119,7 @@
 		select 
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
-		<include refid="joinCon"></include>
+		<include refid="userJoinCon"></include>
 		where (u.dept_l1_id=#{deptId} or u.dept_l2_id=#{deptId} or u.dept_l3_id=#{deptId})
 	</select>
 	

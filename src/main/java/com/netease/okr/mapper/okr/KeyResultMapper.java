@@ -71,4 +71,11 @@ public interface KeyResultMapper {
 	 */
 	public Integer updateKeyResult(KeyResult keyResult)  throws DataAccessException;
 	
+	/**
+	 * 更新关键事件状态已开始
+	 * @return Integer
+	 * @throws DataAccessException
+	 */
+	public Integer updateKeyResultStatus(List<KeyResult> keyResults)  throws DataAccessException;
+	
 }
