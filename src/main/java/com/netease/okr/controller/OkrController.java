@@ -15,8 +15,10 @@ import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.OkrNum;
+import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.UserContextUtil;
 
 
 @RestController
@@ -32,14 +34,15 @@ public class OkrController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.GET)
 	public JsonResponse getMyOkrList(Integer userId) {
+		User user = (User) UserContextUtil.getUserContext().getUser();
 		
 		List<Objectives> okrList = new ArrayList<Objectives>();
 		
 		if(userId!=null){
 			okrList = okrService.getMyOkrList(userId);
 		}else{
-			
-			return JsonUtil.toJsonFail("【userId为空】");
+			//默认查询自己okr
+			okrList = okrService.getMyOkrList(user.getId());
 			
 		}
 		
@@ -73,9 +76,9 @@ public class OkrController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/myOkr/addObjectives", method = RequestMethod.POST)
-	public JsonResponse addObjectives(@RequestParam("type") String type,@RequestBody Objectives objectives) {
+	public JsonResponse addObjectives(@RequestBody Objectives objectives) {
 		
-		return okrService.addObjectives(type, objectives);
+		return okrService.addObjectives(objectives);
 		
 	}
 	
@@ -87,9 +90,9 @@ public class OkrController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/myOkr/addKeyResult", method = RequestMethod.POST)
-	public JsonResponse addKeyResult(@RequestParam("type") String type,@RequestBody KeyResult keyResult) {
+	public JsonResponse addKeyResult(@RequestBody KeyResult keyResult) {
 		
-		return okrService.addKeyResult(type, keyResult);
+		return okrService.addKeyResult(keyResult);
 		
 	}
 

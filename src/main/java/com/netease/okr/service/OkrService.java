@@ -11,9 +11,9 @@ public interface OkrService {
 
 	public List<Objectives> getMyOkrList(Integer userId);
 
-	public JsonResponse addObjectives(String type, Objectives objectives);
+	public JsonResponse addObjectives(Objectives objectives);
 
-	public JsonResponse addKeyResult(String type, KeyResult keyResult);
+	public JsonResponse addKeyResult(KeyResult keyResult);
 
 	public OkrNum getMyOkrNum(Integer userId);
 

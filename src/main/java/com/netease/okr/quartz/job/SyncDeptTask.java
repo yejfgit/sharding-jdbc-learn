@@ -35,10 +35,14 @@ public class SyncDeptTask implements JobProcessor {
 			return;
 		}
 		
-		ehrDateService.syncDept();
-		
-		// 释放锁
-		taskLockService.releaseLock(TaskTypeEnum.DEPT_SYNC.getName());
+		try {
+			ehrDateService.syncDept();
+		} catch (Exception e) {
+			LoggerUtil.error("同步用户异常", e);
+		}finally{
+			// 释放锁
+			taskLockService.releaseLock(TaskTypeEnum.DEPT_SYNC.getName());
+		}
 		
 		LoggerUtil.info("SyncDeptTask--end");
 	}
