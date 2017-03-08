@@ -73,7 +73,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 	@Override
 	public JsonResponse addWeekReports(WeekReportList weekReportList) {
 		
-		if(weekReportList!=null&&weekReportList.getWeekReport()!=null&&weekReportList.getWeekReport().size()>0){
+		if(weekReportList!=null&&weekReportList.getWeekList()!=null&&weekReportList.getWeekList().size()>0){
 			saveWeekReportList(weekReportList);
 		}else{
 			return JsonUtil.toJsonFail("【空信息】");
@@ -139,7 +139,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 		Integer status = -1;
 		String type = weekReportList.getType();
-		List<WeekReport> weekReports = weekReportList.getWeekReport();
+		List<WeekReport> weekReports = weekReportList.getWeekList();
 		
 		if(ConstantsUtil.OPREATE_TYPE_RELEASE.equals(type)&&weekReports!=null&&weekReports.size()>0){
 			status = ConstantsUtil.OPREATE_TYPE_RELEASE_STATUS;
