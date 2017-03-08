@@ -28,6 +28,8 @@
 		create_time
 	</sql>
 	
+	
+	<!-- 根据Id查询目标 -->
 	<select id="getObjectivesById" resultMap="ObjectivesResultMap">
 		select
 		<include refid="selectedObjectivesColumns"></include>
@@ -35,6 +37,7 @@
 		where id=#{id}
 	</select>
 	
+	<!-- 查询员工的okr-->
 	<select id="getMyOkrList" resultMap="ObjectivesResultMap">
 		select
 		<include refid="selectedObjectivesColumns"></include>
@@ -43,6 +46,7 @@
 		order by objectives_code desc
 	</select>
 	
+	<!-- 查询员工的okr总数-->
 	<select id="getAllMyOkrListCount" resultType="int">
 		select
 		count(1)
