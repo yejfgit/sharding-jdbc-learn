@@ -36,7 +36,7 @@
 		<where>
 			1=1 
 			<if test="userId!=null">and t.user_id = #{userId} </if>
-			<if test="year!=null and year!=''">  and t.year = #{month} </if>
+			<if test="year!=null and year!=''">  and t.year = #{year} </if>
 			<if test="month!=null and month!=''"> and t.month = #{month} </if>
 		</where>
 	</sql>
