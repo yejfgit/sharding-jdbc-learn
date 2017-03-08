@@ -96,7 +96,7 @@
 		from tb_user u
 		<include refid="joinCon"></include> 
 		<include refid="userWhere"></include> 
-		order by emp_type
+		order by u.emp_type,u.u_no
 	</select>
 	
 	

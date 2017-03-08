@@ -20,10 +20,11 @@ import org.openid4java.message.ParameterList;
 import org.openid4java.message.ax.FetchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
@@ -82,33 +83,28 @@ public class OpenIdController {
 	 * @param session
 	 * @return
 	 */
-	/*@RequestMapping(value = "/login/{passport}/{password}")
+	@RequestMapping(value = "/login/{passport}/{password}")
 	public String login(@PathVariable(value = "passport") String passport,
 			@PathVariable(value = "password") String password, HttpSession session) {
-		LoggerUtil.info(passport + " passport login.");
-		if (passport.startsWith("yixin.")) {
-			passport = passport.substring(6);
-		}
+		LoggerUtil.info(passport + ":passport【devlogin】");
+
+		UserContext userContext = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+		
 		passport = passport + "@corp.netease.com";
 		User user = userService.getUserByEmail(passport);
-		if (user == null) {
-			user = userService.getUserByEmail(passport.replace("@corp.netease.com", "@yixin.im"));
-		}
+
 		if (user != null) {
-			if (null != password && password.equals(user.getPassword())) {
-				setUserInfo(user);
-				session.setAttribute(Constants.USER, user);
-				String redirectUrl = session.getAttribute(Constants.LASTURL) == null ? ""
-						: session.getAttribute(Constants.LASTURL).toString();
-				if (StringUtils.isBlank(redirectUrl)) {
-					redirectUrl = "/app.html";
-				}
-				LoggerUtil.info("passport success.");
-				return "redirect:" + redirectUrl;
+			if (null != password && password.equals(ConstantsUtil.LOGIN_KEY)) {
+				userContext = new UserContext();
+				userContext.setUser(user);
+				// 把用户上下文放入会话中
+				session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+				return "redirect:" + INDEX_PAGE_SUCCESS;
+		
 			}
 		}
-		return "error/index";
-	}*/
+		return null;
+	}
 
 	/**
 	 * openId登录
@@ -232,12 +228,12 @@ public class OpenIdController {
 	@RequestMapping(value = "/logout")
 	public JsonResponse logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		request.getSession().invalidate();
-		
+		LoggerUtil.info("退出登录");
 		JsonResponse jsonResponse = new JsonResponse();
-		jsonResponse.setCode(ConstantsUtil.RESPONSE_TIMEOUT);
+		jsonResponse.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);
 		jsonResponse.setData("/openid.do");
-		jsonResponse.setMsg("退出。");
-		
+		jsonResponse.setMsg("已退出！");
+		LoggerUtil.info(JSON.toJSONString(jsonResponse));
 		return jsonResponse;
 	}
 
@@ -252,15 +248,11 @@ public class OpenIdController {
 	public JsonResponse timeout() {
 		LoggerUtil.info("超时或未登录");
 		JsonResponse jsonResponse = new JsonResponse();
-		jsonResponse.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);
+		jsonResponse.setCode(ConstantsUtil.RESPONSE_TIMEOUT);
 		jsonResponse.setData("/openid.do");
-		jsonResponse.setMsg("长时间未操作或未登录。");
+		jsonResponse.setMsg("长时间未操作或未登录！");
+		LoggerUtil.info(JSON.toJSONString(jsonResponse));
 		return jsonResponse;
-	}
-
-	@RequestMapping(value = "/error", method = RequestMethod.GET)
-	public String error() {
-		return "index.do";
 	}
 
 }

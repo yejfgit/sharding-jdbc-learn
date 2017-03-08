@@ -15,7 +15,7 @@ public class JsonUtil {
 		} catch (Exception e) {
 			// TODO: handle exception
 			res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED);
+			res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":【toJsonObj异常】");
 			LoggerUtil.error("",e);
 		}
 		
@@ -27,7 +27,7 @@ public class JsonUtil {
 	public static JsonResponse toJsonFail(String msg){
 		JsonResponse res = new JsonResponse(); 
 		res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-		res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":"+msg);
+		res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":【"+msg+"】");
 		
 		LoggerUtil.info(JSON.toJSONString(res));
 		return res;
@@ -39,6 +39,7 @@ public class JsonUtil {
 			return JSON.parseObject(jsonObj, obj.getClass());
 		} catch (Exception e) {
 			// TODO: handle exception
+			LoggerUtil.error("jsonToObj异常",e);
 			return null;
 		}
 	}
