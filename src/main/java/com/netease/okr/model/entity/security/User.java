@@ -13,6 +13,10 @@ public class User implements Serializable {
 	private String name;
 	private String password;
 	private String uNo;
+	/**
+	 * 主管工号
+	 */
+	private String chargeId;
 	private String idCardNo;
 	private String nameCn;
 	private String phone;
@@ -249,6 +253,14 @@ public class User implements Serializable {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public String getChargeId() {
+		return chargeId;
+	}
+
+	public void setChargeId(String chargeId) {
+		this.chargeId = chargeId;
 	}
 
 
