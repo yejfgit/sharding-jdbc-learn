@@ -65,9 +65,9 @@ public class WeekReportController extends BaseController {
 			weekReportQuery.setUserId(user.getId());
 		}
 		
-		if(MyStringUtil.isBlank(weekReportQuery.getYear())){
+		/*if(MyStringUtil.isBlank(weekReportQuery.getYear())){
 			weekReportQuery.setYear(MyDateUtils.formatYDate(new Date(),""));
-		}
+		}*/
 		
 		List<WeekReport> weekReportList = weekReportService.getWeekReportList(weekReportQuery);
 		

@@ -41,8 +41,7 @@
 	
 	
 	<sql id="weekReporWhere">
-		<where>
-			t.status = 1  
+		<where> 
 			<if test="status!=null">and t.status = #{status} </if>
 			<if test="userId!=null">and t.user_id = #{userId} </if>
 			<if test="year!=null and year!=''">  and d.year = #{year} </if>
