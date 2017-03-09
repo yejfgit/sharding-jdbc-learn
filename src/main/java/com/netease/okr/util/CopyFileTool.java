@@ -13,11 +13,13 @@ public class CopyFileTool {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String inFile = "E:/hj3/same"; // 输入文件路径
-        String outFile = "E:/hj3/out/"; // 输出文件路径
+		String inFile = "E:/hj3/same2"; // 输入文件路径
+        String outFile = "E:/hj3/out3/"; // 输出文件路径
 		
 		
 		traverseFolder1(inFile,outFile);
+        
+        //System.out.println(getExtention("adfasdfas.jpg"));
 	}
 	
 	 public static void copyFile(String oldPath, String newPath) { 
@@ -25,7 +27,14 @@ public class CopyFileTool {
 	           int bytesum = 0; 
 	           int byteread = 0; 
 	           File oldfile = new File(oldPath); 
+	          /* File newPathF = new File(newPath);
+	           
+	           if(!newPathF.exists()){
+	        	   newPathF.createNewFile();
+	           }*/
+	           
 	           if (oldfile.exists()) {                  //文件存在时 
+	        	   System.out.println(oldPath+"--------------------------------------------------------"+newPath);
 	               InputStream inStream = new FileInputStream(oldPath);      //读入原文件 
 	               FileOutputStream fs = new FileOutputStream(newPath); 
 	               byte[] buffer = new byte[1444]; 
@@ -57,11 +66,20 @@ public class CopyFileTool {
                     fileNum++;
                 } else {
                 	if(isContain(file2.getName())){
-                		copyFile(file2.getAbsolutePath(),outfile+file2.getName());
+                		if(file2.getName().contains("(2)")||file2.getName().contains("(3)")){
+                			copyFile(file2.getAbsolutePath(),outfile+file2.getName());
+                		}else{
+                			String up = getContain(file2.getName());
+                			
+                			//System.out.println(file2.getName()+"--------------------------------------------------------"+up);
+                			
+                			copyFile(file2.getAbsolutePath(),outfile+up+getExtention(file2.getName()));
+                		}
+                		
                 		//file2.delete();
                 		copeNum++;
                 	}else{
-                		System.out.println("文件:" + file2.getName()+"不在表格工号中");
+                		//System.out.println("文件:" + file2.getName()+"不在表格工号中");
                 		notConNum++;
                 	}
                 	
@@ -85,7 +103,7 @@ public class CopyFileTool {
                 }
             }*/
         } else {
-            System.out.println("文件不存在!");
+            //System.out.println("文件不存在!");
         }
         System.out.println("文件夹共有:" + folderNum + ",文件共有:" + fileNum+",excel不包含工号数："+notConNum+",成功复制数："+copeNum);
 
@@ -97,12 +115,32 @@ public class CopyFileTool {
 		for(int i=0;i<lst.size();i++){
 			String constr = lst.get(i);
 			if(str.contains(constr)){
+				System.out.println(str+"--------------------------------------------------------"+constr);
 				return true;
 			}
 		}
 		
 		return false;
-	};
+	}
+	
+	private static String getContain(String str){
+		List<String> lst = getList();
+		
+		for(int i=0;i<lst.size();i++){
+			String constr = lst.get(i);
+			if(str.contains(constr)){
+				
+				return constr;
+			}
+		}
+		return null;
+	}
+	
+	
+	public static String getExtention(String fileName) {
+		int pos = fileName.lastIndexOf(".");
+		return fileName.substring(pos);
+	}
 	
 	
 	private static List<String>  getList(){
