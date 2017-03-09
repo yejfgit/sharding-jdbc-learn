@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netease.okr.common.PageBean;
+import com.netease.okr.common.PageJsonResponse;
 import com.netease.okr.dao.UserDao;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
@@ -49,9 +50,16 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
-	public List<User> getUsers(UserQuery user,PageBean<User> pageBean){
+	public List<User> getUsers(UserQuery user){
 		
-		return userDao.getUsers(user, pageBean);
+		return userDao.getUsers(user);
+		
+	}
+	
+	@Override
+	public PageJsonResponse<User> getUsersPage(UserQuery user,PageBean<User> pageBean){
+		
+		return userDao.getUsersPage(user, pageBean);
 		
 	}
 

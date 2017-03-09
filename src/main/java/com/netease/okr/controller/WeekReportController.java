@@ -1,6 +1,5 @@
 package com.netease.okr.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.MyDateUtils;
-import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
 

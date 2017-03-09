@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.common.PageBean;
+import com.netease.okr.common.PageJsonResponse;
 import com.netease.okr.controller.BaseController;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
@@ -79,8 +80,7 @@ public class UserController extends BaseController {
 			user.setDeptId(curUser.getDeptL1Id());
 		}
 		
-		
-		List<User> users = userService.getUsers(user,page);
+		PageJsonResponse<User> users = userService.getUsersPage(user,page);
 		
 		return JsonUtil.toJsonObj(users);
 	}

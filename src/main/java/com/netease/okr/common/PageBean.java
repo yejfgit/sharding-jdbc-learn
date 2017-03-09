@@ -1,8 +1,5 @@
 package com.netease.okr.common;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * 分页对象.
  * 
@@ -31,9 +28,6 @@ public class PageBean<T> {
 
 	/** 排序方法. */
 	private String order;
-	
-	/** 数据. */
-	private List<T> result = Collections.emptyList();
 
 	/**
 	 * 构造函数.
@@ -187,20 +181,6 @@ public class PageBean<T> {
 	 */
 	public int getStartRownum() {
 		return (getCurrentPage() - 1) * getPageSize() + 1;
-	}
-
-	/**
-	 * @return the result
-	 */
-	public List<T> getResult() {
-		return result;
-	}
-
-	/**
-	 * @param result the result to set
-	 */
-	public void setResult(List<T> result) {
-		this.result = result;
 	}
 
 	/**

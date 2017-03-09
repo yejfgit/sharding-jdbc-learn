@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.netease.okr.common.PageBean;
+import com.netease.okr.common.PageJsonResponse;
 import com.netease.okr.dao.UserDao;
 import com.netease.okr.mapper.okr.UserMapper;
 import com.netease.okr.model.entity.security.User;
@@ -47,7 +48,19 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 	
 	
 	@Override
-	public List<User> getUsers(UserQuery user,PageBean<User> pageBean){
+	public List<User> getUsers(UserQuery user){
+		
+		List<User> userList = sqlSessionTemplate.selectList("getUsers",user);
+
+		return userList;
+		
+	}
+	
+	@Override
+	public PageJsonResponse<User> getUsersPage(UserQuery user,PageBean<User> pageBean){
+		
+		PageJsonResponse<User> pageRes = new PageJsonResponse<User>();
+		pageRes.setPage(pageBean);
 		
 		List<User> userList = new ArrayList<User>();
 		if (pageBean != null && pageBean.getPageSize() != -1) {
@@ -55,12 +68,12 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 			int offset = pageBean.getStartRownum() - 1;
 			int limit = pageBean.getPageSize();
 			userList = sqlSessionTemplate.selectList("getUsers",user, new RowBounds(offset, limit));
-		} else {
-			userList = sqlSessionTemplate.selectList("getUsers",user);
-		}
-		return userList;
+		} 
+		pageRes.setObjList(userList);
+		return pageRes;
 		
 	}
+	
 	
 	
 	
