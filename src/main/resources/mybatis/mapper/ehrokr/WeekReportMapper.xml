@@ -42,7 +42,7 @@
 	
 	<sql id="weekReporWhere">
 		<where>
-			1=1 
+			t.status = 1  
 			<if test="status!=null">and t.status = #{status} </if>
 			<if test="userId!=null">and t.user_id = #{userId} </if>
 			<if test="year!=null and year!=''">  and d.year = #{year} </if>
@@ -54,14 +54,18 @@
 		left outer join tb_date_info d on d.id=t.date_id
 	</sql>
 	
+	<sql id="weekReporOrderBy">
+		order by d.id desc,t.create_time desc
+	</sql>
+	
 	<!-- 查询所有的周报 -->
 	<select id="getWeekReportList" resultMap="WeekReportResultMap">
 		select 
 		<include refid="selectedWeekReportColumns"></include> 
-		from tb_week_report t
+		from tb_week_report t 
 		<include refid="weekReporJoinCon"></include> 
 		<include refid="weekReporWhere"></include> 
-		order by d.year desc,d.month desc,d.week desc,t.create_time
+		<include refid="weekReporOrderBy"></include>
 	</select>
 	
 	<!-- 查询已发布的周报 -->
@@ -72,7 +76,7 @@
 		<include refid="weekReporJoinCon"></include> 
 		left join tb_week_report_rel tl on t.id = tl.week_report_id
 		where tl.key_result_id=#{keyResultId} and t.status = 1
-		order by d.year desc,d.month desc,d.week desc,t.create_time desc
+		<include refid="weekReporOrderBy"></include>
 	</select>
 	
 	<!-- 查询其他员工周报数量（已发布） -->

@@ -131,13 +131,14 @@ public class EhrDataServiceImpl implements EhrDateService {
 				
 			}
 		}
-		LoggerUtil.info("SyncUserTask saveUser end num ="+empList==null?0:empList.size());
+		LoggerUtil.info("SyncUserTask saveUser end num ="+(empList==null?0:empList.size()));
 		return  result;
 	}
 	
 	private void setUserInfo(Employee emp,User user){
 		user.setName(emp.getName());
 		user.setEmpType(emp.getType());
+		user.setChargeId(emp.getChargeId());
 		user.setState(emp.getState());
 		user.setuNo(emp.getId());
 		user.setCorpMail(emp.getCorpMail());

@@ -9,6 +9,7 @@
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="u_no" property="uNo"  />
+		<result column="charge_id" property="chargeId"  />
 		<result column="corp_mail" property="corpMail"  />
 		<result column="emp_type" property="empType"  />
 		<result column="state" property="state"  />
@@ -32,6 +33,7 @@
 		u.id,
 		u.name,
 		u.u_no,
+		u.charge_id,
 		u.emp_type,
 		u.state,
 		u.corp_mail,
@@ -96,7 +98,7 @@
 		from tb_user u
 		<include refid="userJoinCon"></include> 
 		<include refid="userWhere"></include> 
-		order by u.emp_type,u.u_no
+		order by u.emp_type,u.charge_id,u.u_no
 	</select>
 	
 	
@@ -136,6 +138,7 @@
 	
 	<insert id="addUser" parameterType="com.netease.okr.model.entity.security.User" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_user(
+			<if test="chargeId!=null and chargeId!=''">charge_id,</if>
 			<if test="uNo!=null and uNo!=''">u_no,</if>
 			<if test="corpMail!=null and corpMail!=''">corp_mail,</if>
 			<if test="empType!=null and empType!=''">emp_type,</if>
@@ -152,6 +155,7 @@
 			name
 		)
 		values(
+			<if test="chargeId!=null and chargeId!=''">#{chargeId},</if>
 			<if test="uNo!=null and uNo!=''">#{uNo},</if>
 			<if test="corpMail!=null and corpMail!=''">#{corpMail},</if>
 			<if test="empType!=null and empType!=''">#{empType},</if>
@@ -173,6 +177,9 @@
 	<update id="updateUser" parameterType="com.netease.okr.model.entity.security.User">
 		update tb_user
 		<set> 
+			<if test="chargeId!=null and chargeId!=''">
+				charge_id=#{chargeId},
+			</if>
 			<if test="name!=null and name!=''">
 				name=#{name},
 			</if>
