@@ -24,6 +24,7 @@ import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -170,6 +171,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 				weekReportDao.addWeekReport(weekReport);
 			}
 			
+			LoggerUtil.info("创建周报【id="+weekReport.getId()+";dateId="+dateId+";year="+weekReport.getYear()+";week="+weekReport.getWeek()+"】");
 			
 			//保存周报关键事件关系表
 			saveWeekReportRelList(weekReport.getId(),weekReport.getKeyResultList());
