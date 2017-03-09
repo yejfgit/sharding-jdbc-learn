@@ -196,16 +196,16 @@ public class OpenIdController {
 				User user = userService.getUserByEmail(passport);
 				
 				// 未登录的
-				if (userContext == null) {
+				if (userContext == null&&user!=null) {
 					userContext = new UserContext();
 					userContext.setUser(user);
 					// 把用户上下文放入会话中
 					hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
+				}else{
+					return "redirect:" + INDEX_PAGE_FAILED;
 				}
-				
-				return "redirect:" + INDEX_PAGE_SUCCESS;
 				
 			}
 		} catch (Exception e) {

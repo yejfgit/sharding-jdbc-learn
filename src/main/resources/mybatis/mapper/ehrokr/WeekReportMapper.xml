@@ -61,7 +61,7 @@
 		from tb_week_report t
 		<include refid="weekReporJoinCon"></include> 
 		<include refid="weekReporWhere"></include> 
-		order by d.year desc,d.month desc,d.week desc
+		order by d.year desc,d.month desc,d.week desc,t.create_time
 	</select>
 	
 	<!-- 查询已发布的周报 -->
