@@ -69,6 +69,10 @@
 		left outer join tb_dept d3 on d3.id=u.dept_l3_id
 	</sql>
 	
+	<sql id="userOrderBy">
+		order by u.dept_l1_id,u.dept_l2_id,u.dept_l3_id,u.u_no
+	</sql>
+	
 
 	<select id="getUserByUNo" resultMap="UserResultMap">
 		select 
@@ -99,7 +103,8 @@
 		from tb_user u
 		<include refid="userJoinCon"></include> 
 		<include refid="userWhere"></include> 
-		order by u.emp_type,u.charge_id,u.u_no
+		<include refid="userOrderBy"></include> 
+		
 	</select>
 	
 	

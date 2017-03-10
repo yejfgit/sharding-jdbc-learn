@@ -2,7 +2,9 @@ package com.netease.okr.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,24 @@ public class EhrDataServiceImpl implements EhrDateService {
 	@Autowired
 	private FileService fileService;
 
+	// 部门编号
+	private static Set<String> delDeptIdList = new HashSet<String>();
+
+	static {
+		delDeptIdList.add("D002033053");//业务支持组
+		delDeptIdList.add("D002033054");//北京内勤组
+		delDeptIdList.add("D002002");//人事业务组
+		delDeptIdList.add("D002003");//薪酬福利组
+		delDeptIdList.add("D002004");//员工培训组
+		delDeptIdList.add("D002005");//员工关系组
+		delDeptIdList.add("D002006");//绩效考核组
+		delDeptIdList.add("D002007");//北京业务组
+		delDeptIdList.add("D002008");//广州业务组
+		delDeptIdList.add("D002009");//上海业务组
+		delDeptIdList.add("D002010");//杭州人力资源中心
+	}
+	
+	
 	/**
 	 * @author yejf
 	 * @param 
@@ -96,6 +116,9 @@ public class EhrDataServiceImpl implements EhrDateService {
 		String result = "";
 		if(empList!=null&&empList.size()>0){
 			for(Employee emp:empList){
+				
+				if(delDeptIdList.contains(emp.getDept2()==null?"":emp.getDept2().getCode())||delDeptIdList.contains(emp.getDept3()==null?"":emp.getDept3().getCode())) continue;
+				
 				//防止事物全部回滚
 				try {
 					User user = userDao.getUserByUNo(emp.getId());
@@ -182,7 +205,7 @@ public class EhrDataServiceImpl implements EhrDateService {
 				//防止事物全部回滚
 				try {
 					
-					if(ConstantsUtil.BJ_NQ_DEPT_CODE.equals(department.getId())) continue;
+					if(delDeptIdList.contains(department.getId())) continue;
 					
 					Dept dept = new Dept();
 					//组装部门数据
