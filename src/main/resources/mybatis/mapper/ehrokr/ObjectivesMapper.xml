@@ -11,6 +11,7 @@
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
 		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
 		
@@ -24,6 +25,7 @@
 		objectives_code,
 		user_id,
 		is_valid,
+		code_num,
 		modify_time,
 		create_time
 	</sql>
@@ -46,10 +48,10 @@
 		order by objectives_code desc
 	</select>
 	
-	<!-- 查询员工的okr总数-->
-	<select id="getAllMyOkrListCount" resultType="int">
+	<!-- 获取下一个编号-->
+	<select id="getNextCodeNum" resultType="int">
 		select
-		count(1)
+		ifnull(MAX(code_num),0)+1
 		from tb_objectives
 		where user_id=#{userId}
 	</select>
@@ -62,6 +64,7 @@
 			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc,</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">objectives_code,</if>
 			<if test="userId!=null">user_id,</if>
+			<if test="codeNum!=null">code_num,</if>
 			create_time,
 			modify_time
 		)
@@ -71,6 +74,7 @@
 			<if test="objectivesDsc!=null and objectivesDsc!=''">#{objectivesDsc},</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">#{objectivesCode},</if>
 			<if test="userId!=null">#{userId},</if>
+			<if test="codeNum!=null">#{codeNum},</if>
 			now(),
 			now()
 		)

@@ -59,7 +59,7 @@ public interface ObjectivesMapper {
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
-	public Integer getAllMyOkrListCount(@Param(value = "userId") Integer userId)  throws DataAccessException;
+	public Integer getNextCodeNum(@Param(value = "userId") Integer userId)  throws DataAccessException;
 	
 	
 	/**

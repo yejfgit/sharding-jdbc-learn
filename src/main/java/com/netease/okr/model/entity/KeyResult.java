@@ -37,6 +37,10 @@ public class KeyResult  extends BaseEntity implements Serializable {
 	 * */
 	private Integer isValid;
 	
+	/**
+	 * code编号
+	 * */
+	private Integer codeNum;
 
 	public Integer getId() {
 		return id;
@@ -95,6 +99,16 @@ public class KeyResult  extends BaseEntity implements Serializable {
 
 	public void setIsValid(Integer isValid) {
 		this.isValid = isValid;
+	}
+
+
+	public Integer getCodeNum() {
+		return codeNum;
+	}
+
+
+	public void setCodeNum(Integer codeNum) {
+		this.codeNum = codeNum;
 	}
 	
 	

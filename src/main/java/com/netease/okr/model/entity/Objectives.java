@@ -38,6 +38,11 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private Integer isValid;
 	
+	/**
+	 * code编号
+	 * */
+	private Integer codeNum;
+	
 
 	
 	private List<KeyResult> keyResultList;
@@ -84,6 +89,12 @@ public class Objectives extends BaseEntity implements Serializable  {
 	}
 	public void setKeyResultList(List<KeyResult> keyResultList) {
 		this.keyResultList = keyResultList;
+	}
+	public Integer getCodeNum() {
+		return codeNum;
+	}
+	public void setCodeNum(Integer codeNum) {
+		this.codeNum = codeNum;
 	}
 	
 	

@@ -14,9 +14,9 @@ public interface ObjectivesDao {
 
 	public Integer updateObjectives(Objectives objectives);
 
-	public Integer getAllMyOkrListCount(Integer userId);
-
 	public Objectives getObjectivesById(Integer id);
+
+	public Integer getNextCodeNum(Integer userId);
 
 
 }

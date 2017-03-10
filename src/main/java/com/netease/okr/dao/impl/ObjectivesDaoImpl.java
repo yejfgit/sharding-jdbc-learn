@@ -38,8 +38,8 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	
 	
 	@Override
-	public Integer getAllMyOkrListCount(Integer userId){
-		return objectivesMapper.getAllMyOkrListCount(userId);
+	public Integer getNextCodeNum(Integer userId){
+		return objectivesMapper.getNextCodeNum(userId);
 	}
 	
 	

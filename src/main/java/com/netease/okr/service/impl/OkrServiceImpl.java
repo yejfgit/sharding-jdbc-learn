@@ -57,7 +57,6 @@ public class OkrServiceImpl implements OkrService {
 		OkrNum okrNum= new OkrNum();
 		okrNum.setUserId(userId);
 		
-		okrNum.setOkrNum(objectivesDao.getAllMyOkrListCount(userId));
 		okrNum.setWeekReportNum(weekReportDao.getWeekReportCountByUserId(userId));
 		return okrNum;
 	}
@@ -84,9 +83,10 @@ public class OkrServiceImpl implements OkrService {
 		
 		if(ConstantsUtil.OPREATE_TYPE_ADD.equals(type)){
 			
-			String nextNum = getNextObjectivesNum();
+			Integer nextNum = getNextObjectivesNum();
 			//设置目标编号
 			objectives.setObjectivesCode(ConstantsUtil.OBJECTIVES_CODE_PRE+nextNum);
+			objectives.setCodeNum(nextNum);
 			//设置目标名称
 			objectives.setObjectivesName(ConstantsUtil.OBJECTIVES_NAME_PRE+nextNum);
 			
@@ -138,9 +138,10 @@ public class OkrServiceImpl implements OkrService {
 			Objectives objectives = objectivesDao.getObjectivesById(keyResult.getObjectivesId());
 
 			//获取下级编号
-			String nextNum = getNextKeyResultNum(keyResult.getObjectivesId());
+			Integer nextNum = getNextKeyResultNum(keyResult.getObjectivesId());
 			//设置关键指标和结果编号
 			keyResult.setKeyResultCode(objectives.getObjectivesCode()+ConstantsUtil.KRY_RESULT_CODE_PRE+nextNum);
+			keyResult.setCodeNum(nextNum);
 			
 			c = keyResultDao.addKeyResult(keyResult);
 		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
@@ -168,12 +169,13 @@ public class OkrServiceImpl implements OkrService {
 	 * 
 	 * 获取目标当前编号
 	 * */
-	private String getNextObjectivesNum(){
+	private Integer getNextObjectivesNum(){
 		User user = (User) UserContextUtil.getUserContext().getUser();
 		
-		Integer codeNum = objectivesDao.getAllMyOkrListCount(user.getId());
+		Integer codeNum = objectivesDao.getNextCodeNum(user.getId());
 		
-		return (++codeNum).toString();
+		return codeNum;
+		
 	}
 	
 
@@ -181,11 +183,11 @@ public class OkrServiceImpl implements OkrService {
 	 * 
 	 * 获取关键事件及结果当前编号
 	 * */
-	private String getNextKeyResultNum(Integer objectivesId){
+	private Integer getNextKeyResultNum(Integer objectivesId){
 		
-		Integer codeNum = keyResultDao.getALLKeyResultListCountByoId(objectivesId);
+		Integer codeNum = keyResultDao.getNextCodeNum(objectivesId);
 		
-		return (++codeNum).toString();
+		return codeNum;
 	}
 	
 }

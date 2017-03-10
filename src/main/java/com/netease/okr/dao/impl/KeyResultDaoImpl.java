@@ -32,8 +32,8 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	
 	
 	@Override
-	public Integer getALLKeyResultListCountByoId(Integer objectivesId){
-		return keyResultMapper.getALLKeyResultListCountByoId(objectivesId);
+	public Integer getNextCodeNum(Integer objectivesId){
+		return keyResultMapper.getNextCodeNum(objectivesId);
 	}
 	
 	
