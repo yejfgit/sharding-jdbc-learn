@@ -25,8 +25,8 @@ public class SyncDeptTask implements JobProcessor {
 	private TaskLockService taskLockService;
 	
 	
-	/*@Scheduled(cron = "0 0/1 * * * ?")*/
-	@Scheduled(cron = "0 50 12,23 * * ?")
+	@Scheduled(cron = "0 0/3 * * * ?")
+	/*@Scheduled(cron = "0 50 12,23 * * ?")*/
 	public void handle() {
 		LoggerUtil.info("SyncDeptTask--begin");
 
