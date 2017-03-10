@@ -181,6 +181,9 @@ public class EhrDataServiceImpl implements EhrDateService {
 			for(Department department:deptList){
 				//防止事物全部回滚
 				try {
+					
+					if(ConstantsUtil.BJ_NQ_DEPT_CODE.equals(department.getId())) continue;
+					
 					Dept dept = new Dept();
 					//组装部门数据
 					setDeptInfo(department,dept);

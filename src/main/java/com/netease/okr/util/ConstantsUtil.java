@@ -32,6 +32,7 @@ public interface ConstantsUtil {
 	Integer DEPT_LEVEL_L3 = 3;
 	
 	String HR_DEPT_CODE = "D002";//人力资源部
+	String BJ_NQ_DEPT_CODE="D002033054";//北京内勤组
 	
 	/** 系统根目录. */
 	String REAL_PATH = "REAL_PATH";
