@@ -26,7 +26,7 @@ public class DeptController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/dept/getDeptList", method = RequestMethod.GET)
-	public JsonResponse getDeptInfo() {
+	public JsonResponse getDeptInfo() throws Exception {
 		
 		List<Dept> depts =deptService.getAllDept();
 		
