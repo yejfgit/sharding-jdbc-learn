@@ -12,6 +12,7 @@ import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.Dept;
 import com.netease.okr.service.DeptService;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.LoggerUtil;
 
 
 @RestController
@@ -33,7 +34,7 @@ public class DeptController extends BaseController {
 			return JsonUtil.toJsonObj(depts);
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			LoggerUtil.error("异常", e);
 		}
 		return JsonUtil.toJsonObj("测试");
 	}
