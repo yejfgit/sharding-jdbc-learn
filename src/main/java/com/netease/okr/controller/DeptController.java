@@ -26,11 +26,16 @@ public class DeptController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/dept/getDeptList", method = RequestMethod.GET)
-	public JsonResponse getDeptInfo() throws Exception {
-		
-		List<Dept> depts =deptService.getAllDept();
-		
-		return JsonUtil.toJsonObj(depts);
+	public JsonResponse getDeptInfo(){
+		try {
+			List<Dept> depts =deptService.getAllDept();
+			
+			return JsonUtil.toJsonObj(depts);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return JsonUtil.toJsonObj("测试");
 	}
 	
 
