@@ -12,7 +12,6 @@ import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.Dept;
 import com.netease.okr.service.DeptService;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.LoggerUtil;
 
 
 @RestController
@@ -27,16 +26,11 @@ public class DeptController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/dept/getDeptList", method = RequestMethod.GET)
-	public JsonResponse getDeptInfo(){
-		try {
-			List<Dept> depts =deptService.getAllDept();
-			
-			return JsonUtil.toJsonObj(depts);
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error("异常", e);
-		}
-		return JsonUtil.toJsonObj("测试");
+	public JsonResponse getDeptInfo() {
+		
+		List<Dept> depts =deptService.getAllDept();
+		
+		return JsonUtil.toJsonObj(depts);
 	}
 	
 

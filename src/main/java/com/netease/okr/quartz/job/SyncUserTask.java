@@ -24,7 +24,6 @@ public class SyncUserTask implements JobProcessor {
 	@Autowired
 	private TaskLockService taskLockService;
 	
-	/*@Scheduled(cron = "0 0/2 * * * ?")*/
 	@Scheduled(cron = "0 50 23 * * ?")
 	public void handle() {
 		LoggerUtil.info("SyncUserTask--begin");
