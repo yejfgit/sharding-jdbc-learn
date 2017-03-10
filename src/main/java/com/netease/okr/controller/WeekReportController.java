@@ -89,7 +89,7 @@ public class WeekReportController extends BaseController {
 	
 	/**
 	 * 更新删除周报
-	 * @param  type="release" || “save”
+	 * @param  type="update" || “delete”
 	 * @return JsonResponse
 	 */
 	@ResponseBody
