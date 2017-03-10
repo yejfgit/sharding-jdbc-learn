@@ -89,18 +89,16 @@
 	
 	<insert id="addWeekReport" parameterType="com.netease.okr.model.entity.WeekReport" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_week_report(
-			id,
+			id,date_id,
 			<if test="content!=null and content!=''">content,</if>
-			<if test="dateId!=null">date_id,</if>
 			<if test="status!=null">status,</if>
 			<if test="userId!=null">user_id,</if>
 			create_time,
 			modify_time
 		)
 		values(
-			#{id},
+			#{id},#{dateId},
 			<if test="content!=null and content!=''">#{content},</if>
-			<if test="dateId!=null">#{dateId},</if>
 			<if test="status!=null">#{status},</if>
 			<if test="userId!=null">#{userId},</if>
 			now(),
