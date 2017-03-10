@@ -8,8 +8,6 @@ public interface KeyResultDao {
 
 	public List<KeyResult> getKeyResultListByoId(Integer objectivesId);
 
-	public Integer getALLKeyResultListCountByoId(Integer objectivesId);
-
 	public Integer addKeyResult(KeyResult keyResult);
 
 	public Integer deleteKeyResult(Integer id);
@@ -17,6 +15,8 @@ public interface KeyResultDao {
 	public Integer updateKeyResult(KeyResult keyResult);
 
 	public Integer updateKeyResultStatus(List<KeyResult> keyResults);
+
+	public Integer getNextCodeNum(Integer objectivesId);
 
 
 }

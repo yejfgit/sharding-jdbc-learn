@@ -11,6 +11,7 @@
 		<result column="objectives_id" property="objectivesId"/>
 		<result column="status" property="status"/>
 		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
 	</resultMap>
@@ -21,6 +22,7 @@
 		t.key_result_code,
 		t.objectives_id,
 		t.status,
+		t.code_num,
 		t.is_valid,
 		t.modify_time,
 		t.create_time
@@ -35,10 +37,10 @@
 		order by t.key_result_code 
 	</select>
 	
-	<!-- 根据目标id查询关键事件【生成编号使用】(包含已删除)-->
-	<select id="getALLKeyResultListCountByoId" resultType="int">
+	<!-- 获取下一个编号-->
+	<select id="getNextCodeNum" resultType="int">
 		select
-		count(1)
+		ifnull(MAX(code_num),0)+1
 		from tb_key_result
 		where objectives_id=#{objectivesId}
 	</select>
@@ -61,6 +63,7 @@
 			<if test="keyResultCode!=null and keyResultCode!=''">key_result_code,</if>
 			<if test="objectivesId!=null">objectives_id,</if>
 			<if test="status!=null">status,</if>
+			<if test="codeNum!=null">code_num,</if>
 			create_time,
 			modify_time
 		)
@@ -70,6 +73,7 @@
 			<if test="keyResultCode!=null and keyResultCode!=''">#{keyResultCode},</if>
 			<if test="objectivesId!=null">#{objectivesId},</if>
 			<if test="status!=null">#{status},</if>
+			<if test="codeNum!=null">#{codeNum},</if>
 			now(),
 			now()
 		)
@@ -92,7 +96,6 @@
 		</foreach>
 		 
 	</update>
-	
 	
 	<delete id="deleteKeyResult">
 		update tb_key_result set is_valid = 0 where id=#{id}

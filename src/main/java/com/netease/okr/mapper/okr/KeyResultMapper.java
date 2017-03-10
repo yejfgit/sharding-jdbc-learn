@@ -41,7 +41,7 @@ public interface KeyResultMapper {
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
-	public Integer getALLKeyResultListCountByoId(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	public Integer getNextCodeNum(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
 	
 	
 	/**
