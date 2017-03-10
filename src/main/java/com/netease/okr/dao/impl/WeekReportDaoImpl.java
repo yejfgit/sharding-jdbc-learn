@@ -3,6 +3,7 @@ package com.netease.okr.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -61,7 +62,17 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 			return 0;
 		}
 		return weekReportMapper.addWeekReportRel(list);
-	};
+	}
+	
+	/**
+	 * 删除周报和关键事件结果关系
+	 * @return
+	 * @throws DataAccessException
+	 */
+	@Override
+	public Integer deleteWeekReport(Integer id)  {
+		return weekReportMapper.deleteWeekReport(id);
+	}
 	
 	/**
 	 * 删除周报和关键事件结果关系
@@ -71,7 +82,7 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	@Override
 	public Integer deleteWeekReportRel(Integer weekReportId)  {
 		return weekReportMapper.deleteWeekReportRel(weekReportId);
-	};
+	}
 	
 	
 	@Override

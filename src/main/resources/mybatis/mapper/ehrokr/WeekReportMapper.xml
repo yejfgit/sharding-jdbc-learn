@@ -123,6 +123,11 @@
 	</delete>
 	
 	
+	<delete id="deleteWeekReport">
+		DELETE FROM tb_week_report WHERE id = #{id}
+	</delete>
+	
+	
 	<update id="updateWeekReport" parameterType="com.netease.okr.model.entity.WeekReport">
 		update tb_week_report
 		<set> 

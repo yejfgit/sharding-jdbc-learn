@@ -83,7 +83,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(weekReportList!=null&&weekReportList.getWeekList()!=null&&weekReportList.getWeekList().size()>0){
 			saveWeekReportList(weekReportList);
 		}else{
-			return JsonUtil.toJsonFail("空信息");
+			return JsonUtil.toJsonFail("传值错误！周报内容为空");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReportList);
@@ -104,7 +104,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		if(weekReport!=null&&weekReport.getId()!=null&&MyStringUtil.isNotBlank(weekReport.getType())){
 			updateWeekReport(weekReport);
 		}else{
-			return JsonUtil.toJsonFail("空信息");
+			return JsonUtil.toJsonFail("传值错误！id或type未提交");
 		}
 		
 		return  JsonUtil.toJsonObj(weekReport);
@@ -121,7 +121,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		//删除
 		if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
 			
-			weekReportDao.deleteWeekReportRel(weekReportId);//删除周报
+			weekReportDao.deleteWeekReport(weekReportId);//删除周报
 			deleteWeekReportRelList(weekReportId);//删除周报关系表
 			deleteAppendixList(weekReportId);//删除周报附件表
 			
