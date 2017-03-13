@@ -45,12 +45,25 @@ public interface KeyResultMapper {
 	
 	
 	/**
+	 * 查询已开始的关键事件数量
+	 * @author yejf
+	 * @param objectivesId
+	 * @return Integer
+	 * @throws DataAccessException
+	 */
+	public Integer getKeyResultNumOfStart(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	
+	
+	/**
 	 * @author yejf
 	 * @param id
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
 	public Integer deleteKeyResult(Integer id)  throws DataAccessException;
+	
+
+	public Integer deleteKeyResultByoId(Integer objectivesId)  throws DataAccessException;
 	
 	
 	

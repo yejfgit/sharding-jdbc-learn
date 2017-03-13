@@ -24,6 +24,8 @@ public interface WeekReportDao {
 
 	public Integer deleteWeekReport(Integer id);
 
+	public List<WeekReportRel> getWeekReportRelList(WeekReportRel weekReportRel);
+
 
 
 }

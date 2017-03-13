@@ -1,12 +1,12 @@
 package com.netease.okr.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.dao.WeekReportDao;
@@ -21,10 +21,13 @@ import com.netease.okr.model.entity.WeekReportList;
 import com.netease.okr.model.entity.WeekReportRel;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
+import com.netease.okr.quartz.job.UpdateKeyResultStatusTask;
+import com.netease.okr.quartz.scheduler.TaskScheduler;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.LoggerUtil;
+import com.netease.okr.util.MyDateUtils;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -43,6 +46,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 
 	@Autowired
 	private KeyResultDao keyResultDao;
+	
+	@Autowired
+	private UpdateKeyResultStatusTask updateKeyResultStatusTask;
 	
 	
 	/**
@@ -103,6 +109,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 		if(weekReport!=null&&weekReport.getId()!=null&&MyStringUtil.isNotBlank(weekReport.getType())){
 			updateWeekReport(weekReport);
+			
 		}else{
 			return JsonUtil.toJsonFail("传值错误！id或type未提交");
 		}
@@ -111,31 +118,6 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 	}
 	
-	
-	/**
-	 * 更新周报周报
-	 * */
-	private void updateWeekReport(WeekReport weekReport){
-		Integer weekReportId = weekReport.getId();
-		String type = weekReport.getType();
-		//删除
-		if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
-			
-			weekReportDao.deleteWeekReport(weekReportId);//删除周报
-			deleteWeekReportRelList(weekReportId);//删除周报关系表
-			deleteAppendixList(weekReportId);//删除周报附件表
-			
-		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
-			weekReportDao.updateWeekReport(weekReport);
-			
-			//保存周报关键事件关系表
-			saveWeekReportRelList(weekReportId,weekReport.getKeyResultList());
-			
-			//更新周报附件信息
-			updateAppendixList(weekReportId,weekReport.getAppendixList());
-		}
-		
-	}
 	
 	
 	/**
@@ -211,12 +193,54 @@ public class WeekReportServiceImpl implements WeekReportService {
 	}
 	
 	/**
+	 * 更新周报周报
+	 * */
+	private void updateWeekReport(WeekReport weekReport){
+		Integer weekReportId = weekReport.getId();
+		String type = weekReport.getType();
+		//删除
+		if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
+			
+			deleteWeekReport(weekReportId);
+			
+		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
+			weekReportDao.updateWeekReport(weekReport);
+			//保存周报关键事件关系表
+			saveWeekReportRelList(weekReportId,weekReport.getKeyResultList());
+			//更新周报附件信息
+			updateAppendixList(weekReportId,weekReport.getAppendixList());
+		}
+		
+	}
+	
+	
+	private void  deleteWeekReport(Integer weekReportId){
+		
+		List<Integer> keyResultIds = new ArrayList<Integer>();
+		
+		//查询周报关联关键事件信息
+		WeekReportRel weekReportRel = new WeekReportRel();
+		weekReportRel.setWeekReportId(weekReportId);
+		List<WeekReportRel> weekReportRelList = weekReportDao.getWeekReportRelList(weekReportRel);
+		if(weekReportRelList!=null){
+			for(WeekReportRel wrr:weekReportRelList){
+				keyResultIds.add(wrr.getKeyResultId());
+			}
+		}
+		
+		weekReportDao.deleteWeekReport(weekReportId);//删除周报
+		deleteWeekReportRelList(weekReportId);//删除周报关系表
+		deleteAppendixList(weekReportId);//删除周报附件表
+		
+		//检查更新关键事件进行状态
+		TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 2), keyResultIds,null, null);
+	}
+	
+	/**
 	 * 删除周报关系
 	 * */
 	private Integer deleteWeekReportRelList(Integer weekReportId){
-
 		return weekReportDao.deleteWeekReportRel(weekReportId);
-		
 	}
 	
 	/**

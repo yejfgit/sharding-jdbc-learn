@@ -1,5 +1,6 @@
 package com.netease.okr.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,11 +97,12 @@ public class OkrServiceImpl implements OkrService {
 			c = objectivesDao.updateObjectives(objectives);
 		}else if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)&&objectives.getId()!=null){
 			//检查是否存在关键事件及结果，存在不能删除
-			List<KeyResult> krs =  keyResultDao.getKeyResultListByoId(objectives.getId());
-			if(krs!=null&&krs.size()>0){
+			Integer startNum = keyResultDao.getKeyResultNumOfStart(objectives.getId());
+			
+			if(startNum>0){
 				return JsonUtil.toJsonFail("【存在关键事件及结果的目标不能删除】");
 			}else{
-				c = objectivesDao.deleteObjectives(objectives.getId());
+				c = deleteObjectives(objectives.getId());
 			}
 			
 		}
@@ -113,6 +115,8 @@ public class OkrServiceImpl implements OkrService {
 		}
 		
 	}
+	
+	
 	
 	
 	/**
@@ -164,6 +168,19 @@ public class OkrServiceImpl implements OkrService {
 		
 	}
 	
+	@Override
+	public Integer updateKeyResultStatus(Integer keyResultId,Integer status){
+		List<KeyResult> keyResults = new ArrayList<KeyResult>();
+		
+		KeyResult keyResult = new KeyResult();
+		keyResult.setId(keyResultId);
+		keyResult.setStatus(status);
+		keyResults.add(keyResult);
+		
+		return keyResultDao.updateKeyResultStatus(keyResults);
+		
+		
+	}
 	
 	/**
 	 * 
@@ -178,6 +195,13 @@ public class OkrServiceImpl implements OkrService {
 		
 	}
 	
+	private Integer deleteObjectives(Integer objectivesId){
+		int c = objectivesDao.deleteObjectives(objectivesId);
+		if(c>0){
+			keyResultDao.deleteKeyResultByoId(objectivesId);
+		}
+		return c;
+	}
 
 	/**
 	 * 

@@ -20,7 +20,7 @@ import com.netease.okr.quartz.job.JobProcessor;
 public class TaskScheduler {
 	final static Logger logger = Logger.getLogger(TaskScheduler.class);
 
-	public static void scheduleTaskAt(JobProcessor jobHandler, Date runAt, List<Integer> empIds, Integer userId,
+	public static void scheduleTaskAt(JobProcessor jobHandler, Date runAt, List<Integer> ids, Integer userId,
 			String group) {
 		String taskId = new SimpleDateFormat("yyyyMMddHHmmss").format(runAt);
 
@@ -42,7 +42,7 @@ public class TaskScheduler {
 			// pass params to job
 			job.getJobDataMap().put(TaskJob.TASK_ID, taskId);
 			job.getJobDataMap().put(TaskJob.JOB_HANDLER, jobHandler);
-			job.getJobDataMap().put(TaskJob.EMP_IDS, empIds);
+			job.getJobDataMap().put(TaskJob.IDS, ids);
 			job.getJobDataMap().put(TaskJob.USER_ID, userId);
 
 			// tell quartz to schedule the job using our trigger

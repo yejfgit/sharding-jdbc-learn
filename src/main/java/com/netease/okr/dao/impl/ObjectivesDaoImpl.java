@@ -18,7 +18,6 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	@Autowired
 	private ObjectivesMapper objectivesMapper;
 	
-	
 	/**
 	 * @author yejf
 	 * @param userId

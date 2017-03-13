@@ -3,7 +3,6 @@ package com.netease.okr.dao.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -89,4 +88,10 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery) {
 		return weekReportMapper.getWeekReportList(weekReportQuery);
 	}
+	
+	@Override
+	public List<WeekReportRel> getWeekReportRelList(WeekReportRel weekReportRel) {
+		return weekReportMapper.getWeekReportRelList(weekReportRel);
+	}
+	
 }
