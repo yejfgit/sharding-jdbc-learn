@@ -183,7 +183,8 @@ public class EhrDataServiceImpl implements EhrDateService {
 		if(workCardImage!=null){
 			String nosKey = fileService.getNosKey();
 			String fileName = emp.getName()+"-"+emp.getId()+emp.getImageExt();
-			String filePath = ConstantsUtil.REAL_PATH+ConstantsUtil.FILE_TMP_DIR_PATH + File.separator+emp.getName()+"-"+emp.getId()+emp.getImageExt();
+
+			String filePath = System.getProperty(ConstantsUtil.REAL_PATH)+ConstantsUtil.FILE_TMP_DIR_PATH + File.separator+emp.getName()+"-"+emp.getId()+emp.getImageExt();
 			
 			//创建文件
 			try {
