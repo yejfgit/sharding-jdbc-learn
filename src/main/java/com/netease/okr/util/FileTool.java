@@ -92,6 +92,13 @@ public class FileTool extends FileUtils {
         try  
         {  
             file = new File(filePath);  
+
+            if(!file.getParentFile().exists()) {  
+	            if(!file.getParentFile().mkdirs()) {  
+	            	LoggerUtil.info("创建目标文件所在目录失败！");  
+	            }  
+	        }  
+            
             if (!file.exists())  
             {  
             	file.createNewFile();  
