@@ -80,7 +80,7 @@
 	</insert>
 	
 	<delete id="deleteDept">
-		delete from tb_dept ;
+		delete from tb_dept 
 	</delete>
 	
 </mapper>
