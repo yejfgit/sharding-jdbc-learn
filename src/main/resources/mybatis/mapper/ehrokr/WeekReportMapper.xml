@@ -112,7 +112,7 @@
 	<!-- 查询其他员工周报数量（已发布） -->
 	<select id="getWeekReportCountByUserId" resultType="int">
 		select 
-		count(1)
+		count(DISTINCT t.date_id)
 		from tb_week_report t
 		where t.user_id = #{userId} and t.status = 1 
 	</select>
