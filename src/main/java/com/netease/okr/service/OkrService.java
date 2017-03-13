@@ -17,4 +17,6 @@ public interface OkrService {
 
 	public OkrNum getMyOkrNum(Integer userId);
 
+	public Integer updateKeyResultStatus(Integer keyResultId, Integer status);
+
 }

@@ -14,7 +14,7 @@ public class TaskJob implements Job {
 
 	static final String TASK_ID = "task_id";
 	static final String JOB_HANDLER = "npHandler";
-	static final String EMP_IDS = "empIds";
+	static final String IDS = "ids";
 	static final String USER_ID = "userId";
 
 	public TaskJob() {
@@ -26,7 +26,7 @@ public class TaskJob implements Job {
 		String taskId = (String) context.getJobDetail().getJobDataMap().get(TASK_ID);
 		try {
 			JobProcessor jobHandler = (JobProcessor) context.getJobDetail().getJobDataMap().get(JOB_HANDLER);
-			List<Integer> empIds = (List<Integer>) context.getJobDetail().getJobDataMap().get(EMP_IDS);
+			List<Integer> empIds = (List<Integer>) context.getJobDetail().getJobDataMap().get(IDS);
 			Integer userId = (Integer) context.getJobDetail().getJobDataMap().get(USER_ID);
 			if (jobHandler == null) {
 				System.out.println("jobHandler==null!!!");

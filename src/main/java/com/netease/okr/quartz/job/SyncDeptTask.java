@@ -30,7 +30,7 @@ public class SyncDeptTask implements JobProcessor {
 		LoggerUtil.info("SyncDeptTask--begin");
 
 		if (!taskLockService.getTaskLock(TaskTypeEnum.DEPT_SYNC.getName())) {
-			LoggerUtil.info("1获取任务锁失败，退出任务");
+			LoggerUtil.info(TaskTypeEnum.DEPT_SYNC.getRemark()+"获取任务锁失败，退出任务");
 			return;
 		}
 		

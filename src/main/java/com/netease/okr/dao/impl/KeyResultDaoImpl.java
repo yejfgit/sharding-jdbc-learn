@@ -36,6 +36,11 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 		return keyResultMapper.getNextCodeNum(objectivesId);
 	}
 	
+	@Override
+	public Integer getKeyResultNumOfStart(Integer objectivesId){
+		return keyResultMapper.getKeyResultNumOfStart(objectivesId);
+	}
+	
 	
 	@Override
 	public Integer addKeyResult(KeyResult keyResult){
@@ -45,6 +50,11 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	@Override
 	public Integer deleteKeyResult(Integer id){
 		return keyResultMapper.deleteKeyResult(id);
+	}
+	
+	@Override
+	public Integer deleteKeyResultByoId(Integer objectivesId){
+		return keyResultMapper.deleteKeyResultByoId(objectivesId);
 	}
 	
 	@Override
