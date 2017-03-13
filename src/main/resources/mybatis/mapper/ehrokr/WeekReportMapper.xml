@@ -39,6 +39,9 @@
 		d.end_date
 	</sql>
 	
+	<sql id="weekReporJoinCon">
+		left outer join tb_date_info d on d.id=t.date_id
+	</sql>
 	
 	<sql id="weekReporWhere">
 		<where> 
@@ -49,13 +52,33 @@
 		</where>
 	</sql>
 	
-	<sql id="weekReporJoinCon">
-		left outer join tb_date_info d on d.id=t.date_id
-	</sql>
-	
 	<sql id="weekReporOrderBy">
 		order by d.id desc,t.create_time desc
 	</sql>
+	
+	
+	<resultMap type="com.netease.okr.model.entity.WeekReportRel" id="WeekReportRelResultMap">
+		<id column="id" property="id"/>
+		<result column="key_result_id" property="keyResultId"/>
+		<result column="week_report_id" property="weekReportId"/>
+	</resultMap>
+	
+	<sql id="selectedWeekReportRelColumns">
+		t.id,
+		t.key_result_id,
+		t.week_report_id
+	</sql>
+	
+	<sql id="weekReporRelWhere">
+		<where> 
+			<if test="keyResultId!=null and keyResultId!=''">  and t.key_result_id = #{keyResultId} </if>
+			<if test="weekReportId!=null and weekReportId!=''"> and t.week_report_id = #{weekReportId} </if>
+		</where>
+	</sql>
+	
+	
+	<!-- ******************************************************************************************************** -->
+
 	
 	<!-- 查询所有的周报 -->
 	<select id="getWeekReportList" resultMap="WeekReportResultMap">
@@ -65,6 +88,14 @@
 		<include refid="weekReporJoinCon"></include> 
 		<include refid="weekReporWhere"></include> 
 		<include refid="weekReporOrderBy"></include>
+	</select>
+	
+	<!-- 查询所有的周报关系 -->
+	<select id="getWeekReportRelList" resultMap="WeekReportRelResultMap">
+		select 
+		<include refid="selectedWeekReportRelColumns"></include> 
+		from tb_week_report_rel t 
+		<include refid="weekReporRelWhere"></include> 
 	</select>
 	
 	<!-- 查询已发布的周报 -->

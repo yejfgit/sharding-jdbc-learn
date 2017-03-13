@@ -18,5 +18,9 @@ public interface KeyResultDao {
 
 	public Integer getNextCodeNum(Integer objectivesId);
 
+	public Integer getKeyResultNumOfStart(Integer objectivesId);
+
+	public Integer deleteKeyResultByoId(Integer objectivesId);
+
 
 }

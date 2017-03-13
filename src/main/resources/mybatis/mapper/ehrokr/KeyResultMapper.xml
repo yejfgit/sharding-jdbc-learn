@@ -37,6 +37,14 @@
 		order by t.code_num 
 	</select>
 	
+	<!-- 查询已开始的关键事件数量-->
+	<select id="getKeyResultNumOfStart" resultType="int">
+		select
+		count(1)
+		from tb_key_result  t
+		where is_valid = 1 and objectives_id=#{objectivesId} and t.status = 1
+	</select>
+	
 	<!-- 获取下一个编号-->
 	<select id="getNextCodeNum" resultType="int">
 		select
@@ -100,6 +108,10 @@
 	
 	<delete id="deleteKeyResult">
 		update tb_key_result set is_valid = 0 where id=#{id}
+	</delete>
+	
+	<delete id="deleteKeyResultByoId">
+		update tb_key_result set is_valid = 0 where objectives_id=#{objectivesId}
 	</delete>
 	
 	
