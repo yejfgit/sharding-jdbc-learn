@@ -85,7 +85,14 @@ public class EhrDataServiceImpl implements EhrDateService {
 		DeptParam deptParam = new DeptParam();
 		deptParam.setDeptLevel(ConstantsUtil.DEPT_LEVEL_L1);
 		deptParam.setState(ConstantsUtil.STATUS_YES);
-		List<Department> deptList = ehrDepartment.getDept(deptParam);
+		List<Department> deptList = null;
+		try {
+			deptList = ehrDepartment.getDept(deptParam);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 		
 		if(deptList!=null&&deptList.size()>0){
 			for(Department dept:deptList){
