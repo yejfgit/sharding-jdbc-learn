@@ -60,7 +60,7 @@ public class DeptServiceImpl implements DeptService {
 		//hr部门
 		List<Dept> deptL1List = new ArrayList<Dept>();
 		
-		Dept deptl1 = deptDao.getDeptById(user.getDeptL2Id());
+		Dept deptl1 = deptDao.getDeptById(user.getDeptL1Id());
 				
 		List<Dept> deptL2List = deptDao.getDeptListByParentId(deptl1.getId());
 		
