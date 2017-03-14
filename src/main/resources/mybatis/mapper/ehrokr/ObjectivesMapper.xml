@@ -93,7 +93,7 @@
 	
 	
 	<delete id="deleteObjectives">
-		update tb_objectives set is_valid = 0 where id=#{id}
+		delete from tb_objectives where id=#{id}
 	</delete>
 	
 	
