@@ -107,11 +107,11 @@
 	</update>
 	
 	<delete id="deleteKeyResult">
-		update tb_key_result set is_valid = 0 where id=#{id}
+		delete tb_key_result  where id=#{id}
 	</delete>
 	
 	<delete id="deleteKeyResultByoId">
-		update tb_key_result set is_valid = 0 where objectives_id=#{objectivesId}
+		delete tb_key_result where objectives_id=#{objectivesId}
 	</delete>
 	
 	
