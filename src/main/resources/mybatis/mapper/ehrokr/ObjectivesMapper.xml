@@ -93,7 +93,7 @@
 	
 	
 	<delete id="deleteObjectives">
-		delete tb_objectives where id=#{id}
+		delete from tb_objectives where id=#{id}
 	</delete>
 	
 	
