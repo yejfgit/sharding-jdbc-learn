@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.service.FileService;
@@ -92,6 +93,8 @@ public class FileController extends BaseController{
 						appTmp.setUrl(appendix.getUrl());
 						res.setData(appTmp);
 						res.setMsg(ConstantsUtil.RESPONSE_MSG_SUCCESS);
+						
+						LoggerUtil.info(JSON.toJSONString(res));
 					}
 				} catch (Exception e) {
 					LoggerUtil.uploadLogError("上传附件错误", e);
