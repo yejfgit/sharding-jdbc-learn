@@ -29,8 +29,8 @@ public class FileController extends BaseController{
 
 	// 附件格式
 	private static Set<String> typeAppendixList = new HashSet<String>();
-	// 附件大小（100M）
-	private static long appendixSize = 100 * 1024 * 1024; // 100M;
+	// 附件大小（10M）
+	private static long appendixSize = 10 * 1024 * 1024; // 10M;
 
 	static {
 		// 附件
