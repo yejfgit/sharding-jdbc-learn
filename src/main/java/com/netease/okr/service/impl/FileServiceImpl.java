@@ -20,6 +20,7 @@ import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.service.FileService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
+import com.netease.okr.util.MyStringUtil;
 
 
 
@@ -117,11 +118,7 @@ public class FileServiceImpl implements FileService {
 
 		URL longNosUrl = nosBaseService.generatePresignedUrl(nosKey, fname);
 		
-		LoggerUtil.info(fname+":longNosUrl="+"【"+longNosUrl+"】");
-		
-		String shortNosUrl = longNosUrl.toString().split("&")[0];
-		
-		LoggerUtil.info(fname+":shortNosUrl="+"【"+shortNosUrl+"】");
+		String shortNosUrl = getUrl(longNosUrl.toString());
 		
 		// 保存appendix表
 		Appendix appendix = new Appendix();
@@ -138,6 +135,23 @@ public class FileServiceImpl implements FileService {
 		return appendix;
 	}
 
+	private String getUrl(String url){
+		
+		String retUrl = "";
+		
+		if(MyStringUtil.isNotBlank(url)){
+			String[] urls1 = url.split("\\?");
+			retUrl = urls1[0];
+			String[] urls2 = urls1[1].split("&");
+			for(int i=0;i<urls2.length;i++){
+				urls2[i].contains("download=");
+				retUrl+="?"+urls2[i];
+				break;
+			}
+			
+		}
+		return retUrl;
+	}
 	
 	/**
 	 * 上传文件
@@ -160,7 +174,7 @@ public class FileServiceImpl implements FileService {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return nosUrl == null ? null : nosUrl.toString().split("&")[0];
+		return nosUrl == null ? null : getUrl(nosUrl.toString());
 	}
 	
 	
