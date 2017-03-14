@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.netease.okr.dao.DeptDao;
 import com.netease.okr.model.entity.Dept;
+import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.DeptService;
 import com.netease.okr.util.ConstantsUtil;
+import com.netease.okr.util.UserContextUtil;
 
 @Service
 public class DeptServiceImpl implements DeptService {
@@ -35,6 +37,8 @@ public class DeptServiceImpl implements DeptService {
 	
 	@Override
 	public List<Dept> getAllDept(){
+		
+		User user = (User) UserContextUtil.getUserContext().getUser();
 		//全部部门
 		/*List<Dept> deptL1List = deptDao.getDeptListByLevel(ConstantsUtil.DEPT_LEVEL_L1);
 		if(deptL1List!=null&&deptL1List.size()>0){
@@ -56,7 +60,7 @@ public class DeptServiceImpl implements DeptService {
 		//hr部门
 		List<Dept> deptL1List = new ArrayList<Dept>();
 		
-		Dept deptl1 = deptDao.getDeptById(ConstantsUtil.HR_DEPT_CODE);
+		Dept deptl1 = deptDao.getDeptById(user.getDeptL2Id());
 				
 		List<Dept> deptL2List = deptDao.getDeptListByParentId(deptl1.getId());
 		
