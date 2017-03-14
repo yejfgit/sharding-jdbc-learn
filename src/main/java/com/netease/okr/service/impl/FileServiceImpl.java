@@ -117,7 +117,12 @@ public class FileServiceImpl implements FileService {
 
 		URL longNosUrl = nosBaseService.generatePresignedUrl(nosKey, fname);
 		
+		LoggerUtil.info(fname+":longNosUrl="+"【"+longNosUrl+"】");
+		
 		String shortNosUrl = longNosUrl.toString().split("&")[0];
+		
+		LoggerUtil.info(fname+":shortNosUrl="+"【"+shortNosUrl+"】");
+		
 		// 保存appendix表
 		Appendix appendix = new Appendix();
 		appendix.setName(fname);
