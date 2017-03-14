@@ -144,9 +144,10 @@ public class FileServiceImpl implements FileService {
 			retUrl = urls1[0];
 			String[] urls2 = urls1[1].split("&");
 			for(int i=0;i<urls2.length;i++){
-				urls2[i].contains("download=");
-				retUrl+="?"+urls2[i];
-				break;
+				if(urls2[i].contains("download=")){
+					retUrl+="?"+urls2[i];
+					break;
+				}
 			}
 			
 		}
