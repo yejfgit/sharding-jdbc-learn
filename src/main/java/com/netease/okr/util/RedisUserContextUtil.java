@@ -32,6 +32,7 @@ public class RedisUserContextUtil {
 			if(cookies!=null){
 				for(int i=0;i<cookies.length;i++){
 					Cookie cookie= cookies[i];
+					LoggerUtil.info("--------------"+cookie.getName()+"="+cookie.getValue()+"----------------");
 					if(COOKIE_NAME.equals(cookie.getName())){
 						return COOKIE_VALUE+cookie.getValue();
 					}
@@ -66,7 +67,7 @@ public class RedisUserContextUtil {
 	public static int initUserContext(UserContext userContext) {
 		
 		String key =(String)instance.get();
-		
+		LoggerUtil.info("--------------"+key+"----------------");
 		String result = RedisClient.set(key, JSON.toJSONString(userContext));
 		RedisClient.expire(key,TIME_OUT_SECONDS);
 		

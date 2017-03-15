@@ -204,11 +204,7 @@ public class OpenIdController {
 					// 把用户上下文放入会话中
 					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
 					LoggerUtil.info("before login");
-					RedisClient.set("test012", "adsfasdfasdfasdfasdfasdfasdf");
-					LoggerUtil.info(RedisClient.get("test012"));
-					
 					RedisUserContextUtil.initUserContext(userContext);
-					
 					LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
