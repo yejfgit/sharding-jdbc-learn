@@ -57,6 +57,15 @@
 	</select>
 	
 	
+	<!-- 获取员工目标数量-->
+	<select id="getObjectivesCount" resultType="int">
+		select count(1) 
+		from tb_objectives 
+		where is_valid = 1 and
+		user_id=#{userId}
+	</select>
+	
+	
 	<insert id="addObjectives" parameterType="com.netease.okr.model.entity.Objectives" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_objectives(
 			id,

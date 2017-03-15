@@ -62,6 +62,16 @@ public interface ObjectivesMapper {
 	public Integer getNextCodeNum(@Param(value = "userId") Integer userId)  throws DataAccessException;
 	
 	
+
+	/**
+	 * @author yejf
+	 * @param id
+	 * @return Integer
+	 * @throws DataAccessException
+	 */
+	public Integer getObjectivesCount(@Param(value = "userId") Integer userId)  throws DataAccessException;
+	
+	
 	/**
 	 * @author yejf
 	 * @param Objectives
