@@ -18,5 +18,7 @@ public interface ObjectivesDao {
 
 	public Integer getNextCodeNum(Integer userId);
 
+	public Integer getObjectivesCount(Integer userId);
+
 
 }

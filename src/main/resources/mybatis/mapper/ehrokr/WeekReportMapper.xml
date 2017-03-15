@@ -110,11 +110,21 @@
 	</select>
 	
 	<!-- 查询其他员工周报数量（已发布） -->
-	<select id="getWeekReportCountByUserId" resultType="int">
+	<select id="getWeekReportCount" resultType="int">
 		select 
 		count(DISTINCT t.date_id)
 		from tb_week_report t
 		where t.user_id = #{userId} and t.status = 1 
+	</select>
+	
+	<!-- 查询最新一条周报 -->
+	<select id="getNewWeekReport" resultMap="WeekReportResultMap">
+		select
+		<include refid="selectedWeekReportColumns"></include>
+		from tb_week_report t
+		<include refid="weekReporJoinCon"></include> 
+		where t.user_id=#{userId} 
+		order by t.date_id desc limit 1 
 	</select>
 	
 	

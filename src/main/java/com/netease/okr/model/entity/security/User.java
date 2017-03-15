@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.netease.okr.model.entity.OkrNum;
+
 
 public class User implements Serializable {
 	private static final long serialVersionUID = -4168412066004667856L;
@@ -40,7 +42,9 @@ public class User implements Serializable {
 	private String deptL1Name;
 	private String deptL2Name;
 	private String deptL3Name;
-	 
+	
+	private OkrNum okrNum;
+	
 	private List<Role> userRoles = new ArrayList<Role>();
 
 
@@ -261,6 +265,14 @@ public class User implements Serializable {
 
 	public void setChargeId(String chargeId) {
 		this.chargeId = chargeId;
+	}
+
+	public OkrNum getOkrNum() {
+		return okrNum;
+	}
+
+	public void setOkrNum(OkrNum okrNum) {
+		this.okrNum = okrNum;
 	}
 
 
