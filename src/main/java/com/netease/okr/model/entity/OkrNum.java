@@ -11,8 +11,6 @@ public class OkrNum extends DateInfo implements Serializable {
 
 	private Integer userId;
 	
-	private Integer okrNum;
-	
 	private Integer objectivesNum;
 	
 	private Integer weekReportNum;
@@ -23,14 +21,6 @@ public class OkrNum extends DateInfo implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public Integer getOkrNum() {
-		return okrNum;
-	}
-
-	public void setOkrNum(Integer okrNum) {
-		this.okrNum = okrNum;
 	}
 
 	public Integer getWeekReportNum() {
