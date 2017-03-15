@@ -15,7 +15,7 @@ public class RedisUserContextUtil {
 
 	private static final int TIME_OUT_SECONDS = 2*60*60;//过去时间【秒】 
 
-	private static final String COOKIE_NAME = "JSESSIONID";
+	private static final String COOKIE_NAME = "_ntes_nnid";
 	
 	private static final String COOKIE_VALUE = "OKR";
 
@@ -32,8 +32,8 @@ public class RedisUserContextUtil {
 			if(cookies!=null){
 				for(int i=0;i<cookies.length;i++){
 					Cookie cookie= cookies[i];
-					LoggerUtil.info("--------------"+cookie.getName()+"="+cookie.getValue()+"----------------");
 					if(COOKIE_NAME.equals(cookie.getName())){
+						LoggerUtil.info("--------------"+cookie.getName()+"="+cookie.getValue()+"----------------");
 						return COOKIE_VALUE+cookie.getValue();
 					}
 				}
