@@ -45,7 +45,7 @@
 		<include refid="selectedObjectivesColumns"></include>
 		from tb_objectives
 		where is_valid = 1 and user_id=#{userId}
-		order by code_num
+		order by code_num desc
 	</select>
 	
 	<!-- 获取下一个编号-->
