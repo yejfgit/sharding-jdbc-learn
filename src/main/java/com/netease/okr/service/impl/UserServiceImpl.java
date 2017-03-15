@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
 import com.netease.okr.service.UserService;
+import com.netease.okr.util.LoggerUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -70,9 +71,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageJsonResponse<User> getUsersPage(UserQuery user,PageBean<User> pageBean){
 		
+		 long startTime = System.currentTimeMillis();    //获取开始时间
 		 PageJsonResponse<User> userPage = userDao.getUsersPage(user, pageBean);
 		 setUserOkrNum(userPage);
 		 
+		 long endTime = System.currentTimeMillis();    //获取结束时间
+		 
+		 LoggerUtil.info("查询用户统计运行时间： "+(endTime-startTime)+"ns"); 
 		 return userPage;
 		
 	}
