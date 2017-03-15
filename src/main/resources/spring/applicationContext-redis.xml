@@ -4,42 +4,33 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- redis连接池 -->  
-  <!--   <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">   
-        <property name="maxTotal" value="${redis_max_active}"></property>  
-        <property name="maxIdle" value="${redis_max_idle}"></property>  
-        <property name="maxWaitMillis" value="${redis_max_wait}"></property>  
-        <property name="testOnBorrow" value="${redis_test_on_borrow}"></property>  
-    </bean> --> 
+
+
+	<description>Redis Configuration</description>
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="100" /><!-- 最大闲置 -->
+		<property name="minIdle" value="10" /><!-- 最小闲置 -->
+		<property name="testOnBorrow" value="true" /><!-- 可以获取 -->
+	</bean>
 	
-	
-	 <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="100"/><!-- 最大闲置 -->
-        <property name="minIdle" value="10"/><!-- 最小闲置 -->
-        <property name="maxTotal" value="${redis_max_active}"></property>
-       <!--  <property name="testOnBorrow" value="true"/> --><!-- 可以获取 -->
-    </bean>
-    
-    <!-- redis 配置-->
+	<!-- redis 配置 -->
 	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
 		<constructor-arg index="0" ref="jedisPoolConfig" />
-		<constructor-arg index="1" value="${redis_addr}" name="host" type="java.lang.String"/>
-	    <constructor-arg index="2" value="${redis_port}"  name="port" type="int"/>
-	    <constructor-arg index="3" value="${redis_max_wait}"  name="timeout" type="int"/>
-	    <constructor-arg index="4" value="${redis_auth}"  name="password" type="java.lang.String"/>
+		<constructor-arg index="1" value="${cache.redis.host}"
+			name="host" type="java.lang.String" />
+		<constructor-arg index="2" value="${cache.redis.port}"
+			name="port" type="int" />
+		<constructor-arg index="3" value="${cache.redis.timeout}"
+			name="timeout" type="int" />
+		<constructor-arg index="4" value="${cache.redis.password}"
+			name="password" type="java.lang.String" />
 	</bean>
-	
+
 	<!-- redis工具类 -->
 	<bean id="redisClient" class="com.netease.okr.redis.RedisClient">
-	    <property name="jedisPool" ref="jedisPool"/>
+		<property name="jedisPool" ref="jedisPool" />
 	</bean>
-	
-	<!-- <bean id="redisConfigService" class="com.netease.rms.service.bean.JedisSentinel">
-		<property name="masterName" value="${redis.sentinel.master}" />
-		<property name="sentinelAddressList" value="${redis.sentinel.address}" />
-		<property name="timeout" value="3000" />
-		<property name="password" value="${redis.sentinel.password}" />
-	</bean> -->
-    
+
 
 </beans>

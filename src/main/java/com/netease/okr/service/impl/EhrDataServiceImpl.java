@@ -135,7 +135,7 @@ public class EhrDataServiceImpl implements EhrDateService {
 						
 						if(MyStringUtil.isBlank(user.getPhotoUrl())){
 							//创建用户工牌照
-							createUserWorkCardImage(emp,user);
+							//createUserWorkCardImage(emp,user);
 						}
 						
 						int c = userDao.updateUser(user);
@@ -147,7 +147,7 @@ public class EhrDataServiceImpl implements EhrDateService {
 						setUserInfo(emp,user);
 						
 						//创建用户工牌照
-						createUserWorkCardImage(emp,user);
+						//createUserWorkCardImage(emp,user);
 						
 						int c = userDao.addUser(user);
 						

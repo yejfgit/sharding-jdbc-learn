@@ -68,7 +68,16 @@ public interface WeekReportMapper {
 	 * @returnInteger
 	 * @throws DataAccessException
 	 */
-	public Integer getWeekReportCountByUserId(Integer userId);
+	public Integer getWeekReportCount(@Param(value = "userId") Integer userId);
+	
+	
+	/**
+	 * 查询最新一条周报
+	 * @returnInteger
+	 * @throws DataAccessException
+	 */
+	public WeekReport getNewWeekReport(@Param(value = "userId") Integer userId);
+	
 	
 	
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);

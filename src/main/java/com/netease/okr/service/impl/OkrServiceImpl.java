@@ -58,7 +58,7 @@ public class OkrServiceImpl implements OkrService {
 		OkrNum okrNum= new OkrNum();
 		okrNum.setUserId(userId);
 		
-		okrNum.setWeekReportNum(weekReportDao.getWeekReportCountByUserId(userId));
+		okrNum.setWeekReportNum(weekReportDao.getWeekReportCount(userId));
 		return okrNum;
 	}
 	

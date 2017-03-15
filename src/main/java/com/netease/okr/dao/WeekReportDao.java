@@ -18,13 +18,15 @@ public interface WeekReportDao {
 
 	public Integer deleteWeekReportRel(Integer weekReportId);
 
-	public Integer getWeekReportCountByUserId(Integer userId);
+	public Integer getWeekReportCount(Integer userId);
 
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);
 
 	public Integer deleteWeekReport(Integer id);
 
 	public List<WeekReportRel> getWeekReportRelList(WeekReportRel weekReportRel);
+
+	public WeekReport getNewWeekReport(Integer userId);
 
 
 

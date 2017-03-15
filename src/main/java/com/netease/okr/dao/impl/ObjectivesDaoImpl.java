@@ -41,6 +41,11 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 		return objectivesMapper.getNextCodeNum(userId);
 	}
 	
+	@Override
+	public Integer getObjectivesCount(Integer userId){
+		return objectivesMapper.getObjectivesCount(userId);
+	}
+	
 	
 	@Override
 	public Integer addObjectives(Objectives objectives){
