@@ -13,7 +13,7 @@ import com.netease.okr.redis.RedisClient;
  */
 public class RedisUserContextUtil {
 
-	private static final int TIME_OUT_SECONDS = 3*60*60;//过去时间【秒】 
+	private static final int TIME_OUT_SECONDS = 2*60*60;//过去时间【秒】 
 
 	private static final String COOKIE_NAME = "JSESSIONID";
 	

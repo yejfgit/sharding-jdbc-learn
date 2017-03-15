@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.redis.RedisClient;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
@@ -202,7 +203,13 @@ public class OpenIdController {
 					userContext.setUser(user);
 					// 把用户上下文放入会话中
 					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+					LoggerUtil.info("before login");
+					RedisClient.set("test012", "adsfasdfasdfasdfasdfasdfasdf");
+					LoggerUtil.info(RedisClient.get("test012"));
+					
 					RedisUserContextUtil.initUserContext(userContext);
+					
+					LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
 				}else{
