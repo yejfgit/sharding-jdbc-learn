@@ -10,8 +10,7 @@ import com.netease.okr.dao.DeptDao;
 import com.netease.okr.model.entity.Dept;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.DeptService;
-import com.netease.okr.util.ConstantsUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 @Service
 public class DeptServiceImpl implements DeptService {
@@ -38,7 +37,7 @@ public class DeptServiceImpl implements DeptService {
 	@Override
 	public List<Dept> getAllDept(){
 		
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		//全部部门
 		/*List<Dept> deptL1List = deptDao.getDeptListByLevel(ConstantsUtil.DEPT_LEVEL_L1);
 		if(deptL1List!=null&&deptL1List.size()>0){

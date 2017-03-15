@@ -17,6 +17,10 @@ import com.netease.okr.util.LoggerUtil;
 
 import redis.clients.jedis.Jedis;
 
+
+/**
+ * @author yejf
+ * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/applicationContext.xml","classpath:spring/applicationContext-database.xml","classpath:spring/applicationContext-redis.xml" })
 public class RedisTest extends AbstractJUnit4SpringContextTests {

@@ -33,6 +33,7 @@ import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.OpenIdAction;
 import com.netease.okr.util.OpenIdUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 import com.netease.okr.util.UserContextUtil;
 
 
@@ -200,7 +201,8 @@ public class OpenIdController {
 					userContext = new UserContext();
 					userContext.setUser(user);
 					// 把用户上下文放入会话中
-					hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+					RedisUserContextUtil.initUserContext(userContext);
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
 				}else{
@@ -227,7 +229,8 @@ public class OpenIdController {
 	@ResponseBody
 	@RequestMapping(value = "/logout")
 	public JsonResponse logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-		request.getSession().invalidate();
+		//request.getSession().invalidate();
+		RedisUserContextUtil.delUserContext();
 		LoggerUtil.info("退出登录");
 		JsonResponse jsonResponse = new JsonResponse();
 		jsonResponse.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);

@@ -17,7 +17,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 
 @RestController
@@ -51,7 +51,7 @@ public class WeekReportController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/weekReport/getWeekReportList", method = RequestMethod.GET)
 	public JsonResponse getWeekReportList(WeekReportQuery weekReportQuery) {
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		if(weekReportQuery==null){
 			weekReportQuery = new WeekReportQuery();

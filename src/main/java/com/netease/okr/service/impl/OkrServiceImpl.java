@@ -20,7 +20,7 @@ import com.netease.okr.service.OkrService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.MyStringUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 @Service
 public class OkrServiceImpl implements OkrService {
@@ -72,7 +72,7 @@ public class OkrServiceImpl implements OkrService {
 	 */
 	@Override
 	public JsonResponse addObjectives(Objectives objectives) {
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		int c = 0;
 		
@@ -187,7 +187,7 @@ public class OkrServiceImpl implements OkrService {
 	 * 获取目标当前编号
 	 * */
 	private Integer getNextObjectivesNum(){
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		Integer codeNum = objectivesDao.getNextCodeNum(user.getId());
 		
