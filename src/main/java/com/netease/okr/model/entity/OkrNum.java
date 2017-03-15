@@ -2,7 +2,7 @@ package com.netease.okr.model.entity;
 
 import java.io.Serializable;
 
-public class OkrNum implements Serializable {
+public class OkrNum extends DateInfo implements Serializable {
 
 	/**
 	 * 
@@ -12,6 +12,8 @@ public class OkrNum implements Serializable {
 	private Integer userId;
 	
 	private Integer okrNum;
+	
+	private Integer objectivesNum;
 	
 	private Integer weekReportNum;
 
@@ -37,6 +39,14 @@ public class OkrNum implements Serializable {
 
 	public void setWeekReportNum(Integer weekReportNum) {
 		this.weekReportNum = weekReportNum;
+	}
+
+	public Integer getObjectivesNum() {
+		return objectivesNum;
+	}
+
+	public void setObjectivesNum(Integer objectivesNum) {
+		this.objectivesNum = objectivesNum;
 	}
 	
 	

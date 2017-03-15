@@ -39,8 +39,14 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	
 	
 	@Override
-	public Integer getWeekReportCountByUserId(Integer userId){
-		return weekReportMapper.getWeekReportCountByUserId(userId);
+	public Integer getWeekReportCount(Integer userId){
+		return weekReportMapper.getWeekReportCount(userId);
+	}
+	
+	
+	@Override
+	public WeekReport getNewWeekReport(Integer userId){
+		return weekReportMapper.getNewWeekReport(userId);
 	}
 	
 	
