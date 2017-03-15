@@ -120,7 +120,7 @@
 		<include refid="selectedUserColumns"></include> 
 		from tb_user u
 		<include refid="userJoinCon"></include> 
-		where u.corp_mail=#{corpMail}
+		where u.corp_mail=#{corpMail} and u.state in (0,1)
 	</select>
 	
 	<select id="getUserListOfDept" resultMap="UserResultMap" >
