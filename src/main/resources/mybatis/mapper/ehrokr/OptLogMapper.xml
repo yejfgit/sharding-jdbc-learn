@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.OptLogMapper">
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	
+	<resultMap type="com.netease.okr.model.entity.OptLog" id="OptLogResultMap">
+		<id column="id" property="id"/>
+		<result column="ip" property="ip"/>
+		<result column="url" property="url"/>
+		<result column="user_id" property="userId"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
+	<insert id="addOptLog" parameterType="com.netease.okr.model.entity.OptLog">
+		insert into tb_opt_log(
+			id,
+			<if test="ip!=null and ip!=''">ip,</if>
+			<if test="url!=null and url!=''">url,</if>
+			<if test="userId!=null">user_id,</if>
+			create_time
+		)
+		values(
+			#{id},
+			<if test="ip!=null and ip!=''">#{ip},</if>
+			<if test="url!=null and url!=''">#{url},</if>
+			<if test="userId!=null">#{userId},</if>
+			now()
+		)
+	</insert>
+	
+</mapper>

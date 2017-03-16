@@ -35,7 +35,7 @@ public class IPUtil {
 	 * @return String
 	 */
 	public static String getRemoteIp(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
+		String ip = request.getHeader("X-Forward-For");
 		if (StringUtils.isBlank(ip)
 				|| StringUtils.equalsIgnoreCase("unknown", ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
