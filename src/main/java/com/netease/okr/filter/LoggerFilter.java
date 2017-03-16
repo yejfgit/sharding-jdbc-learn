@@ -31,16 +31,19 @@ public class LoggerFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String userName = null;
-
+		Integer userId = null;
+		
 		if (session != null) {
 			UserContext ucvo = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
 			if (ucvo != null) {
 				User user = (User) ucvo.getUser();
 				userName = user.getName();
+				userId = user.getId();
 			}
 
 		}
 
+		MDC.put("userId", userId != null ? userId : "noLogin");
 		MDC.put("userName", userName != null ? userName : "noLogin");
 		MDC.put("userIP", new StringBuffer().append("[").append(IPUtil.getRemoteIp(req)).append("]"));
 
