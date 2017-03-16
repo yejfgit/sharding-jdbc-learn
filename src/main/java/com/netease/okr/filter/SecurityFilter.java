@@ -10,11 +10,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.netease.okr.common.UserContext;
+import com.netease.okr.model.entity.OptLog;
+import com.netease.okr.model.entity.security.User;
+import com.netease.okr.service.OptLogService;
+import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.UserContextUtil;
 
 public class SecurityFilter implements Filter {
+	
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
