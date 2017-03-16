@@ -1,8 +1,10 @@
 package com.netease.okr.aop;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +19,15 @@ import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.UserContextUtil;
 
-
 /**
  * @author yejf
- * */
+ */
 public class OptLogAop {
-	
+
 	@Autowired
 	private OptLogService optLogService;
-		
+	
+	
 	// 接口类型
 	private static Set<String> urlTypeList = new HashSet<String>();
 
@@ -45,8 +47,9 @@ public class OptLogAop {
 			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 					.getRequest();
 
-			UserContext uc = UserContextUtil.getUserContext();
-			if (request!=null&&uc != null && uc.getUser() != null&&urlTypeList.contains(request.getRequestURI())) {
+			UserContext uc = (UserContext) request.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			if (request != null && uc != null && uc.getUser() != null
+					&& urlTypeList.contains(request.getRequestURI())) {
 				User user = (User) uc.getUser();
 				OptLog optLog = new OptLog();
 				optLog.setUserId(user.getId());
