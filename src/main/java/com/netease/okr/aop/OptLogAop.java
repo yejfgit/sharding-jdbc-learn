@@ -1,10 +1,8 @@
 package com.netease.okr.aop;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ public class OptLogAop {
 	@Autowired
 	private OptLogService optLogService;
 	
-	
 	// 接口类型
 	private static Set<String> urlTypeList = new HashSet<String>();
 
@@ -41,6 +38,9 @@ public class OptLogAop {
 		urlTypeList.add("/weekReport/updateWeekReport.do");
 	}
 
+	public void before() {
+	}
+	
 	public void after() {
 		try {
 

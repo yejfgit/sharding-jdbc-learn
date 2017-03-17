@@ -17,6 +17,7 @@
 	<aop:config>
 		<aop:aspect id="b" ref="optLog"><!--调用操作记录类 -->
 			<aop:pointcut id="log" expression="execution(* com.netease.okr.controller.*.*(..))" /><!--配置在controller包下所有的类在调用之前都会被拦截 -->
+			<aop:after pointcut-ref="log" method="before" /><!--在controller包下面所有的类的所有方法被调用之前都调用optLog中的before方法 -->
 			<aop:after pointcut-ref="log" method="after" /><!--在controller包下面所有的类的所有方法被调用之前都调用optLog中的after方法 -->
 		</aop:aspect>
 	</aop:config>

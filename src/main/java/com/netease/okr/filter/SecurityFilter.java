@@ -10,13 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.netease.okr.common.UserContext;
-import com.netease.okr.model.entity.OptLog;
-import com.netease.okr.model.entity.security.User;
-import com.netease.okr.service.OptLogService;
-import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.UserContextUtil;
 
@@ -32,7 +26,7 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
-			
+			long startTime = System.currentTimeMillis();    //获取开始时间
 			HttpServletRequest hsrq = (HttpServletRequest) request;
 			UserContext ucvo = (UserContext) hsrq.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
 			
@@ -50,6 +44,7 @@ public class SecurityFilter implements Filter {
 			UserContextUtil.initUserContext(ucvo);
 			chain.doFilter(request, response);
 			UserContextUtil.destoryUserContext();
+			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------"); 
 			
 
 		}
