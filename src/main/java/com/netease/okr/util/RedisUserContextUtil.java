@@ -65,7 +65,7 @@ public class RedisUserContextUtil {
 	
 	/**
 	 * 初始化失败返回 0 成功返回1
-	 * @author hzyejinfu
+	 * @author yejf
 	 * */
 	public static int initUserContext(UserContext userContext) {
 		

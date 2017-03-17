@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OptLogService;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.LoggerUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 import com.netease.okr.util.UserContextUtil;
 
 /**
@@ -47,7 +48,8 @@ public class OptLogAop {
 			HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 					.getRequest();
 
-			UserContext uc = (UserContext) request.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			UserContext uc = (UserContext) RedisUserContextUtil.getUserContext();
+			
 			if (request != null && uc != null && uc.getUser() != null
 					&& urlTypeList.contains(request.getRequestURI())) {
 				User user = (User) uc.getUser();
