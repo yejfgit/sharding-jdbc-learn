@@ -16,6 +16,7 @@ import org.apache.log4j.MDC;
 import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.IPUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 import com.netease.okr.util.UserContextUtil;
 
 public class LoggerFilter implements Filter {
@@ -34,7 +35,7 @@ public class LoggerFilter implements Filter {
 		Integer userId = null;
 		
 		if (session != null) {
-			UserContext ucvo = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
+			UserContext ucvo = RedisUserContextUtil.getUserContext();
 			if (ucvo != null) {
 				User user = (User) ucvo.getUser();
 				userName = user.getName();
