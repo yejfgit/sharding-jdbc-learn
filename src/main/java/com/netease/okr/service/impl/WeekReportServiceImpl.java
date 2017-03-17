@@ -24,6 +24,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.quartz.job.UpdateKeyResultStatusTask;
 import com.netease.okr.quartz.scheduler.TaskScheduler;
+import com.netease.okr.service.FileService;
 import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.JsonUtil;
@@ -43,7 +44,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 	
 	@Autowired
 	private DateInfoMapper dateInfoMapper;
-	
+
+	@Autowired
+	private FileService fileService;
 
 	@Autowired
 	private KeyResultDao keyResultDao;
@@ -267,8 +270,11 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * */
 	private Integer deleteAppendixList(Integer weekReportId){
 
-		return appendixMapper.deleteAppendixByWeekReportId(weekReportId);
+		List<Appendix> appendixs= appendixMapper.getAppendixByWeekReportId(weekReportId);
 		
+		
+		return fileService.deleteList(appendixs);
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.netease.okr.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,5 +41,7 @@ public interface FileService {
 	public String getNosKey();
 
 	public String uploadFile(File file, String fileName, String nosKey) throws DataAccessException;
+
+	public Integer deleteList(List<Appendix> appendixs) throws DataAccessException;
 
 }
