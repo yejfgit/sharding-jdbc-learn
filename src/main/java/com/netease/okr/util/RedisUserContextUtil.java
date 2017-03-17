@@ -13,7 +13,7 @@ import com.netease.okr.redis.RedisClient;
  */
 public class RedisUserContextUtil {
 
-	private static final int TIME_OUT_SECONDS = 2*60*60;//过去时间【秒】 
+	private static final int TIME_OUT_SECONDS = 2*60*60;//过期时间【秒】 
 
 	private static final String COOKIE_NAME = "_ntes_nnid";
 	
@@ -33,10 +33,10 @@ public class RedisUserContextUtil {
 				for(int i=0;i<cookies.length;i++){
 					Cookie cookie= cookies[i];
 					
-					LoggerUtil.info("*******"+cookie.getName()+"="+cookie.getValue()+"*******");
+					LoggerUtil.info("cookieList【"+cookie.getName()+"="+cookie.getValue()+"】");
 					
 					if(COOKIE_NAME.equals(cookie.getName())){
-						LoggerUtil.info("--------------"+cookie.getName()+"="+cookie.getValue()+"----------------");
+						LoggerUtil.info("cookieUsed【"+cookie.getName()+"="+cookie.getValue()+"】");
 						return COOKIE_VALUE+cookie.getValue();
 					}
 				}
@@ -70,7 +70,7 @@ public class RedisUserContextUtil {
 	public static int initUserContext(UserContext userContext) {
 		
 		String key =(String)instance.get();
-		LoggerUtil.info("--------------"+key+"----------------");
+		LoggerUtil.info("cookieKey【"+key+"】");
 		String result = RedisClient.set(key, JSON.toJSONString(userContext));
 		RedisClient.expire(key,TIME_OUT_SECONDS);
 		
