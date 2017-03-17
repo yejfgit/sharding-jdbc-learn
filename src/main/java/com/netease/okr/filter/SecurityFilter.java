@@ -16,6 +16,7 @@ import com.netease.okr.util.RedisUserContextUtil;
 
 public class SecurityFilter implements Filter {
 	
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -28,7 +29,7 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
-			
+			long startTime = System.currentTimeMillis();    //获取开始时间
 			HttpServletRequest hsrq = (HttpServletRequest) request;
 			UserContext ucvo = (UserContext) hsrq.getSession().getAttribute(UserContextUtil.USER_CONTEXT_NAME);
 			
@@ -46,6 +47,7 @@ public class SecurityFilter implements Filter {
 			UserContextUtil.initUserContext(ucvo);
 			chain.doFilter(request, response);
 			UserContextUtil.destoryUserContext();
+			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------"); 
 			
 
 		}
