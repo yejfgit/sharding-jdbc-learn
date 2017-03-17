@@ -7,7 +7,7 @@ public class Appendix implements Serializable {
 	
 	private static final long serialVersionUID = 8721176900490484659L;
 
-	private String id;
+	private Integer id;
 	
 	/**
 	 * 周报ID
@@ -33,11 +33,11 @@ public class Appendix implements Serializable {
 	
 	private Date createTime;
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
