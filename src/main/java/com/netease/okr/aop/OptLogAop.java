@@ -16,7 +16,6 @@ import com.netease.okr.service.OptLogService;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.RedisUserContextUtil;
-import com.netease.okr.util.UserContextUtil;
 
 /**
  * @author yejf
