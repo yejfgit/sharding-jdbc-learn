@@ -49,7 +49,7 @@ public class RedisUserContextUtil {
 	
 	public static int initCookieKey(HttpServletRequest request) {
 		String key = getKey(request);
-		
+		LoggerUtil.info("initCookieKey【"+key+"】");
 		instance.set(key);
 		
 		return 0;
@@ -70,7 +70,7 @@ public class RedisUserContextUtil {
 	public static int initUserContext(UserContext userContext) {
 		
 		String key =(String)instance.get();
-		LoggerUtil.info("cookieKey【"+key+"】");
+		LoggerUtil.info("initUserContext【"+key+"】");
 		String result = RedisClient.set(key, JSON.toJSONString(userContext));
 		RedisClient.expire(key,TIME_OUT_SECONDS);
 		
