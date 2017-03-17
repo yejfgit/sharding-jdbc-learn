@@ -100,7 +100,8 @@ public class OpenIdController {
 				userContext = new UserContext();
 				userContext.setUser(user);
 				// 把用户上下文放入会话中
-				session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+				//session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+				RedisUserContextUtil.initUserContext(userContext);
 				return "redirect:" + INDEX_PAGE_SUCCESS;
 		
 			}
@@ -203,9 +204,9 @@ public class OpenIdController {
 					userContext.setUser(user);
 					// 把用户上下文放入会话中
 					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
-					LoggerUtil.info("before login");
+					//LoggerUtil.info("before login");
 					RedisUserContextUtil.initUserContext(userContext);
-					LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
+					//LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
 				}else{
