@@ -58,6 +58,7 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
+			long startTime = System.currentTimeMillis();    //获取开始时间
 			
 			HttpServletRequest hsrq = (HttpServletRequest) request;
 			
@@ -79,7 +80,7 @@ public class SecurityFilter implements Filter {
 			chain.doFilter(request, response);
 			RedisUserContextUtil.destoryCookieKey();
 			
-
+			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------");
 		}
 	}
 
