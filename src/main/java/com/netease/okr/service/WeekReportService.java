@@ -17,6 +17,8 @@ public interface WeekReportService {
 
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);
 
+	public WeekReport getWeekReportById(Integer id);
+
 
 
 }

@@ -28,6 +28,8 @@ public interface WeekReportDao {
 
 	public WeekReport getNewWeekReport(Integer userId);
 
+	public WeekReport getWeekReportById(Integer id);
+
 
 
 }

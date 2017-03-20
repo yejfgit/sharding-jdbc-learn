@@ -99,5 +99,9 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	public List<WeekReportRel> getWeekReportRelList(WeekReportRel weekReportRel) {
 		return weekReportMapper.getWeekReportRelList(weekReportRel);
 	}
+	@Override
+	public WeekReport getWeekReportById(Integer id) {
+		return weekReportMapper.getWeekReportById(id);
+	}
 	
 }

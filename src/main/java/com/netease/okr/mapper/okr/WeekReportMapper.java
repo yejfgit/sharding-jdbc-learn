@@ -82,6 +82,8 @@ public interface WeekReportMapper {
 	
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery);
 	
+	public WeekReport getWeekReportById(Integer id);
+	
 	public List<WeekReportRel> getWeekReportRelList(WeekReportRel weekReportRel);
 	
 	

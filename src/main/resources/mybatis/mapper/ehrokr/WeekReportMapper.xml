@@ -90,6 +90,15 @@
 		<include refid="weekReporOrderBy"></include>
 	</select>
 	
+	<!-- 查询周报 -->
+	<select id="getWeekReportById" resultMap="WeekReportResultMap">
+		select 
+		<include refid="selectedWeekReportColumns"></include> 
+		from tb_week_report t 
+		<include refid="weekReporJoinCon"></include> 
+		where t.id=#{id}
+	</select>
+	
 	<!-- 查询所有的周报关系 -->
 	<select id="getWeekReportRelList" resultMap="WeekReportRelResultMap">
 		select 
