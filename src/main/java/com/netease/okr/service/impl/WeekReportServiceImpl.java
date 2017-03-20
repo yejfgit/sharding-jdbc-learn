@@ -116,7 +116,23 @@ public class WeekReportServiceImpl implements WeekReportService {
 			return JsonUtil.toJsonFail("传值错误！周报内容为空");
 		}
 		
-		return  JsonUtil.toJsonObj(weekReportList);
+		return  JsonUtil.toJsonObj(toWeekReportList(weekReportList));
+	}
+	
+	
+	private WeekReportList toWeekReportList(WeekReportList weekReportList){
+		
+		WeekReportList wrList = new WeekReportList();
+		
+		if(weekReportList!=null&&weekReportList.getWeekList()!=null&&weekReportList.getWeekList().size()>0){
+			List<WeekReport> weekReports = weekReportList.getWeekList();
+			List<WeekReport> weekReportsAdd = new ArrayList<WeekReport>();
+			for(WeekReport wr:weekReports){
+				weekReportsAdd.add(weekReportDao.getWeekReportById(wr.getId()));
+			}
+			wrList.setWeekList(weekReportsAdd);
+		}
+		return wrList;
 	}
 	
 	
@@ -295,6 +311,11 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 		return fileService.deleteList(appendixs);
 
+	}
+	
+	@Override
+	public WeekReport getWeekReportById(Integer id) {
+		return weekReportDao.getWeekReportById(id);
 	}
 
 }
