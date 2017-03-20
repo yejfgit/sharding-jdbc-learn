@@ -18,6 +18,19 @@
 		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByoId"></collection>
 	</resultMap>
 	
+	
+	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesInfoResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_code" property="objectivesCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
 	<sql id="selectedObjectivesColumns">
 		id,
 		objectives_name,
@@ -33,6 +46,14 @@
 	
 	<!-- 根据Id查询目标 -->
 	<select id="getObjectivesById" resultMap="ObjectivesResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where id=#{id}
+	</select>
+	
+	<!-- 根据Id查询目标简单信息 -->
+	<select id="getObjectivesInfoById" resultMap="ObjectivesInfoResultMap">
 		select
 		<include refid="selectedObjectivesColumns"></include>
 		from tb_objectives

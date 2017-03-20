@@ -34,7 +34,10 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 		return objectivesMapper.getObjectivesById(id);
 	}
 	
-	
+	@Override
+	public Objectives getObjectivesInfoById(Integer id) {
+		return objectivesMapper.getObjectivesInfoById(id);
+	}
 	
 	@Override
 	public Integer getNextCodeNum(Integer userId){

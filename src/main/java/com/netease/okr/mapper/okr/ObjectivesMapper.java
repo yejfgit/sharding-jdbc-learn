@@ -26,11 +26,20 @@ public interface ObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param userId
+	 * @param id
 	 * @return Objectives
 	 * @throws DataAccessException
 	 */
 	public Objectives getObjectivesById(@Param(value = "id") Integer id)  throws DataAccessException;
+	
+	
+	/**
+	 * @author yejf
+	 * @param userId
+	 * @return id
+	 * @throws DataAccessException
+	 */
+	public Objectives getObjectivesInfoById(@Param(value = "id") Integer id)  throws DataAccessException;
 	
 	
 	

@@ -62,6 +62,7 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	 * */
 	private Date endDate;
 	
+	
 	/**
 	 *关键事件及结果 
 	 * */
@@ -144,6 +145,5 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
 
 }
