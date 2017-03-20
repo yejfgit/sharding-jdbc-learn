@@ -41,6 +41,8 @@ public class KeyResult  extends BaseEntity implements Serializable {
 	 * code编号
 	 * */
 	private Integer codeNum;
+	
+	private Objectives objectives;
 
 	public Integer getId() {
 		return id;
@@ -111,6 +113,12 @@ public class KeyResult  extends BaseEntity implements Serializable {
 		this.codeNum = codeNum;
 	}
 	
+	public Objectives getObjectives() {
+		return objectives;
+	}
 	
+	public void setObjectives(Objectives objectives) {
+		this.objectives = objectives;
+	}
 
 }
