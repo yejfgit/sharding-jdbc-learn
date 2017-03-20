@@ -195,6 +195,15 @@ public class OpenIdController {
 				
 				User user = userService.getUserByEmail(passport);
 				
+				//支持@yixin.im,用户名返回会有一个“yixin.”的前缀？！
+				if (user == null) {
+					if(pixPassport.startsWith("yixin.")){
+						pixPassport = pixPassport.substring(6);
+					}
+					passport = pixPassport + "@yixin.im";
+					user = userService.getUserByEmail(passport);
+				}
+				
 				// 未登录的
 				if (userContext == null&&user!=null) {
 					userContext = new UserContext();
