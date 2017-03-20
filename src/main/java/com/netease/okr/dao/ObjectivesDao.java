@@ -20,5 +20,7 @@ public interface ObjectivesDao {
 
 	public Integer getObjectivesCount(Integer userId);
 
+	public Objectives getObjectivesInfoById(Integer id);
+
 
 }
