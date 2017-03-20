@@ -73,6 +73,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping> -->
 	
+	<!-- sessionFilter -->
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>com.netease.okr.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
 	<!-- securityFilter -->
 	<filter>
 		<filter-name>securityFilter</filter-name>

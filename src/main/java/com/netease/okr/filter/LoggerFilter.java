@@ -17,7 +17,6 @@ import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.util.IPUtil;
 import com.netease.okr.util.RedisUserContextUtil;
-import com.netease.okr.util.UserContextUtil;
 
 public class LoggerFilter implements Filter {
 

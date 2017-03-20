@@ -28,7 +28,6 @@ import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.common.UserContext;
 import com.netease.okr.model.entity.security.User;
-import com.netease.okr.redis.RedisClient;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
@@ -87,7 +86,7 @@ public class OpenIdController {
 	 */
 	@RequestMapping(value = "/login/{passport}/{password}")
 	public String login(@PathVariable(value = "passport") String passport,
-			@PathVariable(value = "password") String password, HttpSession session) {
+			@PathVariable(value = "password") String password, HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		LoggerUtil.info(passport + ":passport【devlogin】");
 
 		UserContext userContext = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
@@ -101,7 +100,7 @@ public class OpenIdController {
 				userContext.setUser(user);
 				// 把用户上下文放入会话中
 				//session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
-				RedisUserContextUtil.initUserContext(userContext);
+				RedisUserContextUtil.initUserContext(userContext,request,response);
 				return "redirect:" + INDEX_PAGE_SUCCESS;
 		
 			}
@@ -214,7 +213,7 @@ public class OpenIdController {
 					// 把用户上下文放入会话中
 					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
 					//LoggerUtil.info("before login");
-					RedisUserContextUtil.initUserContext(userContext);
+					RedisUserContextUtil.initUserContext(userContext,request,response);
 					//LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;

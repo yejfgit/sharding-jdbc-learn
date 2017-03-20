@@ -1,7 +1,9 @@
 package com.netease.okr.util;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.UserContext;
@@ -13,11 +15,7 @@ import com.netease.okr.redis.RedisClient;
  */
 public class RedisUserContextUtil {
 
-	private static final int TIME_OUT_SECONDS = 2*60*60;//过期时间【秒】 
-
-	private static final String COOKIE_NAME = "_ntes_nnid";
-	
-	private static final String COOKIE_VALUE = "OKR";
+	private static final int TIME_OUT_SECONDS = CookieUtil.KEY_EXPIRE_TIME;//过期时间【秒】 
 
 	private static ThreadLocal<Object> instance = new ThreadLocal<Object>();
 	
@@ -25,31 +23,11 @@ public class RedisUserContextUtil {
 	 * 获取cookie值
 	 * */
 	public static String getKey(HttpServletRequest request) {
-		
-		if(request!=null){
-			Cookie[] cookies = request.getCookies();
-			LoggerUtil.info(request.getSession().getId());
-			if(cookies!=null){
-				for(int i=0;i<cookies.length;i++){
-					Cookie cookie= cookies[i];
-					
-					LoggerUtil.info("cookieList【"+cookie.getName()+"="+cookie.getValue()+"】");
-					
-					if(COOKIE_NAME.equals(cookie.getName())){
-						LoggerUtil.info("cookieUsed【"+cookie.getName()+"="+cookie.getValue()+"】");
-						return COOKIE_VALUE+cookie.getValue();
-					}
-				}
-			}
-			
-		}
-		
-		return null;
+		return CookieUtil.getJsessionId(request);
 	}
 	
 	public static int initCookieKey(HttpServletRequest request) {
 		String key = getKey(request);
-		LoggerUtil.info("initCookieKey【"+key+"】");
 		instance.set(key);
 		
 		return 0;
@@ -67,11 +45,17 @@ public class RedisUserContextUtil {
 	 * 初始化失败返回 0 成功返回1
 	 * @author yejf
 	 * */
-	public static int initUserContext(UserContext userContext) {
+	public static int initUserContext(UserContext userContext,ServletRequest request,ServletResponse response) {
+		
+		//初始化cookie
+		CookieUtil.addCookie((HttpServletRequest) request, (HttpServletResponse) response,  CookieUtil.KEY_EXPIRE_TIME); 
 		
 		String key =(String)instance.get();
-		LoggerUtil.info("initUserContext【"+key+"】");
+		
+		//添加到redis
 		String result = RedisClient.set(key, JSON.toJSONString(userContext));
+		
+		//设置redis过期时间
 		RedisClient.expire(key,TIME_OUT_SECONDS);
 		
 		if("OK".equals(result)){
