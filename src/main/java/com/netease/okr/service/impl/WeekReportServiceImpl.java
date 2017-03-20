@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.dao.KeyResultDao;
+import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.enums.KeyResultStatusEnum;
 import com.netease.okr.mapper.okr.AppendixMapper;
@@ -38,6 +39,10 @@ public class WeekReportServiceImpl implements WeekReportService {
 
 	@Autowired
 	private WeekReportDao weekReportDao;
+	
+	
+	@Autowired
+	private ObjectivesDao objectivesDao;
 	
 	@Autowired
 	private AppendixMapper appendixMapper;
@@ -75,7 +80,23 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 */
 	@Override
 	public List<WeekReport> getWeekReportList(WeekReportQuery weekReportQuery) {
-		return weekReportDao.getWeekReportList(weekReportQuery);
+		List<WeekReport> weekReports =  weekReportDao.getWeekReportList(weekReportQuery);
+		
+		//周报列表添加目标信息
+		if(weekReports!=null&&weekReports.size()>0){
+			for(WeekReport wr:weekReports){
+				//关键事件
+				List<KeyResult> keyResults = wr.getKeyResultList();
+				if(keyResults!=null&&keyResults.size()>0){
+					for(KeyResult kr:keyResults){
+						//添加目标信息
+						kr.setObjectives(objectivesDao.getObjectivesInfoById(kr.getObjectivesId()));
+					}
+				}
+			}
+		}
+		
+		return weekReports;
 	}
 	
 	
