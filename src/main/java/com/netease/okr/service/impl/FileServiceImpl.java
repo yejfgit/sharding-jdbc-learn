@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -100,6 +101,26 @@ public class FileServiceImpl implements FileService {
 				msg = "删除附件错误";
 		}
 		return msg;
+	}
+	
+	
+	@Override
+	public Integer deleteList(List<Appendix> appendixs) throws DataAccessException {
+		String msg = "";
+		try {
+			if(appendixs!=null&&appendixs.size()>0){
+				for(Appendix apx:appendixs){
+					delete(apx.getId());
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			msg = "删除附件错误";
+			LoggerUtil.error(msg, e);
+			return 0;
+			
+		}
+		return 1;
 	}
 
 	/**
