@@ -15,8 +15,6 @@ import com.netease.okr.redis.RedisClient;
  */
 public class RedisUserContextUtil {
 
-	private static final int TIME_OUT_SECONDS = CookieUtil.KEY_EXPIRE_TIME;//过期时间【秒】 
-
 	private static ThreadLocal<Object> instance = new ThreadLocal<Object>();
 	
 	/**
@@ -48,15 +46,13 @@ public class RedisUserContextUtil {
 	public static int initUserContext(UserContext userContext,ServletRequest request,ServletResponse response) {
 		
 		//初始化cookie
-		CookieUtil.addCookie((HttpServletRequest) request, (HttpServletResponse) response,  CookieUtil.KEY_EXPIRE_TIME); 
-		
-		String key =(String)instance.get();
+		String key =CookieUtil.addCookie((HttpServletRequest) request, (HttpServletResponse) response,  CookieUtil.KEY_EXPIRE_TIME); 
 		
 		//添加到redis
 		String result = RedisClient.set(key, JSON.toJSONString(userContext));
 		
 		//设置redis过期时间
-		RedisClient.expire(key,TIME_OUT_SECONDS);
+		RedisClient.expire(key,CookieUtil.KEY_EXPIRE_TIME);
 		
 		if("OK".equals(result)){
 			return 1;

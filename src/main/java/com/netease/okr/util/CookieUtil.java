@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletResponse;
   
 public class CookieUtil {  
   
-    /** 设置session的过期时间*/  
-    public static Integer KEY_EXPIRE_TIME =  2*60*60;  
+    /** 设置过期时间*/  
+    public static Integer KEY_EXPIRE_TIME =  2 * 60 * 60; //秒 
     
     private static final String COOKIE_NAME = "OKRSESSIONID";
+    
+    private static final String COOKIE_PRE = "OKR";
   
     /** 
      * 获取JessionId 
@@ -35,7 +37,7 @@ public class CookieUtil {
     public static String addCookie(HttpServletRequest request, HttpServletResponse response, Integer KEY_EXPIRE_TIME) {  
         String csessionId = getJsessionId(request);  
         if (csessionId == null || "".equals(csessionId)) {  
-            csessionId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();  
+            csessionId = COOKIE_PRE+UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();  
         }  
         Cookie cookie = new Cookie(COOKIE_NAME, csessionId);  
         cookie.setPath("/");  
