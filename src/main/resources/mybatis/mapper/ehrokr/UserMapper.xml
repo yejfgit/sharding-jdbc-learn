@@ -42,8 +42,8 @@
 		u.dept_l2_id,
 		u.dept_l3_id,
 		u.station_name,
-		u.photo_url,
-		u.nos_key,
+		<!-- u.photo_url,
+		u.nos_key, -->
 		u.modify_time,
 		u.create_time,
 		d1.name deptL1Name,

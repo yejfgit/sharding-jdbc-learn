@@ -28,11 +28,8 @@ public class SessionFilter implements Filter {
         // 当session不为空的时候，要刷新cookie存活周期和redis中键的存活日期  
         String csessionId = CookieUtil.getJsessionId((HttpServletRequest) request);  
         if (csessionId != null && !"".equals(csessionId)) {  
-        	
             RedisClient.expire(csessionId,CookieUtil.KEY_EXPIRE_TIME);
-            
-            CookieUtil.addCookie((HttpServletRequest) request, (HttpServletResponse) response,  
-                    CookieUtil.KEY_EXPIRE_TIME);  
+            CookieUtil.addCookie((HttpServletRequest) request, (HttpServletResponse) response,CookieUtil.KEY_EXPIRE_TIME);  
         }  
         chain.doFilter(request, response);  
     }  

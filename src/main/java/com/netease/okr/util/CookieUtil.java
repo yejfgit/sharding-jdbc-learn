@@ -5,11 +5,15 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;  
 import javax.servlet.http.HttpServletRequest;  
 import javax.servlet.http.HttpServletResponse;  
-  
+ 
+/**
+ * 生成cookie
+ * @author yejf
+ */
 public class CookieUtil {  
   
-    /** 设置过期时间*/  
-    public static Integer KEY_EXPIRE_TIME =  2 * 60 * 60; //秒 
+    /** 设置过期时间【秒】*/  
+    public static Integer KEY_EXPIRE_TIME =  2 * 60 * 60;
     
     private static final String COOKIE_NAME = "OKRSESSIONID";
     
@@ -22,7 +26,7 @@ public class CookieUtil {
      */  
     public static String getJsessionId(HttpServletRequest request) {  
         Cookie[] cookies = request.getCookies();  
-        // 从Cookie数据中遍历查找 并取CSESSIONID  
+        // 从Cookie数据中遍历查找 并取OKRSESSIONID  
         if (null != cookies && cookies.length > 0) {  
             for (Cookie cookie : cookies) {  
                 if (COOKIE_NAME.equals(cookie.getName())) {  
