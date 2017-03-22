@@ -132,7 +132,7 @@
 		<include refid="selectedWeekReportColumns"></include>
 		from tb_week_report t
 		<include refid="weekReporJoinCon"></include> 
-		where t.user_id=#{userId} 
+		where t.user_id=#{userId} and t.status = 1  
 		order by t.date_id desc limit 1 
 	</select>
 	
