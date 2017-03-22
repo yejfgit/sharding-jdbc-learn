@@ -197,7 +197,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 			LoggerUtil.info("创建周报【id="+weekReport.getId()+";dateId="+dateId+";year="+weekReport.getYear()+";week="+weekReport.getWeek()+"】");
 			
 			//保存周报关键事件关系表
-			saveWeekReportRelList(weekReport.getId(),weekReport.getKeyResultList());
+			saveWeekReportRelList(weekReport,weekReport.getKeyResultList());
 			
 			//更新周报附件信息
 			updateAppendixList(weekReport.getId(),weekReport.getAppendixList());
@@ -209,12 +209,20 @@ public class WeekReportServiceImpl implements WeekReportService {
 	/**
 	 * 保存周报关系
 	 * */
-	private void saveWeekReportRelList(Integer weekReportId, List<KeyResult> keyResults){
+	private void saveWeekReportRelList(WeekReport weekReport, List<KeyResult> keyResults){
+		
+		Integer weekReportId = weekReport.getId();
+		
 		List<WeekReportRel> weekReportRels = new ArrayList<WeekReportRel>();
 		if(keyResults!=null&&keyResults.size()>0){
 			for(KeyResult keyResult:keyResults){
 				//更新关键事件状态
-				keyResult.setStatus(KeyResultStatusEnum.STATUS2.getId());
+				if(ConstantsUtil.OPREATE_TYPE_RELEASE_STATUS.equals(weekReport.getStatus())){
+					keyResult.setStatus(KeyResultStatusEnum.STATUS2.getId());
+				}else{
+					keyResult.setStatus(KeyResultStatusEnum.STATUS1.getId());
+				}
+				
 
 				WeekReportRel wrr = new WeekReportRel();
 				wrr.setKeyResultId(keyResult.getId());
@@ -247,7 +255,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
 			weekReportDao.updateWeekReport(weekReport);
 			//保存周报关键事件关系表
-			saveWeekReportRelList(weekReportId,weekReport.getKeyResultList());
+			saveWeekReportRelList(weekReport,weekReport.getKeyResultList());
 			//更新周报附件信息
 			updateAppendixList(weekReportId,weekReport.getAppendixList());
 		}
