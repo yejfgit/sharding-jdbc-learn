@@ -56,6 +56,15 @@ public class EhrDataServiceImpl implements EhrDateService {
 	}
 	
 	
+	// emp
+	private static Set<String> delEmpIdList = new HashSet<String>();
+
+	static {
+		delEmpIdList.add("GZM139");//唐娜
+	}
+	
+	
+	
 	/**
 	 * @author yejf
 	 * @param 
@@ -118,6 +127,8 @@ public class EhrDataServiceImpl implements EhrDateService {
 			for(Employee emp:empList){
 				
 				if(delDeptIdList.contains(emp.getDept2()==null?"":emp.getDept2().getCode())||delDeptIdList.contains(emp.getDept3()==null?"":emp.getDept3().getCode())) continue;
+				
+				if(delEmpIdList.contains(emp.getId())) continue;
 				
 				//防止事物全部回滚
 				try {
