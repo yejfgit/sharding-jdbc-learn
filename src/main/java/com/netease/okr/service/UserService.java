@@ -24,4 +24,6 @@ public interface UserService {
 	public List<User> getUsers(UserQuery user);
 
 	public PageJsonResponse<User> getUsersPage(UserQuery user, PageBean<User> pageBean);
+
+	public User getUserById(Integer id);
 }
