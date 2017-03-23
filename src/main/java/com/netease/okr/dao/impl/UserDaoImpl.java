@@ -46,6 +46,11 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 		return userMapper.getUserByEmail(corpMail);
 	}
 	
+	@Override
+	public User getUserById(Integer id){
+		return userMapper.getUserById(id);
+	}
+	
 	
 	@Override
 	public List<User> getUsers(UserQuery user){

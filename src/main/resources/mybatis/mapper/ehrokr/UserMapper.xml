@@ -42,8 +42,8 @@
 		u.dept_l2_id,
 		u.dept_l3_id,
 		u.station_name,
-		u.photo_url,
-		u.nos_key,
+		<!-- u.photo_url,
+		u.nos_key, -->
 		u.modify_time,
 		u.create_time,
 		d1.name deptL1Name,
@@ -81,12 +81,17 @@
 		<include refid="userJoinCon"></include> 
 		where u.u_no=#{uNo}
 	</select>
+	
+	
+	<select id="getUserById" resultMap="UserResultMap">
+		select 
+		<include refid="selectedUserColumns"></include>
+		from tb_user u
+		<include refid="userJoinCon"></include> 
+		where u.id=#{id}
+	</select>
 
 	
-	<delete id="deleteUserById" parameterType="Integer">
-		delete from tb_user
-		where id=#{id}
-	</delete>
 	
 	<select id="getUserByUsername" resultMap="UserResultMap">
 		select 
@@ -227,5 +232,10 @@
 		</set>
 		where id=#{id}
 	</update>
+	
+	<!-- <delete id="deleteUserById" parameterType="Integer">
+		delete from tb_user
+		where id=#{id}
+	</delete> -->
 	
 </mapper>
