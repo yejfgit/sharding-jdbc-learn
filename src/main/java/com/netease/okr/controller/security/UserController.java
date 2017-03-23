@@ -18,6 +18,7 @@ import com.netease.okr.model.query.UserQuery;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.MyStringUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 import com.netease.okr.util.UserContextUtil;
 
 
@@ -47,13 +48,13 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/user/getUserInfo", method = RequestMethod.GET)
 	public JsonResponse getUserInfo(Integer userId) {
 		
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		//查询其他用户信息
 		if(userId!=null){
 			user = userService.getUserById(userId);
 		}
-		
+
 		return JsonUtil.toJsonObj(user);
 	}
 	
@@ -78,7 +79,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/user/queryUserList", method = RequestMethod.GET)
 	public JsonResponse queryUserList(UserQuery user,PageBean<User> page) {
-		User curUser = (User) UserContextUtil.getUserContext().getUser();
+		User curUser = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		//默认查询本一级部门下人员
 		if(user==null||MyStringUtil.isBlank(user.getDeptId())){
