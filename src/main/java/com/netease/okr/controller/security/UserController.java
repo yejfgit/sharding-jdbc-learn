@@ -19,7 +19,6 @@ import com.netease.okr.service.UserService;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.RedisUserContextUtil;
-import com.netease.okr.util.UserContextUtil;
 
 
 @RestController
