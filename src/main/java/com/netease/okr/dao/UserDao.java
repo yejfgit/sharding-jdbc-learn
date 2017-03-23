@@ -25,4 +25,6 @@ public interface UserDao {
 
 	public PageJsonResponse<User> getUsersPage(UserQuery user, PageBean<User> pageBean);
 
+	public User getUserById(Integer id);
+
 }

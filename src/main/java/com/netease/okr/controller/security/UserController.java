@@ -45,10 +45,15 @@ public class UserController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/getUserInfo", method = RequestMethod.GET)
-	public JsonResponse getUserInfo() {
+	public JsonResponse getUserInfo(Integer userId) {
 		
 		User user = (User) UserContextUtil.getUserContext().getUser();
-
+		
+		//查询其他用户信息
+		if(userId!=null){
+			user = userService.getUserById(userId);
+		}
+		
 		return JsonUtil.toJsonObj(user);
 	}
 	

@@ -74,6 +74,6 @@ public interface UserMapper {
 	public Integer updateUser(User user) throws DataAccessException;
 	
 	
-	
+	public User getUserById(Integer id) throws DataAccessException;
 	
 }
