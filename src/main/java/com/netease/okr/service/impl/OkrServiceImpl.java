@@ -42,9 +42,29 @@ public class OkrServiceImpl implements OkrService {
 	 */
 	@Override
 	public List<Objectives> getMyOkrList(Integer userId) {
-		return objectivesDao.getMyOkrList(userId);
+		List<Objectives> ObjectivesList = objectivesDao.getMyOkrList(userId);
+		
+		//组装json信息
+		if(ObjectivesList!=null&&ObjectivesList.size()>0){
+			for(Objectives ob:ObjectivesList){
+				
+				List<KeyResult> keyResults = ob.getKeyResultList();
+				
+				if(keyResults!=null&&keyResults.size()>0){
+					for(KeyResult kr:keyResults){
+						Objectives obNew = new Objectives();
+						obNew.setObjectivesDsc(ob.getObjectivesDsc());
+						obNew.setObjectivesCode(ob.getObjectivesCode());
+						obNew.setObjectivesName(ob.getObjectivesName());
+						
+						kr.setObjectives(obNew);
+					}
+				}
+			}
+		}
+		
+		return ObjectivesList;
 	}
-	
 	
 
 	/**
@@ -63,7 +83,6 @@ public class OkrServiceImpl implements OkrService {
 	}
 	
 	
-	
 	/**
 	 * @author yejf
 	 * @param type,objectives
@@ -77,7 +96,7 @@ public class OkrServiceImpl implements OkrService {
 		int c = 0;
 		
 		if(objectives==null||MyStringUtil.isBlank(objectives.getType())){
-			return JsonUtil.toJsonFail("【获得objectives信息错误】");
+			return JsonUtil.toJsonFail("获得objectives信息错误");
 		}
 		
 		String type = objectives.getType();
@@ -115,7 +134,6 @@ public class OkrServiceImpl implements OkrService {
 		}
 		
 	}
-	
 	
 	
 	
