@@ -33,6 +33,7 @@ import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.OpenIdAction;
 import com.netease.okr.util.OpenIdUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 import com.netease.okr.util.UserContextUtil;
 
 
@@ -85,7 +86,7 @@ public class OpenIdController {
 	 */
 	@RequestMapping(value = "/login/{passport}/{password}")
 	public String login(@PathVariable(value = "passport") String passport,
-			@PathVariable(value = "password") String password, HttpSession session) {
+			@PathVariable(value = "password") String password, HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		LoggerUtil.info(passport + ":passport【devlogin】");
 
 		UserContext userContext = (UserContext) session.getAttribute(UserContextUtil.USER_CONTEXT_NAME);
@@ -98,7 +99,8 @@ public class OpenIdController {
 				userContext = new UserContext();
 				userContext.setUser(user);
 				// 把用户上下文放入会话中
-				session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+				//session.setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+				RedisUserContextUtil.initUserContext(userContext,request,response);
 				return "redirect:" + INDEX_PAGE_SUCCESS;
 		
 			}
@@ -209,7 +211,10 @@ public class OpenIdController {
 					userContext = new UserContext();
 					userContext.setUser(user);
 					// 把用户上下文放入会话中
-					hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+					//hsrq.getSession().setAttribute(UserContextUtil.USER_CONTEXT_NAME, userContext);
+					//LoggerUtil.info("before login");
+					RedisUserContextUtil.initUserContext(userContext,request,response);
+					//LoggerUtil.info("after login"+JSON.toJSONString(RedisUserContextUtil.getUserContext()));
 					
 					return "redirect:" + INDEX_PAGE_SUCCESS;
 				}else{
@@ -236,7 +241,8 @@ public class OpenIdController {
 	@ResponseBody
 	@RequestMapping(value = "/logout")
 	public JsonResponse logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-		request.getSession().invalidate();
+		//request.getSession().invalidate();
+		RedisUserContextUtil.delUserContext();
 		LoggerUtil.info("退出登录");
 		JsonResponse jsonResponse = new JsonResponse();
 		jsonResponse.setCode(ConstantsUtil.RESPONSE_SUCCESS_200);

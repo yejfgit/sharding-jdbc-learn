@@ -25,7 +25,7 @@ public class UserContextUtil {
 		return 0;
 	}
 
-	public static UserContext getUserContext() {
+	/*public static UserContext getUserContext() {
 		UserContext userCtx = null;
 		Object obj = instance.get();
 		if (obj instanceof UserContext) {
@@ -33,6 +33,6 @@ public class UserContextUtil {
 		}
 		
 		return userCtx;
-	}
+	}*/
 
 }

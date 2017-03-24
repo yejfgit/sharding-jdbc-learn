@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.dao.ObjectivesDao;
@@ -31,7 +32,7 @@ import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyDateUtils;
 import com.netease.okr.util.MyStringUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 @Service
 public class WeekReportServiceImpl implements WeekReportService {
@@ -164,7 +165,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * 保存周报
 	 * */
 	private void saveWeekReportList(WeekReportList weekReportList){
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		Integer status = -1;
 		String type = weekReportList.getType();

@@ -17,7 +17,7 @@ import com.netease.okr.model.entity.OkrNum;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.util.JsonUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 
 @RestController
@@ -33,7 +33,7 @@ public class OkrController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/myOkr/getMyOkrList", method = RequestMethod.GET)
 	public JsonResponse getMyOkrList(Integer userId) {
-		User user = (User) UserContextUtil.getUserContext().getUser();
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		List<Objectives> okrList = new ArrayList<Objectives>();
 		

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.netease.okr.common.UserContext;
 import com.netease.okr.util.LoggerUtil;
-import com.netease.okr.util.UserContextUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 public class SecurityFilter implements Filter {
 	
@@ -22,6 +22,9 @@ public class SecurityFilter implements Filter {
 
 	}
 
+	/*
+	 * 
+	//普通登录过滤器
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -47,6 +50,37 @@ public class SecurityFilter implements Filter {
 			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------"); 
 			
 
+		}
+	}*/
+	
+	
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		if (request instanceof HttpServletRequest) {
+			long startTime = System.currentTimeMillis();    //获取开始时间
+			
+			HttpServletRequest hsrq = (HttpServletRequest) request;
+			
+			RedisUserContextUtil.initCookieKey(hsrq);
+			UserContext ucvo = RedisUserContextUtil.getUserContext();
+			
+			
+			String toUrl = hsrq.getRequestURI().replace(hsrq.getContextPath(), "")
+				+ (hsrq.getQueryString() == null ? "" : "?" + hsrq.getQueryString()); 
+
+			LoggerUtil.info("SecurityFilter url="+toUrl);
+			
+			if (ucvo == null&&toUrl.indexOf("receiveOpenId.do") == -1&&toUrl.indexOf("index.do") == -1
+					&&toUrl.indexOf("openid.do") == -1&&toUrl.indexOf("logout.do") == -1&&toUrl.indexOf("/login/") == -1) {
+				request.getRequestDispatcher("/timeout.do").forward(request, response);
+				return;
+			}
+			
+			chain.doFilter(request, response);
+			RedisUserContextUtil.destoryCookieKey();
+			
+			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------");
 		}
 	}
 

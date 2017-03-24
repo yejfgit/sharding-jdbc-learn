@@ -4,9 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-
-	<description>Redis Configuration</description>
+   <description>Redis Configuration</description>
 
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxIdle" value="100" /><!-- 最大闲置 -->
@@ -31,6 +29,6 @@
 	<bean id="redisClient" class="com.netease.okr.redis.RedisClient">
 		<property name="jedisPool" ref="jedisPool" />
 	</bean>
-
+    
 
 </beans>

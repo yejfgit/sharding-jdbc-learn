@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.netease.okr.service.UserService;
 
+/**
+ * @author yejf
+ * */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/applicationContext.xml","classpath:spring/springMVC.xml","classpath:spring/applicationContext-database.xml"})
 public class LoginTest extends AbstractJUnit4SpringContextTests {
