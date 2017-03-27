@@ -149,7 +149,17 @@ public class WeekReportServiceImpl implements WeekReportService {
 	public JsonResponse updateWeekReports(WeekReport weekReport) {
 		
 		if(weekReport!=null&&weekReport.getId()!=null&&MyStringUtil.isNotBlank(weekReport.getType())){
-			updateWeekReport(weekReport);
+			//删除
+			if(ConstantsUtil.OPREATE_TYPE_DEL.equals(weekReport.getType())){
+				
+				deleteWeekReport(weekReport.getId());
+				
+			}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(weekReport.getType())){
+				
+				updateWeekReport(weekReport);
+				
+			}
+			
 			
 		}else{
 			return JsonUtil.toJsonFail("传值错误！id或type未提交");
@@ -246,37 +256,27 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * */
 	private void updateWeekReport(WeekReport weekReport){
 		Integer weekReportId = weekReport.getId();
-		String type = weekReport.getType();
-		//删除
-		if(ConstantsUtil.OPREATE_TYPE_DEL.equals(type)){
-			
-			deleteWeekReport(weekReportId);
-			
-		}else if(ConstantsUtil.OPREATE_TYPE_UPDATE.equals(type)){
-			weekReportDao.updateWeekReport(weekReport);
-			//保存周报关键事件关系表
-			saveWeekReportRelList(weekReport,weekReport.getKeyResultList());
-			//更新周报附件信息
-			updateAppendixList(weekReportId,weekReport.getAppendixList());
-		}
+		
+		List<Integer> keyResultIds = getKeyResultIds(weekReportId,weekReport.getKeyResultList());
+		
+		weekReportDao.updateWeekReport(weekReport);
+		//保存周报关键事件关系表
+		saveWeekReportRelList(weekReport,weekReport.getKeyResultList());
+		//更新周报附件信息
+		updateAppendixList(weekReportId,weekReport.getAppendixList());
+		
+		//检查更新关键事件进行状态
+		TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 2), keyResultIds,null, null);
 		
 	}
 	
-	
+	/**
+	 * 删除周报周报
+	 * */
 	private void  deleteWeekReport(Integer weekReportId){
 		
-		List<Integer> keyResultIds = new ArrayList<Integer>();
-		
-		//查询周报关联关键事件信息
-		WeekReportRel weekReportRel = new WeekReportRel();
-		weekReportRel.setWeekReportId(weekReportId);
-		List<WeekReportRel> weekReportRelList = weekReportDao.getWeekReportRelList(weekReportRel);
-		if(weekReportRelList!=null){
-			for(WeekReportRel wrr:weekReportRelList){
-				keyResultIds.add(wrr.getKeyResultId());
-			}
-		}
-		
+		List<Integer> keyResultIds = getKeyResultIds(weekReportId,null);
+
 		weekReportDao.deleteWeekReport(weekReportId);//删除周报
 		deleteWeekReportRelList(weekReportId);//删除周报关系表
 		deleteAppendixList(weekReportId);//删除周报附件表
@@ -326,5 +326,33 @@ public class WeekReportServiceImpl implements WeekReportService {
 	public WeekReport getWeekReportById(Integer id) {
 		return weekReportDao.getWeekReportById(id);
 	}
-
+	
+	
+	/**
+	 * 获取更新前周报关联结果id
+	 * afterKeyResultIds 更新周报需要更新当前关键结果状态
+	 * 
+	 * */
+	private List<Integer> getKeyResultIds(Integer weekReportId,List<KeyResult> afterKeyResultIds){
+		List<Integer> keyResultIds = new ArrayList<Integer>();
+		
+		//查询周报更新前的关联关键事件信息
+		WeekReportRel weekReportRel = new WeekReportRel();
+		weekReportRel.setWeekReportId(weekReportId);
+		List<WeekReportRel> weekReportRelList = weekReportDao.getWeekReportRelList(weekReportRel);
+		if(weekReportRelList!=null){
+			for(WeekReportRel wrr:weekReportRelList){
+				keyResultIds.add(wrr.getKeyResultId());
+			}
+		}
+		
+		//检查要更新的周报关联结果
+		if(afterKeyResultIds!=null&&afterKeyResultIds.size()>0){
+			for(KeyResult keyResult:afterKeyResultIds){
+				keyResultIds.add(keyResult.getId());
+			}
+		}
+		
+		return keyResultIds;
+	}
 }
