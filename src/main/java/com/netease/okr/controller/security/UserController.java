@@ -85,7 +85,7 @@ public class UserController extends BaseController {
 			user.setDeptId(curUser.getDeptL1Id());
 		}
 		
-		PageJsonResponse<User> users = userService.getUsersPage(user,page);
+		PageJsonResponse<User> users = userService.getUsersOkrPage(user,page);
 		
 		return JsonUtil.toJsonObj(users);
 	}

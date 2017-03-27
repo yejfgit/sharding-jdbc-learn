@@ -21,9 +21,11 @@ public interface UserService {
 
 	public List<User> getUserListOfDept(String deptId);
 
-	public List<User> getUsers(UserQuery user);
+	public List<User> queryUsers(UserQuery user);
 
-	public PageJsonResponse<User> getUsersPage(UserQuery user, PageBean<User> pageBean);
+	public PageJsonResponse<User> getUsersOkrPage(UserQuery user, PageBean<User> pageBean);
 
 	public User getUserById(Integer id);
+
+	public void updateUserNewWeekReport();
 }

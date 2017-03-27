@@ -12,8 +12,8 @@ import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.LoggerUtil;
 
 /**
- * hzyejinfu 
- *
+ * yejf 
+ * 
  */
 @Component
 public class UpdateKeyResultStatusTask implements JobProcessor {

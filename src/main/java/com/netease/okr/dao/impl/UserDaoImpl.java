@@ -53,16 +53,16 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 	
 	
 	@Override
-	public List<User> getUsers(UserQuery user){
+	public List<User> queryUsers(UserQuery user){
 		
-		List<User> userList = sqlSessionTemplate.selectList("getUsers",user);
+		List<User> userList = sqlSessionTemplate.selectList("queryUsers",user);
 
 		return userList;
 		
 	}
 	
 	@Override
-	public PageJsonResponse<User> getUsersPage(UserQuery user,PageBean<User> pageBean){
+	public PageJsonResponse<User> getUsersOkrPage(UserQuery user,PageBean<User> pageBean){
 		
 		PageJsonResponse<User> pageRes = new PageJsonResponse<User>();
 		pageRes.setPage(pageBean);
