@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
 import com.netease.okr.service.UserService;
+import com.netease.okr.util.ConstantsUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -67,19 +68,37 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
-	public List<User> getUsers(UserQuery user){
+	public List<User> queryUsers(UserQuery user){
 		
-		return userDao.getUsers(user);
+		return userDao.queryUsers(user);
 		
 	}
 	
 	@Override
-	public PageJsonResponse<User> getUsersPage(UserQuery user,PageBean<User> pageBean){
+	public PageJsonResponse<User> getUsersOkrPage(UserQuery user,PageBean<User> pageBean){
 		
-		 PageJsonResponse<User> userPage = userDao.getUsersPage(user, pageBean);
+		 PageJsonResponse<User> userPage = userDao.getUsersOkrPage(user, pageBean);
 		 setUserOkrNum(userPage);
 		 
 		 return userPage;
+		
+	}
+	
+	
+	@Override
+	public void updateUserNewWeekReport(){
+		UserQuery userQuery = new UserQuery();
+		userQuery.setDeptId(ConstantsUtil.HR_DEPT_CODE);
+		List<User> users = userDao.queryUsers(userQuery);
+		
+		for(User user:users){
+			WeekReport weekReport = weekReportDao.getNewWeekReport(user.getId());
+			if(weekReport!=null){
+				user.setWeekReportId(weekReport.getId());
+				userDao.updateUser(user);
+			}
+			
+		}
 		
 	}
 	
@@ -97,14 +116,7 @@ public class UserServiceImpl implements UserService {
 				
 				okrNum.setObjectivesNum(objectivesDao.getObjectivesCount(userId));
 				okrNum.setWeekReportNum(weekReportDao.getWeekReportCount(userId));
-				WeekReport newWR = weekReportDao.getNewWeekReport(userId);
-				
-				if(newWR!=null){
-					okrNum.setWeek(newWR.getWeek());
-					okrNum.setStartDate(newWR.getStartDate());
-					okrNum.setEndDate(newWR.getEndDate());
-				}
-				
+				okrNum.setHasNewWeekReport(weekReportDao.hasNewWeekReport(userId));
 				
 			}
 		}

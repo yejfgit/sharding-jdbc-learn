@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.mapper.okr.ObjectivesMapper;
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.security.User;
+import com.netease.okr.redis.RedisClient;
+import com.netease.okr.redis.RedisConstant;
+import com.netease.okr.util.MyStringUtil;
+import com.netease.okr.util.RedisUserContextUtil;
 
 @Repository
 public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements ObjectivesDao {
@@ -46,22 +51,55 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	
 	@Override
 	public Integer getObjectivesCount(Integer userId){
-		return objectivesMapper.getObjectivesCount(userId);
+		
+		//先从缓存里读取
+		String  objectivesCount = RedisClient.get(RedisConstant.OBJECTIVES_COUNT_KEY+userId);
+		if(MyStringUtil.isNotBlank(objectivesCount)){
+			return Integer.parseInt(objectivesCount);
+		}else{
+			Integer oc = objectivesMapper.getObjectivesCount(userId);
+			RedisClient.set(RedisConstant.OBJECTIVES_COUNT_KEY + userId, oc.toString());
+			RedisClient.expire(RedisConstant.OBJECTIVES_COUNT_KEY + userId, RedisConstant.OBJECTIVES_COUNT_EXPIRE);
+			return oc;
+		}
+
 	}
 	
 	
 	@Override
 	public Integer addObjectives(Objectives objectives){
-		return objectivesMapper.addObjectives(objectives);
+		Integer c =  objectivesMapper.addObjectives(objectives);
+		
+		updateObjectivesCountOfRedis();
+		
+		return c;
 	}
 	
 	@Override
 	public Integer deleteObjectives(Integer id){
-		return objectivesMapper.deleteObjectives(id);
+		Integer c =  objectivesMapper.deleteObjectives(id);
+		
+		updateObjectivesCountOfRedis();
+		
+		return c;
 	}
 	
 	@Override
 	public Integer updateObjectives(Objectives objectives){
 		return objectivesMapper.updateObjectives(objectives);
 	}
+	
+	/**
+	 * 
+	 * 更新redis 周报数量
+	 * */
+	private Integer updateObjectivesCountOfRedis(){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		Integer userId = user.getId();
+		Integer objectivesCount = objectivesMapper.getObjectivesCount(userId);
+		RedisClient.set(RedisConstant.OBJECTIVES_COUNT_KEY + userId, objectivesCount.toString());
+		RedisClient.expire(RedisConstant.OBJECTIVES_COUNT_KEY + userId, RedisConstant.OBJECTIVES_COUNT_EXPIRE);
+		return objectivesCount;
+	}
+	
 }

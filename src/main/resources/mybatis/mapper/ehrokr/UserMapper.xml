@@ -25,10 +25,11 @@
 		<result column="deptL1Name" property="deptL1Name"  />
 		<result column="deptL2Name" property="deptL2Name"  />
 		<result column="deptL3Name" property="deptL3Name"  />
+		<result column="week_report_id" property="weekReportId"  />
 		
-		<collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" />
+		<!-- <collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" /> -->
 	</resultMap>
-	
+
 	<sql id="selectedUserColumns">
 		u.id,
 		u.name,
@@ -62,18 +63,21 @@
 		</where>
 	</sql>
 	
-	
 	<sql id="userJoinCon">
 		left outer join tb_dept d1 on d1.id=u.dept_l1_id
 		left outer join tb_dept d2 on d2.id=u.dept_l2_id
 		left outer join tb_dept d3 on d3.id=u.dept_l3_id
 	</sql>
 	
-	<sql id="userOrderBy">
-		order by u.dept_l1_id,u.dept_l2_id,u.dept_l3_id,u.u_no
-	</sql>
+	<select id="queryUsers" resultMap="UserResultMap">
+		select 
+		<include refid="selectedUserColumns"></include> 
+		from tb_user u
+		<include refid="userJoinCon"></include> 
+		<include refid="userWhere"></include> 
+	</select>
 	
-
+	
 	<select id="getUserByUNo" resultMap="UserResultMap">
 		select 
 		<include refid="selectedUserColumns"></include>
@@ -82,7 +86,6 @@
 		where u.u_no=#{uNo}
 	</select>
 	
-	
 	<select id="getUserById" resultMap="UserResultMap">
 		select 
 		<include refid="selectedUserColumns"></include>
@@ -90,8 +93,6 @@
 		<include refid="userJoinCon"></include> 
 		where u.id=#{id}
 	</select>
-
-	
 	
 	<select id="getUserByUsername" resultMap="UserResultMap">
 		select 
@@ -100,18 +101,6 @@
 		<include refid="userJoinCon"></include> 
 		where u.name=#{name}
 	</select>
-	
-	
-	<select id="getUsers" resultMap="UserResultMap">
-		select 
-		<include refid="selectedUserColumns"></include> 
-		from tb_user u
-		<include refid="userJoinCon"></include> 
-		<include refid="userWhere"></include> 
-		<include refid="userOrderBy"></include> 
-		
-	</select>
-	
 	
 	<select id="getUsersCount" resultType="int">
 		select 
@@ -161,6 +150,7 @@
 			<if test="photoUrl!=null and photoUrl!='' ">photo_url,</if>
 			<if test="nosKey!=null and nosKey!='' ">nos_key,</if>
 			<if test="isValid!=null">is_valid,</if>
+			<if test="weekReportId != null">week_report_id,</if>
 			create_time,
 			modify_time,
 			name
@@ -178,6 +168,7 @@
 			<if test="photoUrl!=null and photoUrl!='' ">#{photoUrl},</if>
 			<if test="nosKey!=null and nosKey!='' ">#{nosKey},</if>
 			<if test="isValid!=null">#{isValid},</if>
+			<if test="weekReportId != null">#{weekReportId},</if>
 			now(),
 			now(),
 			#{name}
@@ -228,14 +219,73 @@
 			<if test="isValid != null">
 				is_valid=#{isValid},
 			</if>
+			<if test="weekReportId != null">
+				week_report_id=#{weekReportId},
+			</if>
+			
 			modify_time = now()
 		</set>
 		where id=#{id}
 	</update>
 	
-	<!-- <delete id="deleteUserById" parameterType="Integer">
-		delete from tb_user
-		where id=#{id}
-	</delete> -->
+	
+	
+	<!-- *******************************我的组织查询  start *************************************** -->
+	<resultMap id="UserMoreResultMap" type="com.netease.okr.model.entity.security.User" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="station_name" property="stationName"  />
+		<result column="deptL1Name" property="deptL1Name"  />
+		<result column="deptL2Name" property="deptL2Name"  />
+		<result column="deptL3Name" property="deptL3Name"  />
+		<result column="week_report_id" property="weekReportId"  />
+		
+		<association property="okrNum" javaType="com.netease.okr.model.entity.OkrNum">
+			<result column="week" property="week"/>
+			<result column="startDate" property="startDate"  />
+			<result column="endDate" property="endDate"  />
+		</association>
+		
+		<!-- <collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" /> -->
+	</resultMap>
+	
+	
+	<sql id="selectedMoreUserColumns">
+		u.id,
+		u.name,
+		u.station_name,
+		d1.name deptL1Name,
+		d2.name deptL2Name,
+		d3.name deptL3Name,
+		u.week_report_id,
+		
+		td.week week,
+		td.start_date startDate,
+		td.end_date endDate
+	</sql>
+	
+	<sql id="userJoinCon2">
+		left outer join tb_dept d1 on d1.id=u.dept_l1_id
+		left outer join tb_dept d2 on d2.id=u.dept_l2_id
+		left outer join tb_dept d3 on d3.id=u.dept_l3_id
+		left outer join tb_week_report wr on wr.id=u.week_report_id
+		LEFT OUTER JOIN tb_date_info td ON td.id = wr.date_id
+	</sql>
+	
+	
+	<select id="getUsers" resultMap="UserMoreResultMap">
+		select 
+		<include refid="selectedMoreUserColumns"></include> 
+		from tb_user u
+		<include refid="userJoinCon2"></include> 
+		<include refid="userWhere"></include> 
+		<include refid="userOrderBy"></include> 
+	</select>
+	
+	
+	<sql id="userOrderBy">
+		order by wr.modify_time desc,u.dept_l1_id,u.dept_l2_id,u.dept_l3_id,u.u_no
+	</sql>
+	<!-- *******************************我的组织查询 end*************************************** -->
 	
 </mapper>

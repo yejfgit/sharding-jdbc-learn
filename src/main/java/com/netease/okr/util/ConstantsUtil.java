@@ -64,7 +64,8 @@ public interface ConstantsUtil {
 	String KRY_RESULT_CODE_PRE = "KR";
 	
 	
-	
+	Integer hasNewWeekReport = 1;//有最新周报
+	Integer noNewWeekReport = 0;//没最新周报
 
 
 }

@@ -39,6 +39,8 @@ public class User implements Serializable {
 	private String empType;
 	private Integer state;
 	
+	private Integer weekReportId;//最新周报ID
+	
 	private String deptL1Name;
 	private String deptL2Name;
 	private String deptL3Name;
@@ -273,6 +275,14 @@ public class User implements Serializable {
 
 	public void setOkrNum(OkrNum okrNum) {
 		this.okrNum = okrNum;
+	}
+
+	public Integer getWeekReportId() {
+		return weekReportId;
+	}
+
+	public void setWeekReportId(Integer weekReportId) {
+		this.weekReportId = weekReportId;
 	}
 
 

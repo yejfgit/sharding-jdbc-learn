@@ -12,11 +12,11 @@ import com.netease.okr.service.TaskLockService;
 import com.netease.okr.util.LoggerUtil;
 
 /**
- * hzyejinfu 
+ * yejf 
  *
  */
 @Component
-public class SyncUserTask implements JobProcessor {
+public class SyncUserTask {
 
 	@Autowired
 	private EhrDateService ehrDateService;
@@ -43,16 +43,6 @@ public class SyncUserTask implements JobProcessor {
 		
 		LoggerUtil.info("SyncUserTask--end");
 		
-	}
-
-	/**
-	 * 手动触发定时任务
-	 * */
-	@Override
-	public void execute(List<Integer> ids, Integer userId) {
-		LoggerUtil.info("SyncUserTask--begin");
-		ehrDateService.syncUser();
-		LoggerUtil.info("SyncUserTask--end");
 	}
 	
 	
