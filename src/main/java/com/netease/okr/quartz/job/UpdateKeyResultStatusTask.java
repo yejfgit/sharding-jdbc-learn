@@ -39,6 +39,9 @@ public class UpdateKeyResultStatusTask implements JobProcessor {
 				if(wrs==null||wrs.size()<1){
 					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS1.getId());
 					LoggerUtil.info("updateKeyResultStatus【keyResultId="+keyResultId+";result="+c+"】");
+				}else if(wrs!=null||wrs.size()>0){
+					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS2.getId());
+					LoggerUtil.info("updateKeyResultStatus【keyResultId="+keyResultId+";result="+c+"】");
 				}
 			}
 		}
