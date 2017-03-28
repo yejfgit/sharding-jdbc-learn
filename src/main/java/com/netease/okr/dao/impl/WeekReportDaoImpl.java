@@ -186,7 +186,7 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 		
 		//更新redis是否有最新周报
 		Integer userId = user.getId();
-		RedisClient.set(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, ConstantsUtil.hasNewWeekReport.toString());
+		RedisClient.set(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, ConstantsUtil.HAS_NEW_WEEK_REPORT.toString());
 		RedisClient.expire(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, RedisConstant.HAS_NEW_WEEK_REPORT_EXPIRE);
 	}
 

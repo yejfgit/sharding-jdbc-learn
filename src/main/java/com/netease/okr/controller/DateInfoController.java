@@ -33,5 +33,15 @@ public class DateInfoController extends BaseController {
 		return JsonUtil.toJsonObj(dateInfos);
 	}
 	
+	
+	
+	@RequestMapping(value = "/date/getCurDate", method = RequestMethod.GET)
+	public JsonResponse getCurDate() {
+		
+		DateInfo dateInfo =dateInfoService.getCurDateInfo();
+		
+		return JsonUtil.toJsonObj(dateInfo);
+	}
+	
 
 }

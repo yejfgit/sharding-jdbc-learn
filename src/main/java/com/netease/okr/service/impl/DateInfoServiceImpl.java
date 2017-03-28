@@ -28,6 +28,11 @@ public class DateInfoServiceImpl implements DateInfoService {
 		return dateInfoDao.getAllDateInfo();
 	}
 	
+	@Override
+	public DateInfo getCurDateInfo(){
+		return dateInfoDao.getCurDateInfo();
+	}
+	
 	
 	@Override
 	public void createDateInfo(String startDateStr,String endDateStr){
