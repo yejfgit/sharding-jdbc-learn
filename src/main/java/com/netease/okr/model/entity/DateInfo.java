@@ -33,11 +33,12 @@ public class DateInfo implements Serializable {
 	 * */
 	private Date startDate;
 	
-	
 	/**
 	 * 一周结束日期
 	 * */
 	private Date endDate;
+	
+	private Integer isShowCurDate;//1:是 0:否
 	
 	public String getYear() {
 		return year;
@@ -74,6 +75,12 @@ public class DateInfo implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getIsShowCurDate() {
+		return isShowCurDate;
+	}
+	public void setIsShowCurDate(Integer isShowCurDate) {
+		this.isShowCurDate = isShowCurDate;
 	}
 
 	

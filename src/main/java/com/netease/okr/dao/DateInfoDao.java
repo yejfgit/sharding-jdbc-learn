@@ -10,5 +10,7 @@ public interface DateInfoDao {
 
 	public List<DateInfo> getAllDateInfo();
 
+	public DateInfo getCurDateInfo();
+
 
 }

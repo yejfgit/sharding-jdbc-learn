@@ -32,6 +32,14 @@
 		order by id desc
 	</select>
 	
+	<select id="getCurDateInfo" resultMap="DateInfoResultMap">
+		select
+		<include refid="selectedDateInfoColumns"></include>
+		from tb_date_info
+		where 
+		<![CDATA[ start_date<#{curDate} and end_date > #{curDate} ]]>
+	</select>
+	
 	<select id="getMonth" resultType="java.lang.String" parameterType="com.netease.okr.model.entity.DateInfo">
 		select
 		month

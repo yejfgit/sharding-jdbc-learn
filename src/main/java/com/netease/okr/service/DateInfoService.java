@@ -12,4 +12,6 @@ public interface DateInfoService {
 
 	public List<DateInfo> getAllDateInfo();
 
+	public DateInfo getCurDateInfo();
+
 }

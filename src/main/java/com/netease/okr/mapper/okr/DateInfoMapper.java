@@ -1,5 +1,6 @@
 package com.netease.okr.mapper.okr;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -31,6 +32,9 @@ public interface DateInfoMapper {
 	 * @throws DataAccessException
 	 */
 	public List<DateInfo> getAllDateInfo()  throws DataAccessException;
+	
+	
+	public List<DateInfo> getCurDateInfo(Date curDate)  throws DataAccessException;
 	
 	
 	/**
