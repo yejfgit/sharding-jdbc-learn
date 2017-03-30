@@ -76,25 +76,25 @@
 			<version>${org.springframework-version}</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<!--  redis -->
+
+		<!-- redis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>2.7.3</version>
 		</dependency>
-		
+
 		<!-- Spring JDBC Support -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
-		
-		
-      
-	
+
+
+
+
+
 		<!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -122,7 +122,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.11</version>
 		</dependency>
-		
+
 		<!-- openid -->
 		<dependency>
 			<groupId>openid4java</groupId>
@@ -204,9 +204,9 @@
 		</dependency>
 
 		<dependency>
-   			<groupId>ojdbc</groupId>
-    		<artifactId>ojdbc</artifactId>
-    		<version>14</version>
+			<groupId>ojdbc</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>14</version>
 		</dependency>
 
 		<!-- json processor -->
@@ -268,17 +268,14 @@
 		</dependency>
 
 		<!-- http client -->
-		<!-- <dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>com.springsource.org.apache.httpcomponents.httpclient</artifactId>
-			<version>4.2.1</version>
-		</dependency> -->
-		
+		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>com.springsource.org.apache.httpcomponents.httpclient</artifactId> 
+			<version>4.2.1</version> </dependency> -->
+
 		<!-- HTTP -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.3.6</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
 		</dependency>
 
 		<!-- 汉字转换成拼音 -->
@@ -350,7 +347,7 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>eu.cedarsoft</groupId>
 			<artifactId>guice-annotations</artifactId>
@@ -361,43 +358,57 @@
 			<artifactId>nekohtml</artifactId>
 			<version>1.9.10</version>
 		</dependency>
-		
+
 		<!-- import sharding-jdbc core -->
 		<dependency>
-		    <groupId>com.dangdang</groupId>
-		    <artifactId>sharding-jdbc-core</artifactId>
-		    <version>${sharding-jdbc-version}</version>
+			<groupId>com.dangdang</groupId>
+			<artifactId>sharding-jdbc-core</artifactId>
+			<version>${sharding-jdbc-version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.dangdang</groupId>
-		    <artifactId>sharding-jdbc-config-spring</artifactId>
-		   <version>${sharding-jdbc-version}</version>
+			<groupId>com.dangdang</groupId>
+			<artifactId>sharding-jdbc-config-spring</artifactId>
+			<version>${sharding-jdbc-version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.fusesource.mqtt-client</groupId>
+			<artifactId>mqtt-client</artifactId>
+			<version>1.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+
+
 		<!-- NOS -->
 		<dependency>
-		  <groupId>com.netease.cloud</groupId>
-		  <artifactId>nos-sdk-java</artifactId>
-		  <version>1.2.6</version>
+			<groupId>com.netease.cloud</groupId>
+			<artifactId>nos-sdk-java</artifactId>
+			<version>1.2.6</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.netease</groupId>
-		    <artifactId>ehrSDK</artifactId>
-		    <version>0.0.1.2</version>
+			<groupId>com.netease</groupId>
+			<artifactId>ehrSDK</artifactId>
+			<version>0.0.1.2</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>21.0</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>21.0</version>
 		</dependency>
-	
-		
+
+
 	</dependencies>
-	
+
 	<repositories>
 		<repository>
 			<snapshots>
@@ -408,7 +419,7 @@
 			<url>http://mvn.hz.netease.com/artifactory/repo</url>
 		</repository>
 	</repositories>
-	
+
 
 	<build>
 		<finalName>${webAppName}</finalName>
@@ -434,7 +445,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
-	
+
+
+
 </project>
