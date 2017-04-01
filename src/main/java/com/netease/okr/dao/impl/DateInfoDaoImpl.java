@@ -59,7 +59,7 @@ public class DateInfoDaoImpl extends SqlSessionDaoSupport implements DateInfoDao
 	
 	@Override
 	public DateInfo getCurDateInfo(){
-		Date curDate = new Date();
+		Date curDate = MyDateUtils.parseYmdDate(MyDateUtils.formatYmdDate(new Date(),null));
 		DateInfo dateInfo = new DateInfo();
 		List<DateInfo> di = dateInfoMapper.getCurDateInfo(curDate);
 		if(di!=null&&di.size()>0){
