@@ -1,4 +1,4 @@
-package com.netease.okr.Lucence.impl;
+/*package com.netease.okr.Lucence.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,11 @@ public class UserIndexServerImpl implements UserIndexServer {
 	@Autowired
 	private UserService userService;
 	
-	/**
+	*//**
 	 * 创建用户索引
 	 * @author yejf
 	 * @throws Exception 
-	 * */
+	 * *//*
 	@Override
 	public void buildUserIndex() throws Exception {
 		LoggerUtil.info("buildUserIndex start");
@@ -72,11 +72,11 @@ public class UserIndexServerImpl implements UserIndexServer {
 	}
 
 	
-	/**
+	*//**
 	 * 检索用户
 	 * @author yejf
 	 * @throws Exception 
-	 * */
+	 * *//*
 	@Override
 	public PageJsonResponse<User> searchUser(UserQuery userQuery, PageBean<User> page) {
 		
@@ -151,3 +151,4 @@ public class UserIndexServerImpl implements UserIndexServer {
 		return user;
 	}
 }
+*/
