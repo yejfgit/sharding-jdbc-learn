@@ -63,7 +63,7 @@ public class UserIndexServerImpl implements UserIndexServer {
 						}
 					}
 				}
-				
+				 
 			}
 		} else {
 			LoggerUtil.info("同步用户获取一级部门数据为空");
