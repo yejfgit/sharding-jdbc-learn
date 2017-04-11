@@ -36,7 +36,7 @@ class ListenerMQTT {
 		MQTT mqtt = new MQTT();
 		//mqtt.setHost(host, port);
 		mqtt.setHost("tcp://10.164.96.36:61613");
-		mqtt.setUserName(user);
+		mqtt.setUserName(user); 
 		mqtt.setPassword(password);
 
 		final CallbackConnection connection = mqtt.callbackConnection();

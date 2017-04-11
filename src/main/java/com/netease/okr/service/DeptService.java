@@ -14,4 +14,6 @@ public interface DeptService {
 
 	public List<Dept> getAllDept();
 
+	public List<Dept> getDeptListByLevel(Integer level);
+
 }
