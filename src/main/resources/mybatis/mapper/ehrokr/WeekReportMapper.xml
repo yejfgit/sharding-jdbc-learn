@@ -7,6 +7,7 @@
 	<resultMap type="com.netease.okr.model.entity.WeekReport" id="WeekReportResultMap">
 		<id column="id" property="id"/>
 		<result column="content" property="content"/>
+		<result column="content_detail" property="contentDetail"/>
 		<result column="status" property="status"/>
 		<result column="user_id" property="userId"/>
 		<result column="modify_time" property="modifyTime"  />
@@ -26,6 +27,7 @@
 	<sql id="selectedWeekReportColumns">
 		t.id,
 		t.content,
+		t.content_detail,
 		t.status,
 		t.modify_time,
 		t.user_id,
@@ -142,6 +144,7 @@
 		insert into tb_week_report(
 			id,date_id,
 			<if test="content!=null and content!=''">content,</if>
+			<if test="contentDetail!=null and contentDetail!=''">content_detail,</if>
 			<if test="status!=null">status,</if>
 			<if test="userId!=null">user_id,</if>
 			create_time,
@@ -150,6 +153,7 @@
 		values(
 			#{id},#{dateId},
 			<if test="content!=null and content!=''">#{content},</if>
+			<if test="contentDetail!=null and contentDetail!=''">#{contentDetail},</if>
 			<if test="status!=null">#{status},</if>
 			<if test="userId!=null">#{userId},</if>
 			now(),
@@ -183,6 +187,7 @@
 		update tb_week_report
 		<set> 
 			<if test="content!=null and content!=''">content = #{content},</if>
+			<if test="contentDetail!=null and contentDetail!=''">content_detail = #{contentDetail},</if>
 			<if test="dateId!=null">date_id = #{dateId},</if>
 			<if test="status!=null">status = #{status},</if>
 			<if test="userId!=null">user_id = #{userId},</if>

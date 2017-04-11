@@ -42,7 +42,7 @@
 		select
 		<include refid="selectedDeptColumns"></include>
 		from tb_dept
-		where level=#{level}
+		where level=#{level} and status = 1
 	</select>
 	
 	<select id="getDeptListByParentId" resultMap="DeptResultMap">

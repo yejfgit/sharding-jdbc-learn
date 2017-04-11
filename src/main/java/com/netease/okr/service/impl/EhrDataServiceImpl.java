@@ -90,6 +90,21 @@ public class EhrDataServiceImpl implements EhrDateService {
 	public void syncUser(){
 		
 		//获取一级部门
+		List<Department> deptList = getDeptL1List();
+		
+		if(deptList!=null&&deptList.size()>0){
+			for(Department dept:deptList){
+				saveUser(queryUser(dept.getId()));
+			}
+		}else {
+			LoggerUtil.info("同步用户获取一级部门数据为空");
+		}
+		
+	}
+	@Override
+	public List<Department> getDeptL1List(){
+		
+		//获取一级部门
 		EhrDepartment ehrDepartment = new EhrDepartment();
 		DeptParam deptParam = new DeptParam();
 		deptParam.setDeptLevel(ConstantsUtil.DEPT_LEVEL_L1);
@@ -101,19 +116,11 @@ public class EhrDataServiceImpl implements EhrDateService {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-		
-		if(deptList!=null&&deptList.size()>0){
-			for(Department dept:deptList){
-				saveUser(queryUser(dept.getId()));
-			}
-		}else {
-			LoggerUtil.info("同步用户获取一级部门数据为空");
-		}
-		
+		return deptList;
 	}
 	
-	private List<Employee> queryUser(String deptL1Id){
+	@Override
+	public List<Employee> queryUser(String deptL1Id){
 		EhrEmployee ehrEmployee = new EhrEmployee();
 		//根据查询条件获取员工列表
 		EmpParam userParam = new EmpParam();
