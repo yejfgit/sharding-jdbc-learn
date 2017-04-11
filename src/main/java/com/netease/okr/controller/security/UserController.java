@@ -28,8 +28,8 @@ public class UserController extends BaseController {
 	@Autowired
 	protected UserService userService;
 	
-	/*@Autowired
-	protected UserIndexServer userIndexServer;*/
+	@Autowired
+	protected UserIndexServer userIndexServer;
 	
 	
 	/**
@@ -98,7 +98,7 @@ public class UserController extends BaseController {
 	/**
 	 * @param 
 	 * @return
-	 *//*
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/searchUserList", method = RequestMethod.GET)
 	public JsonResponse searchUser(UserQuery user,PageBean<User> page) {
@@ -106,7 +106,7 @@ public class UserController extends BaseController {
 		PageJsonResponse<User> users = userIndexServer.searchUser(user, page);
 		
 		return JsonUtil.toJsonObj(users);
-	}*/
+	}
 		
  
 }
