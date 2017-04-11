@@ -100,7 +100,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/searchUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/searchUserList", method = RequestMethod.GET)
 	public JsonResponse searchUser(UserQuery user,PageBean<User> page) {
 		
 		PageJsonResponse<User> users = userIndexServer.searchUser(user, page);
@@ -108,5 +108,5 @@ public class UserController extends BaseController {
 		return JsonUtil.toJsonObj(users);
 	}
 		
-
+ 
 }

@@ -15,7 +15,7 @@ import com.netease.okr.util.LoggerUtil;
  */
 @Component
 public class BuildUserIndexTask {
-
+ 
 	@Autowired
 	private UserIndexServer userIndexServer;
 	
