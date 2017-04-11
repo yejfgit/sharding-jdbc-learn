@@ -1,4 +1,4 @@
-package com.netease.okr.quartz.job;
+/*package com.netease.okr.quartz.job;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,10 +9,10 @@ import com.netease.okr.enums.TaskTypeEnum;
 import com.netease.okr.service.TaskLockService;
 import com.netease.okr.util.LoggerUtil;
 
-/**
+*//**
  * yejf 
  *
- */
+ *//*
 @Component
 public class BuildUserIndexTask {
 
@@ -46,3 +46,4 @@ public class BuildUserIndexTask {
 	
 
 }
+*/
