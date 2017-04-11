@@ -8,6 +8,7 @@
 		<id column="id" property="id"/>
 		<result column="objectives_name" property="objectivesName"/>
 		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
 		<result column="is_valid" property="isValid"/>
@@ -23,6 +24,7 @@
 		<id column="id" property="id"/>
 		<result column="objectives_name" property="objectivesName"/>
 		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
 		<result column="is_valid" property="isValid"/>
@@ -35,6 +37,7 @@
 		id,
 		objectives_name,
 		objectives_dsc,
+		objectives_detail,
 		objectives_code,
 		user_id,
 		is_valid,
@@ -93,6 +96,7 @@
 			<if test="objectivesName!=null and objectivesName!=''">objectives_name,</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc,</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">objectives_code,</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">objectives_detail,</if>
 			<if test="userId!=null">user_id,</if>
 			<if test="codeNum!=null">code_num,</if>
 			create_time,
@@ -103,6 +107,7 @@
 			<if test="objectivesName!=null and objectivesName!=''">#{objectivesName},</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">#{objectivesDsc},</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">#{objectivesCode},</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">#{objectivesDetail},</if>
 			<if test="userId!=null">#{userId},</if>
 			<if test="codeNum!=null">#{codeNum},</if>
 			now(),
@@ -116,6 +121,7 @@
 		<set> 
 			<if test="objectivesName!=null and objectivesName!=''">objectives_name = #{objectivesName},</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc = #{objectivesDsc},</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">objectives_detail = #{objectivesDetail},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}

@@ -27,6 +27,8 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private String objectivesCode;
 	
+	private String objectivesDetail;
+	
 	/**
 	 * 用户Id
 	 * */
@@ -43,7 +45,6 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private Integer codeNum;
 	
-
 	
 	private List<KeyResult> keyResultList;
 	
@@ -95,6 +96,12 @@ public class Objectives extends BaseEntity implements Serializable  {
 	}
 	public void setCodeNum(Integer codeNum) {
 		this.codeNum = codeNum;
+	}
+	public String getObjectivesDetail() {
+		return objectivesDetail;
+	}
+	public void setObjectivesDetail(String objectivesDetail) {
+		this.objectivesDetail = objectivesDetail;
 	}
 	
 	
