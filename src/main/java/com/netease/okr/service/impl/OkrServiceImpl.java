@@ -34,6 +34,7 @@ public class OkrServiceImpl implements OkrService {
 	@Autowired
 	private WeekReportDao weekReportDao;
 	
+	
 	/**
 	 * @author yejf
 	 * @param userId
@@ -187,12 +188,13 @@ public class OkrServiceImpl implements OkrService {
 	}
 	
 	@Override
-	public Integer updateKeyResultStatus(Integer keyResultId,Integer status){
+	public Integer updateKeyResultStatus(Integer keyResultId,Integer status,Integer isWeek){
 		List<KeyResult> keyResults = new ArrayList<KeyResult>();
 		
 		KeyResult keyResult = new KeyResult();
 		keyResult.setId(keyResultId);
 		keyResult.setStatus(status);
+		keyResult.setIsWeek(isWeek);
 		keyResults.add(keyResult);
 		
 		return keyResultDao.updateKeyResultStatus(keyResults);

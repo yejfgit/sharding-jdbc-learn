@@ -1,0 +1,118 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.GroupObjectivesMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.GroupObjectives" id="GroupObjectivesResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="dept_l1_id" property="deptL1Id"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		
+		<collection column="id" property="userList" ofType="com.netease.okr.model.entity.GroupObjectivesUser" select="com.netease.okr.mapper.okr.GroupObjectivesUserMapper.getGroupObjectivesUsers" />
+		<collection column="id" property="mileList" ofType="com.netease.okr.model.entity.security.GroupObjectivesMile" select="com.netease.okr.mapper.okr.GroupObjectivesMileMapper.getGroupObjectivesMiles" />
+		<collection column="id" property="objectivesList" ofType="com.netease.okr.model.entity.security.Objectives" select="getObjectivesList" />
+		
+	</resultMap>
+	
+	<sql id="selectedGroupObjectivesColumns">
+		id,
+		objectives_name,
+		objectives_dsc,
+		dept_l1_id,
+		is_valid,
+		code_num,
+		modify_time,
+		create_time
+	</sql>
+	
+	
+	<!-- 查询组织目标 -->
+	<select id="getGroupObjectivesList" resultMap="GroupObjectivesResultMap">
+		select
+		<include refid="selectedGroupObjectivesColumns"></include>
+		from tb_group_objectives
+		where dept_l1_id=#{deptL1Id}
+		order by code_num desc
+	</select>
+
+	<!-- 组织目标关联的个人目标列表 -->
+	<select id="getObjectivesList" resultMap="com.netease.okr.mapper.okr.ObjectivesMapper.ObjectivesInfoResultMap">
+		select
+		tb.id,tb.objectives_name,tb.objectives_dsc,tb.objectives_detail,tb.user_id,tb.objectives_code,tu.name userName
+		from tb_group_objectives tg
+		left join tb_group_objectives_rel tgl on tg.id = tgl.group_objectives_id
+		left join tb_objectives tb on tb.id = tgl.objectives_id
+		left join tb_user tu on tb.user_id = tu.id
+		where tg.id=#{id}
+	</select>
+	
+	<!-- 获取下一个编号-->
+	<select id="getNextCodeNum" resultType="int">
+		select
+		ifnull(MAX(code_num),0)+1
+		from tb_group_objectives
+		where dept_l1_id=#{deptL1Id}
+	</select>
+
+	<insert id="addGroupObjectives" parameterType="com.netease.okr.model.entity.GroupObjectives" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_group_objectives(
+			id,
+			<if test="objectivesName!=null and objectivesName!=''">objectives_name,</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc,</if>
+			<if test="deptL1Id!=null and deptL1Id!=''">dept_l1_id,</if>
+			<if test="codeNum!=null">code_num,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="objectivesName!=null and objectivesName!=''">#{objectivesName},</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">#{objectivesDsc},</if>
+			<if test="deptL1Id!=null and deptL1Id!=''">#{deptL1Id},</if>
+			<if test="codeNum!=null">#{codeNum},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	
+	<update id="updateGroupObjectives" parameterType="com.netease.okr.model.entity.GroupObjectives">
+		update tb_group_objectives
+		<set> 
+			<if test="objectivesName!=null and objectivesName!=''">objectives_name = #{objectivesName},</if>
+			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc = #{objectivesDsc},</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	<delete id="deleteGroupObjectives">
+		delete from tb_group_objectives where id=#{id}
+	</delete>
+	
+	
+	<insert id="addGroupObjectivesRel" parameterType="java.util.List">
+		insert into tb_group_objectives_rel(objectives_id, group_objectives_id, create_time, modify_time) values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			 (
+			 #{item.objectivesId},
+			 #{item.groupObjectivesId},
+			 now(),
+			 now()
+			 )
+		</foreach>
+	</insert>
+	
+	<delete id="deleteGroupObjectivesRel">
+		DELETE FROM tb_group_objectives_rel WHERE group_objectives_id = #{groupObjectivesId}
+	</delete>
+	
+	
+</mapper>

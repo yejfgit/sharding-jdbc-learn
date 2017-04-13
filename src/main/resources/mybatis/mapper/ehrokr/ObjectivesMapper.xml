@@ -27,6 +27,7 @@
 		<result column="objectives_detail" property="objectivesDetail"/>
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
+		<result column="userName" property="userName"/>
 		<result column="is_valid" property="isValid"/>
 		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
@@ -61,6 +62,14 @@
 		<include refid="selectedObjectivesColumns"></include>
 		from tb_objectives
 		where id=#{id}
+	</select>
+	
+	<!-- 根据Id查询目标简单信息 -->
+	<select id="getObjectivesInfoByUserId" resultMap="ObjectivesInfoResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where is_valid = 1 and user_id=#{userId}
 	</select>
 	
 	<!-- 查询员工的okr-->

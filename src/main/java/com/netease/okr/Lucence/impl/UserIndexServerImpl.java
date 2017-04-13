@@ -23,6 +23,7 @@ import com.netease.okr.service.DeptService;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
+import com.netease.okr.util.MyStringUtil;
 
 @Service
 public class UserIndexServerImpl implements UserIndexServer {
@@ -83,8 +84,9 @@ public class UserIndexServerImpl implements UserIndexServer {
 		PageJsonResponse<User> pageRes = new PageJsonResponse<User>();
 		pageRes.setPage(page);
 		try {
-
-			SolrQuery query = new SolrQuery("*:*"); // 定义查询内容
+			String queryStr  = "name:\"*?*\" OR uNo:\"*?*\" OR corpMail:\"*?*\" ";
+			queryStr = queryStr.replaceAll("[?]",userQuery==null?"":MyStringUtil.isBlank(userQuery.getDesp())?"":userQuery.getDesp());
+			SolrQuery query = new SolrQuery(queryStr); // 定义查询内容
 			int currentPage = page.getCurrentPageOfIndex();
 			query.setStart(currentPage<1?0:(currentPage-1)*page.getPageSize());// 起始页
 			query.setRows(page.getPageSize());// 每页显示数量

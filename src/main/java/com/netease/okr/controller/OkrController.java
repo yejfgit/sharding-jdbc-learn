@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.OkrNum;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.service.ObjectivesService;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.RedisUserContextUtil;
@@ -25,6 +26,10 @@ public class OkrController extends BaseController {
 
 	@Autowired
 	private OkrService okrService;
+	
+	@Autowired
+	private ObjectivesService objectivesService;
+	
 	
 	/**
 	 * @param 
@@ -46,6 +51,18 @@ public class OkrController extends BaseController {
 		}
 		
 		return JsonUtil.toJsonObj(okrList);
+	}
+	
+	/**
+	 * 根据目标id查询事件和周报
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myOkr/getOkrByObjId", method = RequestMethod.GET)
+	public JsonResponse getOkrByObjId(Integer objectivesId) {
+		Objectives Objectives = objectivesService.getObjectivesById(objectivesId);
+		return JsonUtil.toJsonObj(Objectives);
 	}
 	
 	/**

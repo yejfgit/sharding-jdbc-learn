@@ -27,7 +27,7 @@
 		<result column="deptL3Name" property="deptL3Name"  />
 		<result column="week_report_id" property="weekReportId"  />
 		
-		<!-- <collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" /> -->
+		<collection column="id" property="userRoles" ofType="com.netease.okr.model.entity.security.Role" select="getRolesByUserId" />
 	</resultMap>
 
 	<sql id="selectedUserColumns">

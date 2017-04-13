@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.netease.okr.model.entity.OkrNum;
+import com.netease.okr.util.ReflectionUtils;
 
 
 public class User implements Serializable {
@@ -13,7 +14,6 @@ public class User implements Serializable {
 
 	private Integer id;
 	private String name;
-	private String password;
 	private String uNo;
 	/**
 	 * 主管工号
@@ -23,8 +23,6 @@ public class User implements Serializable {
 	private String nameCn;
 	private String phone;
 	private String corpMail;
-	private Date validTimeBegin;
-	private Date validTimeEnd;
 	private Integer isValid;
 	private String deptL1Id;
 	private String deptL2Id;
@@ -34,8 +32,7 @@ public class User implements Serializable {
 	private String nosKey;
 	private Date modifyTime;
 	private Date createTime;
-	private Date passwordUpdateTime;
-	
+
 	private String empType;
 	private Integer state;
 	
@@ -46,9 +43,21 @@ public class User implements Serializable {
 	private String deptL3Name;
 	
 	private OkrNum okrNum;
-	
-	private List<Role> userRoles = new ArrayList<Role>();
 
+	private List<Role> userRoles = new ArrayList<Role>();
+	
+	@SuppressWarnings("unused")
+	private List<Integer> roleIds = new ArrayList<Integer>();
+	
+	public void setRoleIds(List<Integer> roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Integer> getRoleIds() throws Exception{
+		return ReflectionUtils.fetchElementPropertyToList(userRoles, "id");
+	}
+	
 
 	public Integer getId() {
 		return id;
@@ -74,14 +83,6 @@ public class User implements Serializable {
 		this.nameCn = nameCn;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getuNo() {
 		return uNo;
 	}
@@ -98,23 +99,6 @@ public class User implements Serializable {
 		this.corpMail = corpMail;
 	}
 
-
-	public Date getValidTimeBegin() {
-		return validTimeBegin;
-	}
-
-	public void setValidTimeBegin(Date validTimeBegin) {
-		this.validTimeBegin = validTimeBegin;
-	}
-
-	public Date getValidTimeEnd() {
-		return validTimeEnd;
-	}
-
-	public void setValidTimeEnd(Date validTimeEnd) {
-		this.validTimeEnd = validTimeEnd;
-	}
-
 	public Integer getIsValid() {
 		return isValid;
 	}
@@ -129,14 +113,6 @@ public class User implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public Date getPasswordUpdateTime() {
-		return passwordUpdateTime;
-	}
-
-	public void setPasswordUpdateTime(Date passwordUpdateTime) {
-		this.passwordUpdateTime = passwordUpdateTime;
 	}
 
 	public List<Role> getUserRoles() {

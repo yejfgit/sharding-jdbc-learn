@@ -11,6 +11,7 @@
 		<result column="objectives_id" property="objectivesId"/>
 		<result column="status" property="status"/>
 		<result column="is_valid" property="isValid"/>
+		<result column="is_week" property="isWeek"/>
 		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
@@ -24,6 +25,7 @@
 		t.status,
 		t.code_num,
 		t.is_valid,
+		t.is_week,
 		t.modify_time,
 		t.create_time
 	</sql>
@@ -93,6 +95,7 @@
 		<set> 
 			<if test="keyResultName!=null and keyResultName!=''">key_result_name = #{keyResultName},</if>
 			<if test="status!=null">status = #{status},</if>
+			<if test="isWeek!=null">is_week = #{isWeek},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}
