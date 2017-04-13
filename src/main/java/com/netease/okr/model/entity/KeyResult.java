@@ -38,6 +38,11 @@ public class KeyResult  extends BaseEntity implements Serializable {
 	private Integer isValid;
 	
 	/**
+	 * 是否有周报
+	 * */
+	private Integer isWeek;
+	
+	/**
 	 * code编号
 	 * */
 	private Integer codeNum;
@@ -119,6 +124,16 @@ public class KeyResult  extends BaseEntity implements Serializable {
 	
 	public void setObjectives(Objectives objectives) {
 		this.objectives = objectives;
+	}
+
+
+	public Integer getIsWeek() {
+		return isWeek;
+	}
+
+
+	public void setIsWeek(Integer isWeek) {
+		this.isWeek = isWeek;
 	}
 
 }

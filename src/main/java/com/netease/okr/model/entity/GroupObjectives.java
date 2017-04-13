@@ -3,7 +3,7 @@ package com.netease.okr.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class Objectives extends BaseEntity implements Serializable  {
+public class GroupObjectives extends BaseEntity implements Serializable  {
 
 	/**
 	 * 
@@ -23,17 +23,10 @@ public class Objectives extends BaseEntity implements Serializable  {
 	private String objectivesDsc;
 	
 	/**
-	 * 目标编号
+	 * 部门ID
 	 * */
-	private String objectivesCode;
+	private String deptL1Id;
 	
-	private String objectivesDetail;
-	
-	/**
-	 * 用户Id
-	 * */
-	private Integer userId;
-	private String userName;
 	
 	/**
 	 * 是否有效
@@ -46,70 +39,83 @@ public class Objectives extends BaseEntity implements Serializable  {
 	private Integer codeNum;
 	
 	
-	private List<KeyResult> keyResultList;
+	private List<GroupObjectivesUser> userList;
 	
+	private List<GroupObjectivesMile> mileList;
 	
+	private List<Objectives> objectivesList;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getObjectivesName() {
 		return objectivesName;
 	}
+
 	public void setObjectivesName(String objectivesName) {
 		this.objectivesName = objectivesName;
 	}
+
 	public String getObjectivesDsc() {
 		return objectivesDsc;
 	}
+
 	public void setObjectivesDsc(String objectivesDsc) {
 		this.objectivesDsc = objectivesDsc;
 	}
-	public String getObjectivesCode() {
-		return objectivesCode;
+
+	public String getDeptL1Id() {
+		return deptL1Id;
 	}
-	public void setObjectivesCode(String objectivesCode) {
-		this.objectivesCode = objectivesCode;
+
+	public void setDeptL1Id(String deptL1Id) {
+		this.deptL1Id = deptL1Id;
 	}
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+
 	public Integer getIsValid() {
 		return isValid;
 	}
+
 	public void setIsValid(Integer isValid) {
 		this.isValid = isValid;
 	}
-	public List<KeyResult> getKeyResultList() {
-		return keyResultList;
-	}
-	public void setKeyResultList(List<KeyResult> keyResultList) {
-		this.keyResultList = keyResultList;
-	}
+
 	public Integer getCodeNum() {
 		return codeNum;
 	}
+
 	public void setCodeNum(Integer codeNum) {
 		this.codeNum = codeNum;
 	}
-	public String getObjectivesDetail() {
-		return objectivesDetail;
-	}
-	public void setObjectivesDetail(String objectivesDetail) {
-		this.objectivesDetail = objectivesDetail;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	
 
+	public List<GroupObjectivesUser> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<GroupObjectivesUser> userList) {
+		this.userList = userList;
+	}
+
+	public List<GroupObjectivesMile> getMileList() {
+		return mileList;
+	}
+
+	public void setMileList(List<GroupObjectivesMile> mileList) {
+		this.mileList = mileList;
+	}
+
+	public List<Objectives> getObjectivesList() {
+		return objectivesList;
+	}
+
+	public void setObjectivesList(List<Objectives> objectivesList) {
+		this.objectivesList = objectivesList;
+	}
+	
+	
 }

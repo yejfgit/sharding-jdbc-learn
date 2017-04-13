@@ -1,9 +1,11 @@
 package com.netease.okr.mapper.okr;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
-import com.netease.okr.model.entity.security.User;
+import com.netease.okr.model.entity.security.Role;
 
 /**
  * @Description: mapper
@@ -15,18 +17,12 @@ import com.netease.okr.model.entity.security.User;
 public interface RoleMapper {
 
 	/**
-	 * 查询职员信息
+	 * 查询角色信息
 	 * @return
 	 * @throws DataAccessException
 	 */
-	public User getUserById(@Param(value = "id") Integer id) throws DataAccessException;
+	public List<Role> getRolesByUserId(@Param(value = "userId") Integer userId) throws DataAccessException;
 	
-	
-	/**
-	 * 查询职员信息
-	 * @return
-	 * @throws DataAccessException
-	 */
-	public User getUserByUsername(@Param(value = "userName") String userName) throws DataAccessException;
+
 
 }

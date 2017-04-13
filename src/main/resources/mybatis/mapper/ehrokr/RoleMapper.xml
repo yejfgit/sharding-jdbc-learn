@@ -11,20 +11,16 @@
 		<result column="name_cn" property="nameCn"/>
 	</resultMap>
 
-	<select id="getAllRoles" resultMap="RoleResultMap">
-		select id,
-		name,
-		name_cn nameCn
-		from tb_role
+	<select id="getRolesByUserId" resultMap="RoleResultMap">
+		select 
+		tr.id,
+		tr.name,
+		tr.name_cn nameCn
+		from tb_user_role tu 
+		LEFT JOIN tb_role tr on tu.role_id = tr.id
+		where tu.user_id = #{userId}
+		order by tr.id asc
 	</select>
 	
-	<select id="getRoleByName" resultMap="RoleResultMap">
-		select id,
-		name,
-		name_cn nameCn
-		from tb_role
-		<where>
-			<if test="name!=null and name!=''">name=#{name}</if>
-		</where>
-	</select>
+	
 </mapper>

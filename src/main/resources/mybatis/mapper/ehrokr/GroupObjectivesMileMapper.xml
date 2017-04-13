@@ -1,0 +1,75 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.GroupObjectivesMileMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.GroupObjectivesMile" id="GroupObjectivesMileResultMap">
+		<id column="id" property="id"/>
+		<result column="mile_dsc" property="mileDsc"/>
+		<result column="group_objectives_id" property="groupObjectivesId"/>
+		<result column="mile_date" property="mileDate"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		
+	</resultMap>
+	
+	<sql id="selectedGroupObjectivesMileColumns">
+		id,
+		mile_dsc,
+		group_objectives_id,
+		mile_date,
+		modify_time,
+		create_time
+	</sql>
+	
+	
+	<select id="getGroupObjectivesMiles" resultMap="GroupObjectivesMileResultMap">
+		select
+		<include refid="selectedGroupObjectivesMileColumns"></include>
+		from tb_group_objectives_mile
+		where group_objectives_id=#{groupObjectivesId}
+		order by mile_dsc desc
+	</select>
+
+	<insert id="addGroupObjectivesMile" parameterType="com.netease.okr.model.entity.GroupObjectivesMile" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_group_objectives_mile(
+			id,
+			<if test="mileDsc and mileDsc!=''">mile_dsc,</if>
+			<if test="mileDate!=null and mileDate!=''">mile_date,</if>
+			<if test="groupObjectivesId!=null">group_objectives_id,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="mileDsc and mileDsc!=''">#{mileDsc},</if>
+			<if test="mileDate!=null and mileDate!=''">#{mileDate},</if>
+			<if test="groupObjectivesId!=null">#{groupObjectivesId},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	
+	<update id="updateGroupObjectivesMile" parameterType="com.netease.okr.model.entity.GroupObjectivesMile">
+		update tb_group_objectives_mile
+		<set> 
+			<if test="mileDsc and mileDsc!=''">mile_dsc = #{mileDsc},</if>
+			<if test="mileDate!=null and mileDate!=''">mile_date = #{mileDate},</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	<delete id="deleteGroupObjectivesMileById">
+		delete from tb_group_objectives_mile where id=#{id}
+	</delete>
+	
+	<delete id="deleteGroupObjectivesMile">
+		delete from tb_group_objectives_mile where group_objectives_id=#{groupObjectivesId}
+	</delete>
+	
+	
+</mapper>
