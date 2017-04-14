@@ -26,5 +26,9 @@ public interface RedisConstant {
 	String DATE_INFO_QUERY_KEY = REDIS_PRE_KEY+"OKR_DATE_INFO_QUERY_KEY";//周报日期信息
 	
 	Integer DATE_INFO_QUERY_KEY_EXPIRE = 6 * 60 * 60;//周报日期信息缓存时间【6小时】
+	
+	String GROUP_OBJECTIVES_INFO_QUERY_KEY = REDIS_PRE_KEY+"OKR_GROUP_OBJECTIVES_INFO_QUERY_KEY";//组织OKR信息查询
+	
+	Integer GROUP_OBJECTIVES_INFO_QUERY_EXPIRE = 2 * 60 * 60;//组织OKR信息查询缓存时间【2小时】
 
 }

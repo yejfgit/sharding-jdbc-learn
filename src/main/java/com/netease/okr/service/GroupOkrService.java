@@ -10,4 +10,6 @@ public interface GroupOkrService {
 
 	public GroupObjectives deleteGroupObjectives(GroupObjectives groupObjectives);
 
+	public void updateGroupObjectivesListRedis();
+
 }

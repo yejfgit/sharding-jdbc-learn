@@ -49,9 +49,10 @@ public class GroupOkrController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/myGroupOkr/getMyGroupOkrList", method = RequestMethod.GET)
 	public JsonResponse getMyGroupOkrList(Integer userId) {
-		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
-		List<GroupObjectives> myGroupOkrList = groupObjectivesService.getGroupObjectivesList(user.getDeptL1Id());
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		String deptL1Id = user.getDeptL1Id();
+		List<GroupObjectives> myGroupOkrList = groupObjectivesService.getGroupObjectivesList(deptL1Id);
 		
 		return JsonUtil.toJsonObj(myGroupOkrList);
 	}
@@ -75,6 +76,8 @@ public class GroupOkrController extends BaseController {
 		
 		groupObjectives = groupOkrService.addGroupObjectives(groupObjectives);
 		
+		updateGroupObjectivesListRedis();
+
 		return JsonUtil.toJsonObj(groupObjectives);
 	}
 	
@@ -96,6 +99,8 @@ public class GroupOkrController extends BaseController {
 		
 		groupObjectives = groupOkrService.updateGroupObjectives(groupObjectives);
 		
+		updateGroupObjectivesListRedis();
+		
 		return JsonUtil.toJsonObj(groupObjectives);
 	}
 	
@@ -116,6 +121,8 @@ public class GroupOkrController extends BaseController {
 		}
 		
 		groupObjectives = groupOkrService.deleteGroupObjectives(groupObjectives);
+		
+		updateGroupObjectivesListRedis();
 		
 		return JsonUtil.toJsonObj(groupObjectives);
 	}
@@ -139,6 +146,7 @@ public class GroupOkrController extends BaseController {
 		int c = groupObjectivesMileService.addGroupObjectivesMile(groupObjectivesMile);
 		
 		if(c>0){
+			updateGroupObjectivesListRedis();
 			return JsonUtil.toJsonObj(groupObjectivesMile);
 		}else{
 			return JsonUtil.toJsonFail("删除失败");
@@ -164,6 +172,7 @@ public class GroupOkrController extends BaseController {
 		int c = groupObjectivesMileService.deleteGroupObjectivesMileById(groupObjectivesMile.getId());
 		
 		if(c>0){
+			updateGroupObjectivesListRedis();
 			return JsonUtil.toJsonObj(groupObjectivesMile);
 		}else{
 			return JsonUtil.toJsonFail("删除失败");
@@ -188,6 +197,7 @@ public class GroupOkrController extends BaseController {
 		
 		int c = groupObjectivesMileService.updateGroupObjectivesMile(groupObjectivesMile);
 		if(c>0){
+			updateGroupObjectivesListRedis();
 			return JsonUtil.toJsonObj(groupObjectivesMile);
 		}else{
 			return JsonUtil.toJsonFail("更新失败");
@@ -231,6 +241,7 @@ public class GroupOkrController extends BaseController {
 		
 		int c = groupObjectivesService.addGroupObjectivesRel(groupObjectivesRelList);
 		if(c>0){
+			updateGroupObjectivesListRedis();
 			return JsonUtil.toJsonObj(groupObjectivesService.getObjectivesList(groupObjectivesRelList.getGroupObjectivesId()));
 		}else{
 			return JsonUtil.toJsonFail("更新失败");
@@ -239,4 +250,9 @@ public class GroupOkrController extends BaseController {
 		
 	}
 	
+	
+	private void updateGroupObjectivesListRedis(){
+		//更新缓存信息
+		groupOkrService.updateGroupObjectivesListRedis();
+	}
 }
