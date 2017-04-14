@@ -2,14 +2,12 @@ package com.netease.okr.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.netease.okr.model.entity.GroupObjectives;
 import com.netease.okr.model.entity.GroupObjectivesRel;
 
 public interface GroupObjectivesDao {
 
-	public List<GroupObjectives> getGroupObjectivesList(@Param(value = "deptL1Id") String deptL1Id);
+	public List<GroupObjectives> getGroupObjectivesList(String deptL1Id);
 
 	public Integer addGroupObjectives(GroupObjectives groupObjectives);
 
@@ -24,6 +22,8 @@ public interface GroupObjectivesDao {
 	public Integer deleteGroupObjectivesRel(Integer groupObjectivesId);
 
 	public Integer getObjectivesList(Integer id);
+
+	public void updateGroupObjectivesListRedis();
 
 
 }

@@ -22,7 +22,7 @@ public class GroupObjectivesServiceImpl extends SqlSessionDaoSupport implements 
 	private GroupObjectivesDao groupObjectivesDao;
 
 	@Override
-	public List<GroupObjectives> getGroupObjectivesList(@Param(value = "deptL1Id") String deptL1Id) {
+	public List<GroupObjectives> getGroupObjectivesList(String deptL1Id) {
 		return groupObjectivesDao.getGroupObjectivesList(deptL1Id);
 	}
 

@@ -28,6 +28,10 @@ public class GroupOkrServiceImpl extends SqlSessionDaoSupport implements GroupOk
 	@Autowired
 	private GroupObjectivesMileDao groupObjectivesMileDao;
 
+	@Override
+	public void updateGroupObjectivesListRedis() {
+		groupObjectivesDao.updateGroupObjectivesListRedis();
+	}
 	
 	@Override
 	public GroupObjectives addGroupObjectives(GroupObjectives groupObjectives) {
