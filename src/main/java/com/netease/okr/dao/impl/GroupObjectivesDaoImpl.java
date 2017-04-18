@@ -13,6 +13,7 @@ import com.netease.okr.dao.GroupObjectivesDao;
 import com.netease.okr.mapper.okr.GroupObjectivesMapper;
 import com.netease.okr.model.entity.GroupObjectives;
 import com.netease.okr.model.entity.GroupObjectivesRel;
+import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.redis.RedisClient;
 import com.netease.okr.redis.RedisConstant;
@@ -57,7 +58,7 @@ public class GroupObjectivesDaoImpl extends SqlSessionDaoSupport implements Grou
 		return groupObjectivesMapper.addGroupObjectives(groupObjectives);
 	}
 	@Override
-	public Integer getObjectivesList(Integer id) {
+	public List<Objectives> getObjectivesList(Integer id) {
 		return groupObjectivesMapper.getObjectivesList(id);
 	}
 	

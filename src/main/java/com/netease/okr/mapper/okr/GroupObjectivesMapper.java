@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.GroupObjectives;
 import com.netease.okr.model.entity.GroupObjectivesRel;
+import com.netease.okr.model.entity.Objectives;
 
 /**
  * @Description: mapper
@@ -45,7 +46,7 @@ public interface GroupObjectivesMapper {
 	 */
 	public Integer deleteGroupObjectives(Integer id)  throws DataAccessException;
 	
-	public Integer getObjectivesList(Integer id)  throws DataAccessException;
+	public List<Objectives> getObjectivesList(Integer id)  throws DataAccessException;
 	
 	
 	/**
