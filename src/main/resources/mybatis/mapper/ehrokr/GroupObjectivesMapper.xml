@@ -45,8 +45,8 @@
 	<select id="getObjectivesList" resultMap="com.netease.okr.mapper.okr.ObjectivesMapper.ObjectivesInfoResultMap">
 		select
 		tb.id,tb.objectives_name,tb.objectives_dsc,tb.objectives_detail,tb.user_id,tb.objectives_code,tu.name userName
-		from tb_group_objectives tg
-		left join tb_group_objectives_rel tgl on tg.id = tgl.group_objectives_id
+		from tb_group_objectives_rel tgl
+		left join tb_group_objectives tg on tg.id = tgl.group_objectives_id
 		left join tb_objectives tb on tb.id = tgl.objectives_id
 		left join tb_user tu on tb.user_id = tu.id
 		where tg.id=#{id}
