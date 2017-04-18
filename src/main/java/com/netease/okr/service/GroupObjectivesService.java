@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.netease.okr.model.entity.GroupObjectives;
 import com.netease.okr.model.entity.GroupObjectivesRelList;
+import com.netease.okr.model.entity.Objectives;
 
 public interface GroupObjectivesService {
 
@@ -21,7 +22,7 @@ public interface GroupObjectivesService {
 
 	public Integer deleteGroupObjectivesRel(Integer groupObjectivesId);
 
-	public Integer getObjectivesList(Integer id);
+	public List<Objectives> getObjectivesList(Integer id);
 
 
 }

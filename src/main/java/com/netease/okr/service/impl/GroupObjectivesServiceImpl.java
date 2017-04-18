@@ -13,6 +13,7 @@ import com.netease.okr.dao.GroupObjectivesDao;
 import com.netease.okr.model.entity.GroupObjectives;
 import com.netease.okr.model.entity.GroupObjectivesRel;
 import com.netease.okr.model.entity.GroupObjectivesRelList;
+import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.service.GroupObjectivesService;
 
 @Repository
@@ -65,7 +66,7 @@ public class GroupObjectivesServiceImpl extends SqlSessionDaoSupport implements 
 	}
 	
 	@Override
-	public Integer getObjectivesList(Integer id) {
+	public List<Objectives> getObjectivesList(Integer id) {
 		return groupObjectivesDao.getObjectivesList(id);
 	}
 	
