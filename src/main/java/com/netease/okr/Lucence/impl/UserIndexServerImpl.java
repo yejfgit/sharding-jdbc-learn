@@ -84,7 +84,7 @@ public class UserIndexServerImpl implements UserIndexServer {
 		PageJsonResponse<User> pageRes = new PageJsonResponse<User>();
 		pageRes.setPage(page);
 		try {
-			String queryStr  = "name:\"*?*\" OR uNo:\"*?*\" OR corpMail:\"*?*\" ";
+			String queryStr  = "name:\"*?*\" OR uNo:*?* OR corpMail:*?* ";
 			queryStr = queryStr.replaceAll("[?]",userQuery==null?"":MyStringUtil.isBlank(userQuery.getDesp())?"":userQuery.getDesp());
 			SolrQuery query = new SolrQuery(queryStr); // 定义查询内容
 			int currentPage = page.getCurrentPageOfIndex();
