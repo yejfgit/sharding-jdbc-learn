@@ -206,13 +206,16 @@ public class WeekReportServiceImpl implements WeekReportService {
 			
 			LoggerUtil.info("创建周报【id="+weekReport.getId()+";dateId="+dateId+";year="+weekReport.getYear()+";week="+weekReport.getWeek()+"】");
 			
+			//在删除之前获取之前关键事件关系
+			List<Integer> keyResultIds = getKeyResultIds(weekReport.getId(),weekReport.getKeyResultList());
 			//保存周报关键事件关系表
 			saveWeekReportRelList(weekReport,weekReport.getKeyResultList());
 			
 			//更新周报附件信息
 			updateAppendixList(weekReport.getId(),weekReport.getAppendixList());
 			
-			
+			//检查更新关键事件进行状态
+			TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 2), keyResultIds,null, null);
 		}
 	}
 	
