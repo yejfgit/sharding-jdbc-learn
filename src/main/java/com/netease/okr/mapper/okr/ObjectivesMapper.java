@@ -26,6 +26,16 @@ public interface ObjectivesMapper {
 	
 	/**
 	 * @author yejf
+	 * @param userId
+	 * @return List<Objectives>
+	 * @throws DataAccessException
+	 */
+	public List<Objectives> getMyNormalOkrList(@Param(value = "userId") Integer userId)  throws DataAccessException;
+	
+	
+	
+	/**
+	 * @author yejf
 	 * @param id
 	 * @return Objectives
 	 * @throws DataAccessException

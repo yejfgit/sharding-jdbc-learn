@@ -54,6 +54,28 @@ public class OkrController extends BaseController {
 	}
 	
 	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myOkr/getMyNormalOkrList", method = RequestMethod.GET)
+	public JsonResponse getMyNormalOkrList(Integer userId) {
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		
+		List<Objectives> okrList = new ArrayList<Objectives>();
+		
+		if(userId!=null){
+			okrList = okrService.getMyNormalOkrList(userId);
+		}else{
+			//默认查询自己okr
+			okrList = okrService.getMyNormalOkrList(user.getId());
+			
+		}
+		
+		return JsonUtil.toJsonObj(okrList);
+	}
+	
+	/**
 	 * 根据目标id查询事件和周报
 	 * @param 
 	 * @return

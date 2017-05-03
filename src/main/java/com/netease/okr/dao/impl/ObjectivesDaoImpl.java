@@ -35,6 +35,13 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	}
 	
 	@Override
+	public List<Objectives> getMyNormalOkrList(Integer userId) {
+		return objectivesMapper.getMyNormalOkrList(userId);
+	}
+	
+	
+	
+	@Override
 	public Objectives getObjectivesById(Integer id) {
 		return objectivesMapper.getObjectivesById(id);
 	}
