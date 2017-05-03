@@ -15,12 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import com.netease.okr.mapper.okr.DeptMapper;
-
  
 /**
  *  自动生成MyBatis的实体类、实体映射XML文件、Mapper
@@ -423,9 +417,9 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t @Override");
         bw.newLine();
-        bw.write("\t public " + beanName + "  selectById ( @Param(\"id\") Integer id ){");
+        bw.write("\t public " + beanName + "  selectById (Integer id ){");
         bw.newLine();
-        bw.write("\t\t return "+processResultMapId(mapperName)+".selectById(id)");
+        bw.write("\t\t return "+processResultMapId(mapperName)+".selectById(id);");
         bw.newLine();
         bw.write("\t }");
         bw.newLine();
@@ -433,11 +427,11 @@ public class BuildMybatisModelUtil {
         
         bw = buildMethodComment(bw, "删除（根据主键ID删除）");
         bw.newLine();
-        bw.write("\t @Autowired");
+        bw.write("\t @Override");
         bw.newLine();
         bw.write("\t public " + "int deleteById (Integer id ){");
         bw.newLine();
-        bw.write("\t\t return "+processResultMapId(mapperName)+".deleteById(id)");
+        bw.write("\t\t return "+processResultMapId(mapperName)+".deleteById(id);");
         bw.newLine();
         bw.write("\t }");
         bw.newLine();
@@ -445,21 +439,21 @@ public class BuildMybatisModelUtil {
         
         bw = buildMethodComment(bw, "添加");
         bw.newLine();
-        bw.write("\t @Autowired");
+        bw.write("\t @Override");
         bw.newLine();
         bw.write("\t public " + "int insert" + beanName + "( " + beanName + " "+processResultMapId(beanName)+" ) {");
         bw.newLine();
-        bw.write("\t\t return "+processResultMapId(mapperName)+".insert("+processResultMapId(beanName)+")");
+        bw.write("\t\t return "+processResultMapId(mapperName)+".insert("+processResultMapId(beanName)+");");
         bw.newLine();
         bw.write("\t }");
         
         bw = buildMethodComment(bw, "修改（根据主键ID修改）");
         bw.newLine();
-        bw.write("\t @Autowired");
+        bw.write("\t @Override");
         bw.newLine();
         bw.write("\t public " + "int updateById ( " + beanName + " "+processResultMapId(beanName)+" )  {");
         bw.newLine();
-        bw.write("\t\t return "+processResultMapId(mapperName)+".updateById("+processResultMapId(beanName)+")");
+        bw.write("\t\t return "+processResultMapId(mapperName)+".updateById("+processResultMapId(beanName)+");");
         bw.newLine();
         bw.write("\t }");
  
@@ -488,32 +482,32 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.newLine();
         //      bw.write("public interface " + mapperName + " extends " + mapper_extends + "<" + beanName + "> {");
-        bw.write(" public interface " + daoName );
+        bw.write(" public interface " + daoName +"{");
         bw.newLine();
         bw.newLine();
         // ----------定义DaoImpl中的方法Begin----------
         bw = buildMethodComment(bw, "查询（根据主键ID查询）");
         bw.newLine();
-        bw.write("\t public " + beanName + "  selectById ( @Param(\"id\") Integer id )");
+        bw.write("\t public " + beanName + "  selectById (Integer id );");
         bw.newLine();
         
         
         bw = buildMethodComment(bw, "删除（根据主键ID删除）");
         bw.newLine();
-        bw.write("\t public " + "int deleteById (Integer id )");
+        bw.write("\t public " + "int deleteById (Integer id );");
         bw.newLine();
 
         
         
         bw = buildMethodComment(bw, "添加");
         bw.newLine();
-        bw.write("\t public " + "int insert" + beanName + "( " + beanName + " "+processResultMapId(beanName)+" )");
+        bw.write("\t public " + "int insert" + beanName + "( " + beanName + " "+processResultMapId(beanName)+" );");
         bw.newLine();
 
         
         bw = buildMethodComment(bw, "修改（根据主键ID修改）");
         bw.newLine();
-        bw.write("\t public " + "int updateById ( " + beanName + " "+processResultMapId(beanName)+" ) ");
+        bw.write("\t public " + "int updateById ( " + beanName + " "+processResultMapId(beanName)+" ); ");
         bw.newLine();
 
  
