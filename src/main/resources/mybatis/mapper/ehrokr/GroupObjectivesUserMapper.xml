@@ -8,7 +8,7 @@
 		<id column="id" property="id"/>
 		<result column="user_id" property="userId"/>
 		<result column="group_objectives_id" property="groupObjectivesId"/>
-		<result column="user_type" property="userType"/>
+		<result column="user_type" property="type"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
 		<result column="name" property="name" />
