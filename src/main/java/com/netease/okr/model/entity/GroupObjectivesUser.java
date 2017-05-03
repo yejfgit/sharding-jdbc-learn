@@ -20,7 +20,7 @@ public class GroupObjectivesUser extends User implements Serializable  {
 	
 	private Integer groupObjectivesId;
 
-	private Integer userType;
+	private Integer type;
 
 	private Date modifyTime;
 	
@@ -48,13 +48,14 @@ public class GroupObjectivesUser extends User implements Serializable  {
 	}
 
 
-	public Integer getUserType() {
-		return userType;
+
+	public Integer getType() {
+		return type;
 	}
 
 
-	public void setUserType(Integer userType) {
-		this.userType = userType;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 
