@@ -41,7 +41,7 @@
 		insert into tb_group_objectives_user(
 			id,
 			<if test="userId!=null">user_id,</if>
-			<if test="userType!=null">user_type,</if>
+			<if test="type!=null">user_type,</if>
 			<if test="groupObjectivesId!=null">group_objectives_id,</if>
 			create_time,
 			modify_time
@@ -49,7 +49,7 @@
 		values(
 			#{id},
 			<if test="userId!=null">#{userId},</if>
-			<if test="userType!=null">#{userType},</if>
+			<if test="type!=null">#{type},</if>
 			<if test="groupObjectivesId!=null">#{groupObjectivesId},</if>
 			now(),
 			now()
