@@ -19,4 +19,6 @@ public interface OkrService {
 
 	public Integer updateKeyResultStatus(Integer keyResultId, Integer status,Integer isWeek);
 
+	public List<Objectives> getMyNormalOkrList(Integer userId);
+
 }
