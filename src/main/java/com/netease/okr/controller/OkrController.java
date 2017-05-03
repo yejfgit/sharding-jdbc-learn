@@ -32,6 +32,7 @@ public class OkrController extends BaseController {
 	
 	
 	/**
+	 * 查询所有状态关键事件
 	 * @param 
 	 * @return
 	 */
@@ -54,6 +55,7 @@ public class OkrController extends BaseController {
 	}
 	
 	/**
+	 * 查询不包含已终止和已完成的目标和关键事件
 	 * @param 
 	 * @return
 	 */

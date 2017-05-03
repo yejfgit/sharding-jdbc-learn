@@ -113,7 +113,7 @@
 	
 	<update id="updateKeyResultStatus" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" separator=";">
-			update tb_key_result set status = #{item.status}  where id = #{item.id}
+			update tb_key_result set status = #{item.status},is_week = #{item.isWeek}  where id = #{item.id}
 		</foreach>
 		 
 	</update>
