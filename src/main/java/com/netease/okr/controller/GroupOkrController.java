@@ -251,6 +251,20 @@ public class GroupOkrController extends BaseController {
 	}
 	
 	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myGroupOkr/resetGroupObjectivesListRedis", method = RequestMethod.GET)
+	public JsonResponse resetGroupObjectivesListRedis() {
+		
+		updateGroupObjectivesListRedis();
+		
+		return JsonUtil.toJsonObj("ok");
+		
+	}
+	
 	private void updateGroupObjectivesListRedis(){
 		//更新缓存信息
 		groupOkrService.updateGroupObjectivesListRedis();
