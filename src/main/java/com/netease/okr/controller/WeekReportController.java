@@ -81,7 +81,14 @@ public class WeekReportController extends BaseController {
 	@RequestMapping(value = "/weekReport/addWeekReport", method = RequestMethod.POST)
 	public JsonResponse addKeyResult(@RequestBody WeekReportList weekReportList) {
 		
-		
+		if(weekReportList!=null&&weekReportList.getWeekList()!=null&&weekReportList.getWeekList().size()>0){
+			List<WeekReport> weekReports = weekReportList.getWeekList();
+			for(WeekReport wr:weekReports){
+				if(wr.getContent().length()>4000||wr.getContentDetail().length()>4000){
+					return JsonUtil.toJsonFail("内容超过4000字符，请修改！");
+				}
+			}
+		}
 		return weekReportService.addWeekReports(weekReportList);
 		
 	}

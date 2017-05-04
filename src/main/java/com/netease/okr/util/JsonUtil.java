@@ -27,7 +27,7 @@ public class JsonUtil {
 	public static JsonResponse toJsonFail(String msg){
 		JsonResponse res = new JsonResponse(); 
 		res.setCode(ConstantsUtil.RESPONSE_FAILED_400);
-		res.setMsg(ConstantsUtil.RESPONSE_MSG_FAILED+":【"+msg+"】");
+		res.setMsg("【"+msg+"】");
 		
 		LoggerUtil.info(JSON.toJSONString(res));
 		return res;
