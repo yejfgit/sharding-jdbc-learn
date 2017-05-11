@@ -345,15 +345,15 @@ public class BuildMybatisModelUtil {
         // ----------定义Mapper中的方法Begin----------
         bw = buildMethodComment(bw, "查询（根据主键ID查询）");
         bw.newLine();
-        bw.write("\t public " + beanName + "  selectById ( @Param(\"id\") Integer id ) throws DataAccessException;");
+        bw.write("\t public " + beanName + "  selectById (@Param(\"id\") Integer id) throws DataAccessException;");
         bw.newLine();
         bw = buildMethodComment(bw, "删除（根据主键ID删除）");
         bw.newLine();
-        bw.write("\t public " + "int deleteById ( @Param(\"id\") Integer id )  throws DataAccessException;");
+        bw.write("\t public " + "int deleteById (@Param(\"id\") Integer id)  throws DataAccessException;");
         bw.newLine();
         bw = buildMethodComment(bw, "添加");
         bw.newLine();
-        bw.write("\t public " + "int insert" + beanName + "( " + beanName + " record )  throws DataAccessException;");
+        bw.write("\t public " + "int insert" + beanName + "(" + beanName + " record)  throws DataAccessException;");
         bw.newLine();
         /*bw = buildMethodComment(bw, "添加 （匹配有值的字段）");
         bw.newLine();
@@ -365,7 +365,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();*/
         bw = buildMethodComment(bw, "修改（根据主键ID修改）");
         bw.newLine();
-        bw.write("\t public " + "int updateById ( " + beanName + " record )  throws DataAccessException;");
+        bw.write("\t public " + "int updateById (" + beanName + " record)  throws DataAccessException;");
         bw.newLine();
  
         // ----------定义Mapper中的方法End----------
@@ -417,7 +417,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t @Override");
         bw.newLine();
-        bw.write("\t public " + beanName + "  selectById (Integer id ){");
+        bw.write("\t public " + beanName + "  selectById (Integer id){");
         bw.newLine();
         bw.write("\t\t return "+processResultMapId(mapperName)+".selectById(id);");
         bw.newLine();
@@ -429,7 +429,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t @Override");
         bw.newLine();
-        bw.write("\t public " + "int deleteById (Integer id ){");
+        bw.write("\t public " + "int deleteById (Integer id){");
         bw.newLine();
         bw.write("\t\t return "+processResultMapId(mapperName)+".deleteById(id);");
         bw.newLine();
@@ -441,7 +441,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t @Override");
         bw.newLine();
-        bw.write("\t public " + "int insert" + beanName + "( " + beanName + " "+processResultMapId(beanName)+" ) {");
+        bw.write("\t public " + "int insert" + beanName + "(" + beanName + " "+processResultMapId(beanName)+") {");
         bw.newLine();
         bw.write("\t\t return "+processResultMapId(mapperName)+".insert("+processResultMapId(beanName)+");");
         bw.newLine();
@@ -451,7 +451,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t @Override");
         bw.newLine();
-        bw.write("\t public " + "int updateById ( " + beanName + " "+processResultMapId(beanName)+" )  {");
+        bw.write("\t public " + "int updateById (" + beanName + " "+processResultMapId(beanName)+") {");
         bw.newLine();
         bw.write("\t\t return "+processResultMapId(mapperName)+".updateById("+processResultMapId(beanName)+");");
         bw.newLine();
@@ -488,13 +488,13 @@ public class BuildMybatisModelUtil {
         // ----------定义DaoImpl中的方法Begin----------
         bw = buildMethodComment(bw, "查询（根据主键ID查询）");
         bw.newLine();
-        bw.write("\t public " + beanName + "  selectById (Integer id );");
+        bw.write("\t public " + beanName + "  selectById (Integer id);");
         bw.newLine();
         
         
         bw = buildMethodComment(bw, "删除（根据主键ID删除）");
         bw.newLine();
-        bw.write("\t public " + "int deleteById (Integer id );");
+        bw.write("\t public " + "int deleteById (Integer id);");
         bw.newLine();
 
         
