@@ -1,5 +1,7 @@
 package com.netease.okr.quartz.job;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import com.netease.okr.util.LoggerUtil;
  *更新用户最新周报信息
  */
 @Component
-public class UpdateNewWeekReportTask  {
+public class UpdateNewWeekReportTask  implements JobProcessor {
 
 	@Autowired
 	private UserService userService;
@@ -41,6 +43,22 @@ public class UpdateNewWeekReportTask  {
 		
 		LoggerUtil.info("UpdateNewWeekReportTask--end");
 		
+	}
+	
+	
+	/**
+	 * 删除周报更新最新周报任务
+	 * 手动触发定时任务
+	 * */
+	@Override
+	public void execute(List<Integer> ids, Integer userId) {
+		LoggerUtil.info("UpdateNewWeekReportTask--begin");
+		
+		if(userId!=null){
+			userService.updateUserNewWeekReport(userId);
+		}
+		
+		LoggerUtil.info("UpdateNewWeekReportTask--end");
 	}
 
 

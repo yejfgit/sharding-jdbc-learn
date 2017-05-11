@@ -28,4 +28,6 @@ public interface UserService {
 	public User getUserById(Integer id);
 
 	public void updateUserNewWeekReport();
+
+	public void updateUserNewWeekReport(Integer userId);
 }

@@ -14,6 +14,8 @@ import com.netease.okr.model.entity.OkrNum;
 import com.netease.okr.model.entity.WeekReport;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.UserQuery;
+import com.netease.okr.redis.RedisClient;
+import com.netease.okr.redis.RedisConstant;
 import com.netease.okr.service.UserService;
 import com.netease.okr.util.ConstantsUtil;
 
@@ -98,6 +100,25 @@ public class UserServiceImpl implements UserService {
 				userDao.updateUser(user);
 			}
 			
+		}
+		
+	}
+	
+	
+	@Override
+	public void updateUserNewWeekReport(Integer userId){
+		User user = new User();
+		user.setId(userId);
+		WeekReport weekReport = weekReportDao.getNewWeekReport(userId);
+		if(weekReport!=null){
+			user.setWeekReportId(weekReport.getId());
+			userDao.updateUser(user);
+			
+			Long dt = System.currentTimeMillis()-weekReport.getCreateTime().getTime();
+			if(dt>RedisConstant.HAS_NEW_WEEK_REPORT_EXPIRE){
+				//失效
+				RedisClient.expire(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId,0);
+			}
 		}
 		
 	}

@@ -24,6 +24,7 @@ import com.netease.okr.model.entity.WeekReportRel;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.model.query.WeekReportQuery;
 import com.netease.okr.quartz.job.UpdateKeyResultStatusTask;
+import com.netease.okr.quartz.job.UpdateNewWeekReportTask;
 import com.netease.okr.quartz.scheduler.TaskScheduler;
 import com.netease.okr.service.FileService;
 import com.netease.okr.service.WeekReportService;
@@ -58,6 +59,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 	
 	@Autowired
 	private UpdateKeyResultStatusTask updateKeyResultStatusTask;
+	
+	@Autowired
+	private UpdateNewWeekReportTask updateNewWeekReportTask;
 	
 	
 	/**
@@ -277,6 +281,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 	 * 删除周报周报
 	 * */
 	private void  deleteWeekReport(Integer weekReportId){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
 		List<Integer> keyResultIds = getKeyResultIds(weekReportId,null);
 
@@ -286,6 +291,9 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 		//检查更新关键事件进行状态
 		TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 2), keyResultIds,null, null);
+		
+		//删除更新员工最新周报信息
+		TaskScheduler.scheduleTaskAt(updateNewWeekReportTask, MyDateUtils.addSeconds(new Date(), 2), null,user.getId(), null);
 	}
 	
 	/**
