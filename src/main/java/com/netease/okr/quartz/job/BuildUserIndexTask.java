@@ -22,7 +22,7 @@ public class BuildUserIndexTask {
 	@Autowired
 	private TaskLockService taskLockService;
 	
-	@Scheduled(cron = "0 30 2 * * ?")
+	@Scheduled(cron = "0 0/2 * * * ?")
 	public void handle() {
 		LoggerUtil.info("BuildUserIndexTask--begin");
 		
