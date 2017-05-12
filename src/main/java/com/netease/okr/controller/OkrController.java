@@ -15,6 +15,7 @@ import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.OkrNum;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.service.ObjectivesService;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.util.JsonUtil;
 import com.netease.okr.util.RedisUserContextUtil;
@@ -26,7 +27,12 @@ public class OkrController extends BaseController {
 	@Autowired
 	private OkrService okrService;
 	
+	@Autowired
+	private ObjectivesService objectivesService;
+	
+	
 	/**
+	 * 查询所有状态关键事件
 	 * @param 
 	 * @return
 	 */
@@ -46,6 +52,41 @@ public class OkrController extends BaseController {
 		}
 		
 		return JsonUtil.toJsonObj(okrList);
+	}
+	
+	/**
+	 * 查询不包含已终止和已完成的目标和关键事件
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myOkr/getMyNormalOkrList", method = RequestMethod.GET)
+	public JsonResponse getMyNormalOkrList(Integer userId) {
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		
+		List<Objectives> okrList = new ArrayList<Objectives>();
+		
+		if(userId!=null){
+			okrList = okrService.getMyNormalOkrList(userId);
+		}else{
+			//默认查询自己okr
+			okrList = okrService.getMyNormalOkrList(user.getId());
+			
+		}
+		
+		return JsonUtil.toJsonObj(okrList);
+	}
+	
+	/**
+	 * 根据目标id查询事件和周报
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/myOkr/getOkrByObjId", method = RequestMethod.GET)
+	public JsonResponse getOkrByObjId(Integer objectivesId) {
+		Objectives Objectives = objectivesService.getObjectivesById(objectivesId);
+		return JsonUtil.toJsonObj(Objectives);
 	}
 	
 	/**

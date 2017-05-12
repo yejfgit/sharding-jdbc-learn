@@ -77,5 +77,10 @@ public class DeptServiceImpl implements DeptService {
 		return deptL1List;
 	}
 	
+	@Override
+	public List<Dept> getDeptListByLevel(Integer level){
+		return deptDao.getDeptListByLevel(level);
+	}
+	
 	
 }

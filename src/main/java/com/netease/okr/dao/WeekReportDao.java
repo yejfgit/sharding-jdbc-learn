@@ -30,6 +30,8 @@ public interface WeekReportDao {
 
 	public WeekReport getWeekReportById(Integer id);
 
+	public Integer hasNewWeekReport(Integer userId);
+
 
 
 }

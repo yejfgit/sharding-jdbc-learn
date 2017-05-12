@@ -22,5 +22,7 @@ public interface ObjectivesDao {
 
 	public Objectives getObjectivesInfoById(Integer id);
 
+	public List<Objectives> getMyNormalOkrList(Integer userId);
+
 
 }

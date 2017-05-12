@@ -20,6 +20,12 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	private String content;
 	
 	/**
+	 * 周报内容
+	 * */
+	private String contentDetail;
+	
+	
+	/**
 	 * 状态0：暂存 1：发布
 	 * */
 	private Integer status;
@@ -144,6 +150,12 @@ public class WeekReport  extends BaseEntity implements Serializable {
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	public String getContentDetail() {
+		return contentDetail;
+	}
+	public void setContentDetail(String contentDetail) {
+		this.contentDetail = contentDetail;
 	}
 
 }

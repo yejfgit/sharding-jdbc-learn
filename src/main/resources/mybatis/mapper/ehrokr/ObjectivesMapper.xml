@@ -3,11 +3,13 @@
 
 <mapper namespace="com.netease.okr.mapper.okr.ObjectivesMapper">
 
-
+	
+	<!--查询包含所有状态的事件-->
 	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesResultMap">
 		<id column="id" property="id"/>
 		<result column="objectives_name" property="objectivesName"/>
 		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
 		<result column="is_valid" property="isValid"/>
@@ -18,13 +20,31 @@
 		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByoId"></collection>
 	</resultMap>
 	
+	<!--查询不包含已完成和已终止的事件-->
+	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesListResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
+		<result column="objectives_code" property="objectivesCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getNormalKeyResultListByoId"></collection>
+	</resultMap>
 	
+	<!--基础信息不包含集合信息-->
 	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesInfoResultMap">
 		<id column="id" property="id"/>
 		<result column="objectives_name" property="objectivesName"/>
 		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
 		<result column="objectives_code" property="objectivesCode"/>
 		<result column="user_id" property="userId"/>
+		<result column="userName" property="userName"/>
 		<result column="is_valid" property="isValid"/>
 		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
@@ -35,6 +55,7 @@
 		id,
 		objectives_name,
 		objectives_dsc,
+		objectives_detail,
 		objectives_code,
 		user_id,
 		is_valid,
@@ -60,8 +81,25 @@
 		where id=#{id}
 	</select>
 	
+	<!-- 根据Id查询目标简单信息 -->
+	<select id="getObjectivesInfoByUserId" resultMap="ObjectivesInfoResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where is_valid = 1 and user_id=#{userId}
+	</select>
+	
 	<!-- 查询员工的okr-->
 	<select id="getMyOkrList" resultMap="ObjectivesResultMap">
+		select
+		<include refid="selectedObjectivesColumns"></include>
+		from tb_objectives
+		where is_valid = 1 and user_id=#{userId}
+		order by code_num desc
+	</select>
+	
+	<!-- 查询员工不包含已完成和已终止事件的的okr-->
+	<select id="getMyNormalOkrList" resultMap="ObjectivesListResultMap">
 		select
 		<include refid="selectedObjectivesColumns"></include>
 		from tb_objectives
@@ -93,6 +131,7 @@
 			<if test="objectivesName!=null and objectivesName!=''">objectives_name,</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc,</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">objectives_code,</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">objectives_detail,</if>
 			<if test="userId!=null">user_id,</if>
 			<if test="codeNum!=null">code_num,</if>
 			create_time,
@@ -103,6 +142,7 @@
 			<if test="objectivesName!=null and objectivesName!=''">#{objectivesName},</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">#{objectivesDsc},</if>
 			<if test="objectivesCode!=null and objectivesCode!=''">#{objectivesCode},</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">#{objectivesDetail},</if>
 			<if test="userId!=null">#{userId},</if>
 			<if test="codeNum!=null">#{codeNum},</if>
 			now(),
@@ -116,6 +156,7 @@
 		<set> 
 			<if test="objectivesName!=null and objectivesName!=''">objectives_name = #{objectivesName},</if>
 			<if test="objectivesDsc!=null and objectivesDsc!=''">objectives_dsc = #{objectivesDsc},</if>
+			<if test="objectivesDetail!=null and objectivesDetail!=''">objectives_detail = #{objectivesDetail},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}

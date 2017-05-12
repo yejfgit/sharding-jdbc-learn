@@ -34,6 +34,7 @@ public class OkrServiceImpl implements OkrService {
 	@Autowired
 	private WeekReportDao weekReportDao;
 	
+	
 	/**
 	 * @author yejf
 	 * @param userId
@@ -44,6 +45,12 @@ public class OkrServiceImpl implements OkrService {
 	public List<Objectives> getMyOkrList(Integer userId) {
 		List<Objectives> ObjectivesList = objectivesDao.getMyOkrList(userId);
 		
+		setKeyResultObjectivesInfo(ObjectivesList);
+		
+		return ObjectivesList;
+	}
+	
+	private void setKeyResultObjectivesInfo(List<Objectives> ObjectivesList){
 		//组装json信息
 		if(ObjectivesList!=null&&ObjectivesList.size()>0){
 			for(Objectives ob:ObjectivesList){
@@ -62,9 +69,25 @@ public class OkrServiceImpl implements OkrService {
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * @author yejf
+	 * @param userId
+	 * @return List<Objectives>
+	 * @throws DataAccessException
+	 */
+	@Override
+	public List<Objectives> getMyNormalOkrList(Integer userId) {
+		List<Objectives> ObjectivesList = objectivesDao.getMyNormalOkrList(userId);
+		
+		setKeyResultObjectivesInfo(ObjectivesList);
 		
 		return ObjectivesList;
 	}
+	
+	
 	
 
 	/**
@@ -187,12 +210,13 @@ public class OkrServiceImpl implements OkrService {
 	}
 	
 	@Override
-	public Integer updateKeyResultStatus(Integer keyResultId,Integer status){
+	public Integer updateKeyResultStatus(Integer keyResultId,Integer status,Integer isWeek){
 		List<KeyResult> keyResults = new ArrayList<KeyResult>();
 		
 		KeyResult keyResult = new KeyResult();
 		keyResult.setId(keyResultId);
 		keyResult.setStatus(status);
+		keyResult.setIsWeek(isWeek);
 		keyResults.add(keyResult);
 		
 		return keyResultDao.updateKeyResultStatus(keyResults);

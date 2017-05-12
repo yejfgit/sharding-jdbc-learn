@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.okr.mapper.okr.GroupObjectivesUserMapper">
+
+
+	<resultMap type="com.netease.okr.model.entity.GroupObjectivesUser" id="GroupObjectivesUserResultMap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="group_objectives_id" property="groupObjectivesId"/>
+		<result column="user_type" property="type"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		<result column="name" property="name" />
+		
+		<collection column="user_id" property="objectivesList" ofType="com.netease.okr.model.entity.Objectives" select="com.netease.okr.mapper.okr.ObjectivesMapper.getObjectivesInfoByUserId" />
+	</resultMap>
+	
+	<sql id="selectedGroupObjectivesUserColumns">
+		tg.id,
+		tg.user_id,
+		tg.group_objectives_id,
+		tg.user_type,
+		tg.modify_time,
+		tg.create_time,
+		
+		tu.name
+	</sql>
+	
+	
+	<select id="getGroupObjectivesUsers" resultMap="GroupObjectivesUserResultMap">
+		select
+		<include refid="selectedGroupObjectivesUserColumns"></include>
+		from tb_group_objectives_user tg
+		left join tb_user tu on tg.user_id = tu.id
+		where tg.group_objectives_id=#{groupObjectivesId}
+		order by tg.user_type desc
+	</select>
+
+	<insert id="addGroupObjectivesUser" parameterType="com.netease.okr.model.entity.GroupObjectivesUser" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_group_objectives_user(
+			id,
+			<if test="userId!=null">user_id,</if>
+			<if test="type!=null">user_type,</if>
+			<if test="groupObjectivesId!=null">group_objectives_id,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="userId!=null">#{userId},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="groupObjectivesId!=null">#{groupObjectivesId},</if>
+			now(),
+			now()
+		)
+	</insert>
+
+	
+	<delete id="deleteGroupObjectivesUser">
+		delete from tb_group_objectives_user where group_objectives_id=#{groupObjectivesId}
+	</delete>
+	
+	
+</mapper>

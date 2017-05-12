@@ -281,6 +281,56 @@ public class MyDateUtils extends DateUtils {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			return format.format(date);
 		}
+		
+		
+		public static int getDaysIgnoreTime(Date beginDate, Date endDate) {
+			if (beginDate == null || endDate == null)
+				return 0;
+			Date begin = stringToDate(dateToString(beginDate, "yyyy-MM-dd").concat(" 09:00:00"),
+					"yyyy-MM-dd HH:mm:ss");
+			Date end = stringToDate(dateToString(endDate, "yyyy-MM-dd").concat(" 09:00:00"),
+					"yyyy-MM-dd HH:mm:ss");
+			return getDays(begin, end);
+		}
+
+		public static int getDays(Date beginDate, Date endDate) {
+			if (beginDate == null || endDate == null)
+				return 0;
+
+			long beginTime = beginDate.getTime();
+			long endTime = endDate.getTime();
+
+			int days = (int) ((endTime - beginTime) / (1000 * 3600 * 24));
+
+			return days;
+		}
+		
+		/** Added by dale_wang. */
+		public static java.util.Date stringToDate(String date) {
+			try {
+				SimpleDateFormat format = null;
+				if (date.trim().length() == "yyyy-MM-dd".length()) {
+					format = new SimpleDateFormat("yyyy-MM-dd");
+				} else {
+					format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				}
+				return (java.util.Date) format.parseObject(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		/** Added by jackhuo. */
+		public static java.util.Date stringToDate(String date, String format_str) {
+			try {
+				SimpleDateFormat format = new SimpleDateFormat(format_str);
+				return (java.util.Date) format.parseObject(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
 
 }
 

@@ -7,7 +7,8 @@ public enum KeyResultStatusEnum {
 	
     STATUS1(0, "未开始"),
     STATUS2(1, "已开始"),
-    STATUS3(2, "已结束");
+    STATUS3(2, "已结束"),
+	STATUS4(3, "已终止");
 
 
     private int id;

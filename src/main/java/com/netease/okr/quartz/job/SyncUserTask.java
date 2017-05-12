@@ -1,7 +1,5 @@
 package com.netease.okr.quartz.job;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,11 +10,11 @@ import com.netease.okr.service.TaskLockService;
 import com.netease.okr.util.LoggerUtil;
 
 /**
- * hzyejinfu 
+ * yejf 
  *
  */
 @Component
-public class SyncUserTask implements JobProcessor {
+public class SyncUserTask {
 
 	@Autowired
 	private EhrDateService ehrDateService;
@@ -43,16 +41,6 @@ public class SyncUserTask implements JobProcessor {
 		
 		LoggerUtil.info("SyncUserTask--end");
 		
-	}
-
-	/**
-	 * 手动触发定时任务
-	 * */
-	@Override
-	public void execute(List<Integer> ids, Integer userId) {
-		LoggerUtil.info("SyncUserTask--begin");
-		ehrDateService.syncUser();
-		LoggerUtil.info("SyncUserTask--end");
 	}
 	
 	

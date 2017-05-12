@@ -27,11 +27,13 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private String objectivesCode;
 	
+	private String objectivesDetail;
+	
 	/**
 	 * 用户Id
 	 * */
 	private Integer userId;
-	
+	private String userName;
 	
 	/**
 	 * 是否有效
@@ -43,7 +45,6 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private Integer codeNum;
 	
-
 	
 	private List<KeyResult> keyResultList;
 	
@@ -95,6 +96,18 @@ public class Objectives extends BaseEntity implements Serializable  {
 	}
 	public void setCodeNum(Integer codeNum) {
 		this.codeNum = codeNum;
+	}
+	public String getObjectivesDetail() {
+		return objectivesDetail;
+	}
+	public void setObjectivesDetail(String objectivesDetail) {
+		this.objectivesDetail = objectivesDetail;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

@@ -94,6 +94,15 @@ public class PageBean<T> {
 		}
 		return currentPage > 0 ? currentPage : 1;
 	}
+	
+	/**
+	 * 获取 当前页码.
+	 * 
+	 * @return the 当前页码
+	 */
+	public int getCurrentPageOfIndex() {
+		return currentPage > 0 ? currentPage : 1;
+	}
 
 	
 	/**

@@ -6,7 +6,9 @@ package com.netease.okr.enums;
 public enum TaskTypeEnum {
 	
 	DEPT_SYNC("dept_sync", "同步部门信息"),
-    USER_SYNC("user_sync", "同步用户信息");
+    USER_SYNC("user_sync", "同步用户信息"),
+	USER_NEW_WEEK_REPORT("user_new_week_report", "更新用户新周报"),
+	USER_INDEX("user_index", "同步索引信息");
 
     private String name;
 

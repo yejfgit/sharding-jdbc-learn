@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netease.okr.Lucence.UserIndexServer;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.common.PageBean;
 import com.netease.okr.common.PageJsonResponse;
@@ -26,7 +27,11 @@ public class UserController extends BaseController {
 
 	@Autowired
 	protected UserService userService;
-
+	
+	@Autowired
+	protected UserIndexServer userIndexServer;
+	
+	
 	/**
 	 * @param curUserId
 	 * @return
@@ -85,10 +90,23 @@ public class UserController extends BaseController {
 			user.setDeptId(curUser.getDeptL1Id());
 		}
 		
-		PageJsonResponse<User> users = userService.getUsersPage(user,page);
+		PageJsonResponse<User> users = userService.getUsersOkrPage(user,page);
+		
+		return JsonUtil.toJsonObj(users);
+	}
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/user/searchUserList", method = RequestMethod.GET)
+	public JsonResponse searchUser(UserQuery user,PageBean<User> page) {
+		
+		PageJsonResponse<User> users = userIndexServer.searchUser(user, page);
 		
 		return JsonUtil.toJsonObj(users);
 	}
 		
-
+ 
 }

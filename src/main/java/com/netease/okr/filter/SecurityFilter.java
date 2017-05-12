@@ -77,7 +77,13 @@ public class SecurityFilter implements Filter {
 				return;
 			}
 			
-			chain.doFilter(request, response);
+			try {
+				chain.doFilter(request, response);
+			} catch (Exception e) {
+				// TODO: handle exception
+				LoggerUtil.error(toUrl+"-Exception",e);
+			}
+			
 			RedisUserContextUtil.destoryCookieKey();
 			
 			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------");

@@ -11,6 +11,7 @@
 		<result column="objectives_id" property="objectivesId"/>
 		<result column="status" property="status"/>
 		<result column="is_valid" property="isValid"/>
+		<result column="is_week" property="isWeek"/>
 		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
@@ -24,6 +25,7 @@
 		t.status,
 		t.code_num,
 		t.is_valid,
+		t.is_week,
 		t.modify_time,
 		t.create_time
 	</sql>
@@ -34,6 +36,15 @@
 		<include refid="selectedKeyResultColumns"></include>
 		from tb_key_result  t
 		where is_valid = 1 and objectives_id=#{objectivesId}
+		order by t.code_num 
+	</select>
+	
+	<!-- 根据目标id查询不包含已完成和已终止的事件-->
+	<select id="getNormalKeyResultListByoId" resultMap="KeyResultResultMap">
+		select
+		<include refid="selectedKeyResultColumns"></include>
+		from tb_key_result  t
+		where is_valid = 1 and objectives_id=#{objectivesId} and status in(0,1)
 		order by t.code_num 
 	</select>
 	
@@ -93,6 +104,7 @@
 		<set> 
 			<if test="keyResultName!=null and keyResultName!=''">key_result_name = #{keyResultName},</if>
 			<if test="status!=null">status = #{status},</if>
+			<if test="isWeek!=null">is_week = #{isWeek},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}
@@ -101,7 +113,7 @@
 	
 	<update id="updateKeyResultStatus" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" separator=";">
-			update tb_key_result set status = #{item.status}  where id = #{item.id}
+			update tb_key_result set status = #{item.status},is_week = #{item.isWeek}  where id = #{item.id}
 		</foreach>
 		 
 	</update>

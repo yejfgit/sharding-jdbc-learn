@@ -14,6 +14,8 @@ public class OkrNum extends DateInfo implements Serializable {
 	private Integer objectivesNum;
 	
 	private Integer weekReportNum;
+	
+	private Integer hasNewWeekReport;//1:是 ;0:否
 
 	public Integer getUserId() {
 		return userId;
@@ -38,8 +40,14 @@ public class OkrNum extends DateInfo implements Serializable {
 	public void setObjectivesNum(Integer objectivesNum) {
 		this.objectivesNum = objectivesNum;
 	}
-	
-	
-	
+
+	public Integer getHasNewWeekReport() {
+		return hasNewWeekReport;
+	}
+
+	public void setHasNewWeekReport(Integer hasNewWeekReport) {
+		this.hasNewWeekReport = hasNewWeekReport;
+	}
+
 
 }

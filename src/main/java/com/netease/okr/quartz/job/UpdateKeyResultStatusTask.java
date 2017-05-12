@@ -12,8 +12,8 @@ import com.netease.okr.service.WeekReportService;
 import com.netease.okr.util.LoggerUtil;
 
 /**
- * hzyejinfu 
- *
+ * yejf 
+ * 
  */
 @Component
 public class UpdateKeyResultStatusTask implements JobProcessor {
@@ -37,10 +37,10 @@ public class UpdateKeyResultStatusTask implements JobProcessor {
 			for(Integer keyResultId:keyResultIds){
 				List<WeekReport> wrs = weekReportService.getWeekReportListByKeyResultId(keyResultId);
 				if(wrs==null||wrs.size()<1){
-					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS1.getId());
+					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS1.getId(),0);
 					LoggerUtil.info("updateKeyResultStatus【keyResultId="+keyResultId+";result="+c+"】");
 				}else if(wrs!=null||wrs.size()>0){
-					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS2.getId());
+					int c = okrService.updateKeyResultStatus(keyResultId,KeyResultStatusEnum.STATUS2.getId(),1);
 					LoggerUtil.info("updateKeyResultStatus【keyResultId="+keyResultId+";result="+c+"】");
 				}
 			}
