@@ -24,7 +24,7 @@ public class UpdateNewWeekReportTask  implements JobProcessor {
 	@Autowired
 	private TaskLockService taskLockService;
 	
-	@Scheduled(cron = "0 0/30 * * * ?")
+	/*@Scheduled(cron = "0 0/30 * * * ?")
 	public void handle() {
 		LoggerUtil.info("UpdateNewWeekReportTask--begin");
 		
@@ -43,7 +43,7 @@ public class UpdateNewWeekReportTask  implements JobProcessor {
 		
 		LoggerUtil.info("UpdateNewWeekReportTask--end");
 		
-	}
+	}*/
 	
 	
 	/**
