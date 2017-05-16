@@ -290,7 +290,7 @@ public class WeekReportServiceImpl implements WeekReportService {
 		deleteAppendixList(weekReportId);//删除周报附件表
 		
 		//检查更新关键事件进行状态
-		TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 2), keyResultIds,null, null);
+		TaskScheduler.scheduleTaskAt(updateKeyResultStatusTask, MyDateUtils.addSeconds(new Date(), 1), keyResultIds,null, null);
 		
 		//删除更新员工最新周报信息
 		TaskScheduler.scheduleTaskAt(updateNewWeekReportTask, MyDateUtils.addSeconds(new Date(), 2), null,user.getId(), null);
