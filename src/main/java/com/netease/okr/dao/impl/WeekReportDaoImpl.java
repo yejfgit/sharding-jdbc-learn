@@ -176,18 +176,25 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 	private void updateHasNewWeekReportOfRedis(WeekReport weekReport){
 		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
+		//查询之前最新周报，本次修改周早于最新不更新
+		User userWeekReport = userMapper.getUserById(user.getId());
+		WeekReport beWeekReport  = weekReportMapper.getWeekReportById(userWeekReport.getWeekReportId());
 		
-		//更新用户最新周报信息
-		User up = new User();
-		up.setId(user.getId());
-		up.setWeekReportId(weekReport.getId());
-		userMapper.updateUser(up);
+		if(weekReport!=null&&weekReport.getDateId()>(beWeekReport==null?0:beWeekReport.getDateId())){
+			//更新用户最新周报信息
+			User up = new User();
+			up.setId(user.getId());
+			up.setWeekReportId(weekReport.getId());
+			userMapper.updateUser(up);
+			
+			
+			//更新redis是否有最新周报
+			Integer userId = user.getId();
+			RedisClient.set(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, ConstantsUtil.HAS_NEW_WEEK_REPORT.toString());
+			RedisClient.expire(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, RedisConstant.HAS_NEW_WEEK_REPORT_EXPIRE);
+		}
 		
 		
-		//更新redis是否有最新周报
-		Integer userId = user.getId();
-		RedisClient.set(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, ConstantsUtil.HAS_NEW_WEEK_REPORT.toString());
-		RedisClient.expire(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, RedisConstant.HAS_NEW_WEEK_REPORT_EXPIRE);
 	}
 
 }
