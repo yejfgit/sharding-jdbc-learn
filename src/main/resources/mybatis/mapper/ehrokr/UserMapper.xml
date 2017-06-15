@@ -43,6 +43,7 @@
 		u.dept_l2_id,
 		u.dept_l3_id,
 		u.station_name,
+		u.week_report_id,
 		<!-- u.photo_url,
 		u.nos_key, -->
 		u.modify_time,

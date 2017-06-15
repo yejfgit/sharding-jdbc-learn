@@ -110,7 +110,13 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setId(userId);
 		WeekReport weekReport = weekReportDao.getNewWeekReport(userId);
-		if(weekReport!=null){
+		
+		//查询之前最新周报，本次修改周早于最新不更新
+		User userWeekReport = userDao.getUserById(userId);
+		WeekReport beWeekReport  = weekReportDao.getWeekReportById(userWeekReport.getWeekReportId());
+		
+		
+		if(weekReport!=null&&weekReport.getDateId()>(beWeekReport==null?0:beWeekReport.getDateId())){
 			user.setWeekReportId(weekReport.getId());
 			userDao.updateUser(user);
 			
