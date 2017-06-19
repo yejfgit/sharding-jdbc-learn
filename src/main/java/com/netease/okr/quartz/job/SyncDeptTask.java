@@ -23,7 +23,7 @@ public class SyncDeptTask {
 	private TaskLockService taskLockService;
 	
 	
-	@Scheduled(cron = "0 50 12,23 * * ?")
+	@Scheduled(cron = "0 50 12,1 * * ?")
 	public void handle() {
 		LoggerUtil.info("SyncDeptTask--begin");
 

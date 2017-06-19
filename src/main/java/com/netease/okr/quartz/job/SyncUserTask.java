@@ -22,7 +22,7 @@ public class SyncUserTask {
 	@Autowired
 	private TaskLockService taskLockService;
 	
-	@Scheduled(cron = "0 50 23 * * ?")
+	@Scheduled(cron = "0 50 1 * * ?")
 	public void handle() {
 		LoggerUtil.info("SyncUserTask--begin");
 		

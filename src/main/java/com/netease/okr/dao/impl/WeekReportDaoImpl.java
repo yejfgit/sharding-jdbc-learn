@@ -180,6 +180,8 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 		User userWeekReport = userMapper.getUserById(user.getId());
 		WeekReport beWeekReport  = weekReportMapper.getWeekReportById(userWeekReport.getWeekReportId());
 		
+		weekReport = weekReportMapper.getWeekReportById(weekReport.getId());
+		
 		if(weekReport!=null&&weekReport.getDateId()>(beWeekReport==null?0:beWeekReport.getDateId())){
 			//更新用户最新周报信息
 			User up = new User();
