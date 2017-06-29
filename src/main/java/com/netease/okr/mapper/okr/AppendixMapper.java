@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.Appendix;
+import com.netease.okr.model.entity.AppendixRel;
+import com.netease.okr.model.entity.WeekReportRel;
 
 /**
  * @Description: mapper
@@ -42,6 +44,8 @@ public interface AppendixMapper {
 	 */
 	public Integer addAppendix(Appendix appendix)  throws DataAccessException;
 	
+	public Integer addAppendixRel(@Param(value = "list") List<Appendix> list)  throws DataAccessException;
+	
 	/**
 	 * @author yejf
 	 * @param id
@@ -49,6 +53,8 @@ public interface AppendixMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer deleteAppendix(@Param(value = "id") Integer id)  throws DataAccessException;
+	
+	public Integer deleteAppendixRel(@Param(value = "relId") Integer relId)  throws DataAccessException;
 	
 	
 	/**

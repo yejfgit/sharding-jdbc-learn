@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,11 +35,18 @@ public class SummaryController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/summary/getSummaryList", method = RequestMethod.GET)
-	public JsonResponse getSummaryList() {
+	public JsonResponse getSummaryList(Integer userId) {
 		
 		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		
-		List<Summary> summaryList = summaryService.getSummaryList(user.getId());
+		List<Summary> summaryList = new ArrayList<Summary>();;
+		
+
+		if(userId!=null){
+			summaryList = summaryService.getSummaryList(userId);
+		}else{
+			summaryList = summaryService.getSummaryList(user.getId());
+		}
 		
 		return JsonUtil.toJsonObj(summaryList);
 	}
@@ -61,11 +69,37 @@ public class SummaryController extends BaseController {
 		}else{
 			//默认查询自己okr
 			okrList = okrService.getOkrSummaryList(user.getId());
-			
 		}
 		
 		return JsonUtil.toJsonObj(okrList);
 	}
+	
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/addSummary", method = RequestMethod.POST)
+	public JsonResponse addSummary(@RequestBody Summary summary) {
+		
+		/*User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		
+		List<Objectives> okrList = new ArrayList<Objectives>();
+		
+		if(userId!=null){
+			okrList = okrService.getOkrSummaryList(userId);
+		}else{
+			//默认查询自己okr
+			okrList = okrService.getOkrSummaryList(user.getId());
+		}
+		
+		return JsonUtil.toJsonObj(okrList);*/
+		
+		return null;
+	}
+	
 
 	
 

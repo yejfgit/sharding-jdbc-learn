@@ -1,70 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.netease.okr.mapper.okr.SummaryMapper">
+<mapper namespace="com.netease.okr.mapper.okr.SummaryOtherMapper">
 
 	<!--实体映射-->
-	<resultMap id="summaryResultMap" type="com.netease.okr.model.entity.Summary">
+	<resultMap id="summaryOtherResultMap" type="com.netease.okr.model.entity.SummaryOther">
 		<!---->
 		<id property="id" column="id" />
 		<!---->
 		<result property="name" column="name" />
 		<!---->
+		<result property="content" column="content" />
+		<!--总结时间-->
 		<result property="dateTabId" column="date_tab_id" />
-
+		<!---->
 		<result property="userId" column="user_id" />
+		
+		<result property="summaryId" column="summary_id" />
 		<!---->
 		<result property="modifyTime" column="modify_time" />
 		<!---->
 		<result property="createTime" column="create_time" />
-		
-		<result property="year" column="year" />
-		
-		<result property="dateClass" column="date_class" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		t.id,
-		t.name,
-		t.date_tab_id,
-		t.user_id,
-		t.modify_time,
-		t.create_time,
-		tt.year,
-		tt.date_class
+		id,
+		name,
+		content,
+		date_tab_id,
+		user_id,
+		summary_id,
+		modify_time,
+		create_time
 	</sql>
 
-
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectById" resultMap="summaryResultMap" parameterType="java.lang.Integer">
+	<select id="selectById" resultMap="summaryOtherResultMap" resultType="java.lang.Integer">
 		 SELECT
 		 <include refid="Base_Column_List" />
-		 FROM tb_summary t
-		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
+		 FROM tb_summary_other
 		 WHERE id = #{id}
 	</select>
 	
 	
-	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="java.lang.Integer">
+	<select id="getSummaryOtherList" resultMap="summaryOtherResultMap" resultType="java.lang.Integer">
 		 SELECT
 		 <include refid="Base_Column_List" />
-		 FROM tb_summary t
-		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
-		 WHERE t.user_id = #{userId}
-		 order by year desc
+		 FROM tb_summary_other
+		 WHERE summary_id = #{summaryId}
 	</select>
 
 	<!--删除：根据主键ID删除-->
 	<delete id="deleteById" parameterType="java.lang.Integer">
-		 DELETE FROM tb_summary
+		 DELETE FROM tb_summary_other
 		 WHERE id = #{id}
 	</delete>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSummary" parameterType="com.netease.okr.model.entity.Summary">
-		 INSERT INTO tb_summary
+	<insert id="insertSummaryOther" parameterType="com.netease.okr.model.entity.SummaryOther">
+		 INSERT INTO tb_summary_other
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
 				 id,
@@ -72,8 +68,17 @@
 			<if test="name != null">
 				 name,
 			</if>
+			<if test="content != null">
+				 content,
+			</if>
 			<if test="dateTabId != null">
 				 date_tab_id,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="summaryId != null">
+				 summary_id,
 			</if>
 			 modify_time,
 			 create_time
@@ -86,25 +91,40 @@
 			<if test="name!=null">
 				 #{name},
 			</if>
+			<if test="content!=null">
+				 #{content},
+			</if>
 			<if test="dateTabId!=null">
 				 #{dateTabId},
 			</if>
-			 #{modifyTime},
-			 #{createTime}
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="summaryId != null">
+				  #{summaryId},
+			</if>
+			now(),
+			now()
 		 </trim>
 	</insert>
 
 	<!-- 修 改-->
-	<update id="updateById" parameterType="com.netease.okr.model.entity.Summary">
-		 UPDATE tb_summary
+	<update id="updateById" parameterType="com.netease.okr.model.entity.SummaryOther">
+		 UPDATE tb_summary_other
  		 <set> 
 			<if test="name != null">
 				 name = #{name},
 			</if>
+			<if test="content != null">
+				 content = #{content},
+			</if>
 			<if test="dateTabId != null">
 				 date_tab_id = #{dateTabId},
 			</if>
-			 modify_time = now()
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			modify_time =now()
 
  		 </set>
 		 WHERE id = #{id}
