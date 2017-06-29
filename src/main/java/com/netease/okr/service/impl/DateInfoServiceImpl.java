@@ -32,6 +32,17 @@ public class DateInfoServiceImpl implements DateInfoService {
 	public DateInfo getCurDateInfo(){
 		return dateInfoDao.getCurDateInfo();
 	}
+	@Override
+	public DateInfo getDateByModel(Integer model){
+		return null;
+	}
+	
+	
+	@Override
+	public List<DateInfo> getClassDateByModel(Integer type){
+		return dateInfoDao.getClassDateByModel(type);
+	}
+	
 	
 	
 	@Override

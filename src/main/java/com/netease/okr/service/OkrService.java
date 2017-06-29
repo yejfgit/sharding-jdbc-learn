@@ -21,4 +21,6 @@ public interface OkrService {
 
 	public List<Objectives> getMyNormalOkrList(Integer userId);
 
+	public List<Objectives> getOkrSummaryList(Integer userId);
+
 }

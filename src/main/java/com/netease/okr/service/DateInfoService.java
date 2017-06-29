@@ -14,4 +14,8 @@ public interface DateInfoService {
 
 	public DateInfo getCurDateInfo();
 
+	public DateInfo getDateByModel(Integer model);
+
+	public List<DateInfo> getClassDateByModel(Integer type);
+
 }

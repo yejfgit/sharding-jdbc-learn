@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netease.okr.common.JsonResponse;
+import com.netease.okr.enums.DateModelEnum;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.service.DateInfoService;
 import com.netease.okr.util.JsonUtil;
@@ -41,6 +42,15 @@ public class DateInfoController extends BaseController {
 		DateInfo dateInfo =dateInfoService.getCurDateInfo();
 		
 		return JsonUtil.toJsonObj(dateInfo);
+	}
+	
+	
+	@RequestMapping(value = "/date/getClassDateByType", method = RequestMethod.GET)
+	public JsonResponse getDateByModel(Integer type) {
+		
+		List<DateInfo> dateInfos =dateInfoService.getClassDateByModel(type==null?DateModelEnum.TYPE1.getId():type);
+		
+		return JsonUtil.toJsonObj(dateInfos);
 	}
 	
 

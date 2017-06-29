@@ -12,5 +12,7 @@ public interface DateInfoDao {
 
 	public DateInfo getCurDateInfo();
 
+	public List<DateInfo> getClassDateByModel(Integer type);
+
 
 }

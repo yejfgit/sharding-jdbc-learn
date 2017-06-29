@@ -19,6 +19,17 @@ public class DateInfo implements Serializable {
 	private String year;
 	
 	/**
+	 * 日期类型
+	 * */
+	private String dateClass;
+	
+
+	private Integer display;
+	
+	
+	private Integer type;
+	
+	/**
 	 * 月份
 	 * */
 	private String month;
@@ -40,17 +51,13 @@ public class DateInfo implements Serializable {
 	
 	private Integer isShowCurDate;//1:是 0:否
 	
+
+
 	public String getYear() {
 		return year;
 	}
 	public void setYear(String year) {
 		this.year = year;
-	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
 	}
 	public String getWeek() {
 		return week;
@@ -82,6 +89,32 @@ public class DateInfo implements Serializable {
 	public void setIsShowCurDate(Integer isShowCurDate) {
 		this.isShowCurDate = isShowCurDate;
 	}
+	
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getDateClass() {
+		return dateClass;
+	}
+	public void setDateClass(String dateClass) {
+		this.dateClass = dateClass;
+	}
+	public Integer getDisplay() {
+		return display;
+	}
+	public void setDisplay(Integer display) {
+		this.display = display;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	
 
 	
 }
