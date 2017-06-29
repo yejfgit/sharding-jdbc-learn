@@ -83,7 +83,7 @@ public class BuildMybatisModelUtil {
  
     private final String url = "jdbc:mysql://127.0.0.1:3306/" + moduleName + "?characterEncoding=utf8";
  
-    private final String table = "tb_summary";
+    private final String table = "tb_summary_other";
     
     private String tableName = null;
  
@@ -605,8 +605,8 @@ public class BuildMybatisModelUtil {
         // 查询（根据主键ID查询）
         bw.write("\t<!-- 查询（根据主键ID查询） -->");
         bw.newLine();
-        bw.write("\t<select id=\"selectById\" resultType=\""
-                + this.processResultMapId(beanName) + "\" resultMap=\"java.lang." + processType(types.get(0)) + "\">");
+        bw.write("\t<select id=\"selectById\" resultMap=\""
+                + this.processResultMapId(beanName) + "\" resultType=\"java.lang." + processType(types.get(0)) + "\">");
         bw.newLine();
         bw.write("\t\t SELECT");
         bw.newLine();

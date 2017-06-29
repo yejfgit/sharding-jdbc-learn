@@ -1,5 +1,6 @@
 package com.netease.okr.model.entity;
 import java.io.Serializable;
+import java.util.List;
 
 
 @SuppressWarnings("serial")
@@ -23,6 +24,8 @@ public class Summary extends BaseEntity implements Serializable {
 	 * */
 	private String dateClass;
 	
+	
+	private List<Objectives> objectivesList;
 
 	public void setName(String name){
 		this.name = name;
@@ -71,6 +74,14 @@ public class Summary extends BaseEntity implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public List<Objectives> getObjectivesList() {
+		return objectivesList;
+	}
+
+	public void setObjectivesList(List<Objectives> objectivesList) {
+		this.objectivesList = objectivesList;
 	}
 
 }
