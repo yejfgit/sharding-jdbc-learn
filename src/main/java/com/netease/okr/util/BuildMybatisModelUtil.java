@@ -52,7 +52,7 @@ public class BuildMybatisModelUtil {
     private final String type_blob = "blob";
  
  
-    private final String moduleName = "test"; // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
+    private final String moduleName = "ehrokr"; // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
  
     private final String base_path  =  "d:/entity_create";
     
@@ -83,7 +83,7 @@ public class BuildMybatisModelUtil {
  
     private final String url = "jdbc:mysql://127.0.0.1:3306/" + moduleName + "?characterEncoding=utf8";
  
-    private final String table = "tb_employee_campus";
+    private final String table = "tb_summary";
     
     private String tableName = null;
  
@@ -443,7 +443,7 @@ public class BuildMybatisModelUtil {
         bw.newLine();
         bw.write("\t public " + "int insert" + beanName + "(" + beanName + " "+processResultMapId(beanName)+") {");
         bw.newLine();
-        bw.write("\t\t return "+processResultMapId(mapperName)+".insert("+processResultMapId(beanName)+");");
+        bw.write("\t\t return "+processResultMapId(mapperName)+".insert"+ beanName +"("+processResultMapId(beanName)+");");
         bw.newLine();
         bw.write("\t }");
         
@@ -606,7 +606,7 @@ public class BuildMybatisModelUtil {
         bw.write("\t<!-- 查询（根据主键ID查询） -->");
         bw.newLine();
         bw.write("\t<select id=\"selectById\" resultType=\""
-                + processResultMapId(beanName) + "\" parameterType=\"java.lang." + processType(types.get(0)) + "\">");
+                + this.processResultMapId(beanName) + "\" resultMap=\"java.lang." + processType(types.get(0)) + "\">");
         bw.newLine();
         bw.write("\t\t SELECT");
         bw.newLine();

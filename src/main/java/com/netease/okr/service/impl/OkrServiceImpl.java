@@ -50,26 +50,20 @@ public class OkrServiceImpl implements OkrService {
 		return ObjectivesList;
 	}
 	
-	private void setKeyResultObjectivesInfo(List<Objectives> ObjectivesList){
-		//组装json信息
-		if(ObjectivesList!=null&&ObjectivesList.size()>0){
-			for(Objectives ob:ObjectivesList){
-				
-				List<KeyResult> keyResults = ob.getKeyResultList();
-				
-				if(keyResults!=null&&keyResults.size()>0){
-					for(KeyResult kr:keyResults){
-						Objectives obNew = new Objectives();
-						obNew.setObjectivesDsc(ob.getObjectivesDsc());
-						obNew.setObjectivesCode(ob.getObjectivesCode());
-						obNew.setObjectivesName(ob.getObjectivesName());
-						
-						kr.setObjectives(obNew);
-					}
-				}
-			}
-		}
+	
+	/**
+	 * @author yejf
+	 * @param userId
+	 * @return List<Objectives>
+	 * @throws DataAccessException
+	 */
+	@Override
+	public List<Objectives> getOkrSummaryList(Integer userId) {
+		List<Objectives> ObjectivesList = objectivesDao.getMyOkrList(userId);
+		
+		return ObjectivesList;
 	}
+	
 	
 	
 	/**
@@ -254,6 +248,27 @@ public class OkrServiceImpl implements OkrService {
 		Integer codeNum = keyResultDao.getNextCodeNum(objectivesId);
 		
 		return codeNum;
+	}
+	
+	private void setKeyResultObjectivesInfo(List<Objectives> ObjectivesList){
+		//组装json信息
+		if(ObjectivesList!=null&&ObjectivesList.size()>0){
+			for(Objectives ob:ObjectivesList){
+				
+				List<KeyResult> keyResults = ob.getKeyResultList();
+				
+				if(keyResults!=null&&keyResults.size()>0){
+					for(KeyResult kr:keyResults){
+						Objectives obNew = new Objectives();
+						obNew.setObjectivesDsc(ob.getObjectivesDsc());
+						obNew.setObjectivesCode(ob.getObjectivesCode());
+						obNew.setObjectivesName(ob.getObjectivesName());
+						
+						kr.setObjectives(obNew);
+					}
+				}
+			}
+		}
 	}
 	
 }

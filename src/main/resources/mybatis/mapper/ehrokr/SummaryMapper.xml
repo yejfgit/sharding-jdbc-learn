@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.netease.okr.mapper.okr.SummaryMapper">
+
+	<!--实体映射-->
+	<resultMap id="summaryResultMap" type="com.netease.okr.model.entity.Summary">
+		<!---->
+		<id property="id" column="id" />
+		<!---->
+		<result property="name" column="name" />
+		<!---->
+		<result property="dateTabId" column="date_tab_id" />
+
+		<result property="userId" column="user_id" />
+		<!---->
+		<result property="modifyTime" column="modify_time" />
+		<!---->
+		<result property="createTime" column="create_time" />
+		
+		<result property="year" column="year" />
+		
+		<result property="dateClass" column="date_class" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		t.id,
+		t.name,
+		t.date_tab_id,
+		t.user_id,
+		t.modify_time,
+		t.create_time,
+		tt.year,
+		tt.date_class
+	</sql>
+
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectById" resultMap="summaryResultMap" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM tb_summary t
+		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
+		 WHERE id = #{id}
+	</select>
+	
+	
+	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM tb_summary t
+		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
+		 WHERE t.user_id = #{userId}
+		 order by year desc
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		 DELETE FROM tb_summary
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSummary" parameterType="com.netease.okr.model.entity.Summary">
+		 INSERT INTO tb_summary
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="name != null">
+				 name,
+			</if>
+			<if test="dateTabId != null">
+				 date_tab_id,
+			</if>
+			<if test="modifyTime != null">
+				 modify_time,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="name!=null">
+				 #{name},
+			</if>
+			<if test="dateTabId!=null">
+				 #{dateTabId},
+			</if>
+			<if test="modifyTime!=null">
+				 #{modifyTime},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateById" parameterType="com.netease.okr.model.entity.Summary">
+		 UPDATE tb_summary
+ 		 <set> 
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="dateTabId != null">
+				 date_tab_id = #{dateTabId},
+			</if>
+			<if test="modifyTime != null">
+				 modify_time = #{modifyTime},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

@@ -28,6 +28,11 @@ public class DateInfoDaoImpl extends SqlSessionDaoSupport implements DateInfoDao
 		return dateInfoMapper.addDateInfo(dateInfo);
 	}
 	
+	@Override
+	public List<DateInfo> getClassDateByModel(Integer type){
+		return dateInfoMapper.getClassDateByModel(type);
+	}
+	
 	
 	@Override
 	public List<DateInfo> getAllDateInfo(){
