@@ -51,7 +51,7 @@ public interface ObjectivesMapper {
 	 */
 	public Objectives getObjectivesInfoById(@Param(value = "id") Integer id)  throws DataAccessException;
 	
-	
+	public Integer deleteAllObjectivesSummaryOfUser(@Param(value = "userId") Integer userId)  throws DataAccessException;
 	
 	
 	/**

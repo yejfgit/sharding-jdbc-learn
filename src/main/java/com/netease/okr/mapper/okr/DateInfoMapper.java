@@ -55,6 +55,9 @@ public interface DateInfoMapper {
 	
 	public List<DateInfo> getClassDateByModel(@Param(value = "type") Integer type)  throws DataAccessException;
 	
+	public DateInfo getClassDateById(@Param(value = "id") Integer id)  throws DataAccessException;
+	
+	
 	
 	
 }

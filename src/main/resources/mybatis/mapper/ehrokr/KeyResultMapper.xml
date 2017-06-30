@@ -134,4 +134,8 @@
 	</delete>
 	
 	
+	<update id="deleteAllKeyResultScoreOfUser">
+		update tb_key_result set score=null where objectives_id in (select id from tb_objectives where user_id=#{userId} )
+	</update>
+	
 </mapper>

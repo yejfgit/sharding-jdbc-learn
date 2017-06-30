@@ -19,13 +19,8 @@ public class SummaryOther implements Serializable {
 
 	/****/
 	private String content;
-
-	/**总结时间**/
-	private Integer dateTabId;
 	
 	private Integer summaryId;
-	/****/
-	private Integer userId;
 
 	/****/
 	private java.util.Date modifyTime;
@@ -60,22 +55,6 @@ public class SummaryOther implements Serializable {
 
 	public String getContent(){
 		return this.content;
-	}
-
-	public void setDateTabId(Integer dateTabId){
-		this.dateTabId = dateTabId;
-	}
-
-	public Integer getDateTabId(){
-		return this.dateTabId;
-	}
-
-	public void setUserId(Integer userId){
-		this.userId = userId;
-	}
-
-	public Integer getUserId(){
-		return this.userId;
 	}
 
 	public void setModifyTime(java.util.Date modifyTime){

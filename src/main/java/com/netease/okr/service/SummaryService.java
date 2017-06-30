@@ -8,5 +8,13 @@ public interface SummaryService {
 
 	public List<Summary> getSummaryList(Integer userId);
 
+	public Boolean addSummary(Summary summary);
+
+	public Boolean updateSummary(Summary summary);
+
+	public Boolean delSummary(Integer summaryId);
+
+	public Summary getSummaryById(Integer id);
+
 
 }

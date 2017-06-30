@@ -24,5 +24,7 @@ public interface ObjectivesDao {
 
 	public List<Objectives> getMyNormalOkrList(Integer userId);
 
+	public Integer deleteAllObjectivesSummaryOfUser(Integer userId);
+
 
 }

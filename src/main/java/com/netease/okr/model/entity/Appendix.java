@@ -32,6 +32,22 @@ public class Appendix implements Serializable {
 	private Date modifyTime;
 	
 	private Date createTime;
+	
+	
+	/**
+	 * 附件ID
+	 * */
+	private Integer appendixId;
+	
+	/**
+	 * 关系ID
+	 * */
+	private Integer relId;
+
+	/**
+	 * 附件名称
+	 * */
+	private Integer type;
 
 	public Integer getId() {
 		return id;
@@ -88,6 +104,30 @@ public class Appendix implements Serializable {
 
 	public void setNosKey(String nosKey) {
 		this.nosKey = nosKey;
+	}
+
+	public Integer getAppendixId() {
+		return appendixId;
+	}
+
+	public void setAppendixId(Integer appendixId) {
+		this.appendixId = appendixId;
+	}
+
+	public Integer getRelId() {
+		return relId;
+	}
+
+	public void setRelId(Integer relId) {
+		this.relId = relId;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	

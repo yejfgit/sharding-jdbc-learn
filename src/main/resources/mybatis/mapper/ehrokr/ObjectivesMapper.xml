@@ -169,6 +169,10 @@
 		where id=#{id}
 	</update>
 	
+	<update id="deleteAllObjectivesSummaryOfUser">
+		update tb_objectives set complete=null where user_id=#{userId};
+	</update>
+	
 	
 	<delete id="deleteObjectives">
 		delete from tb_objectives where id=#{id}

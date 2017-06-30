@@ -50,6 +50,11 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	public Objectives getObjectivesInfoById(Integer id) {
 		return objectivesMapper.getObjectivesInfoById(id);
 	}
+	@Override
+	public Integer deleteAllObjectivesSummaryOfUser(Integer userId){
+		return objectivesMapper.deleteAllObjectivesSummaryOfUser(userId);
+	}
+	
 	
 	@Override
 	public Integer getNextCodeNum(Integer userId){

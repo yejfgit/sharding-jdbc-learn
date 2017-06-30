@@ -14,6 +14,16 @@
 		<result column="create_time" property="createTime"  />
 	</resultMap>
 	
+	
+	<resultMap type="com.netease.okr.model.entity.Appendix" id="AppendixRelResultMap">
+		<id column="id" property="id"/>
+		<result column="appendix_id" property="appendixId"/>
+		<result column="rel_id" property="relId"/>
+		<result column="type" property="type"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
 	<sql id="selectedAppendixColumns">
 		id,
 		week_report_id,
@@ -62,6 +72,40 @@
 		)
 	</insert>
 	
+	<update id="updateAppendix" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update tb_appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
+		</foreach>
+		 
+	</update>
+	
+	<delete id="deleteAppendixByWeekReportId">
+		delete from tb_appendix where week_report_id=#{weekReportId}
+	</delete>
+	
+	<delete id="deleteAppendix">
+		delete from tb_appendix where id=#{id}
+	</delete>
+	
+	
+	
+	<!-- ******************************AppendixRel************************************ -->
+	<sql id="selectedAppendixRelColumns">
+		id,
+		appendix_id,
+		rel_id,
+		type,
+		modify_time,
+		create_time
+	</sql>
+	
+	<select id="getAppendixRelList" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixRelColumns"></include>
+		from tb_appendix
+		where rel_id=#{relId}
+	</select>
+	
 	<insert id="addAppendixRel" parameterType="java.util.List">
 		insert into tb_appendix_rel(appendix_id, rel_id,type, create_time, modify_time) values 
 		<foreach collection="list" item="item" index="index" separator=",">
@@ -76,24 +120,15 @@
 	</insert>
 	
 	
-	<update id="updateAppendix" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="index" separator=";">
-			update tb_appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
-		</foreach>
-		 
-	</update>
-	
-	<delete id="deleteAppendix">
-		delete from tb_appendix where id=#{id}
-	</delete>
-	
 	<delete id="deleteAppendixRel">
-		delete from tb_appendix where rel_id=#{relId}
+		delete from tb_appendix_rel where rel_id=#{relId} and type=#{type}
 	</delete>
 	
-	<delete id="deleteAppendixByWeekReportId">
-		delete from tb_appendix where week_report_id=#{weekReportId}
+	<delete id="deleteAppendixRelById">
+		delete from tb_appendix_rel where id=#{id}
 	</delete>
+	
+	
 	
 	
 </mapper>

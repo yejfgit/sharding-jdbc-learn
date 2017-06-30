@@ -63,7 +63,7 @@
 	</delete>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSummary" parameterType="com.netease.okr.model.entity.Summary">
+	<insert id="insertSummary" parameterType="com.netease.okr.model.entity.Summary" useGeneratedKeys="true" keyProperty="id">
 		 INSERT INTO tb_summary
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
@@ -89,8 +89,8 @@
 			<if test="dateTabId!=null">
 				 #{dateTabId},
 			</if>
-			 #{modifyTime},
-			 #{createTime}
+			 now(),
+			 now()
 		 </trim>
 	</insert>
 

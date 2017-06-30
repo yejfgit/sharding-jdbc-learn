@@ -32,6 +32,9 @@ public interface SummaryOtherMapper{
 	 **/
 	 public int deleteById (@Param("id") Integer id)  throws DataAccessException;
 
+	 public int deleteBySummaryId (@Param("summaryId") Integer summaryId)  throws DataAccessException;
+	 
+	 
 	/**
 	 * 
 	 * 添加

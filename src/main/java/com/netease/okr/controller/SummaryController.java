@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.Summary;
@@ -17,6 +18,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.service.SummaryService;
 import com.netease.okr.util.JsonUtil;
+import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.RedisUserContextUtil;
 
 
@@ -57,6 +59,25 @@ public class SummaryController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
+	@RequestMapping(value = "/summary/getSummaryId", method = RequestMethod.GET)
+	public JsonResponse getSummaryById(Integer id) {
+		
+		
+		if(id==null){
+			return JsonUtil.toJsonFail("查询ID为空");
+		}
+		
+		Summary summary = summaryService.getSummaryById(id);
+		
+		return JsonUtil.toJsonObj(summary);
+	}
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping(value = "/summary/getOkrSummaryList", method = RequestMethod.GET)
 	public JsonResponse getOkrSummaryList(Integer userId) {
 		
@@ -84,20 +105,58 @@ public class SummaryController extends BaseController {
 	@RequestMapping(value = "/summary/addSummary", method = RequestMethod.POST)
 	public JsonResponse addSummary(@RequestBody Summary summary) {
 		
-		/*User user = (User) RedisUserContextUtil.getUserContext().getUser();
-		
-		List<Objectives> okrList = new ArrayList<Objectives>();
-		
-		if(userId!=null){
-			okrList = okrService.getOkrSummaryList(userId);
+		LoggerUtil.info("addSummary start:"+JSON.toJSONString(summary));
+		if(summary!=null&&summary.getDateTabId()!=null){
+			if(summaryService.addSummary(summary)){
+				return JsonUtil.toJsonObj(summary);
+			}else{
+				return JsonUtil.toJsonFail("添加失败");
+			}
 		}else{
-			//默认查询自己okr
-			okrList = okrService.getOkrSummaryList(user.getId());
+			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
 		}
+	}
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/updateSummary", method = RequestMethod.POST)
+	public JsonResponse updateSummary(@RequestBody Summary summary) {
 		
-		return JsonUtil.toJsonObj(okrList);*/
+		LoggerUtil.info("updateSummary start:"+JSON.toJSONString(summary));
+		if(summary!=null&&summary.getId()!=null&&summary.getDateTabId()!=null){
+			if(summaryService.updateSummary(summary)){
+				return JsonUtil.toJsonObj(summary);
+			}else{
+				return JsonUtil.toJsonFail("更新失败");
+			}
+		}else{
+			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
+		}
+	}
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/delSummary", method = RequestMethod.POST)
+	public JsonResponse delSummary(@RequestBody Summary summary) {
 		
-		return null;
+		LoggerUtil.info("delSummary start:"+JSON.toJSONString(summary));
+		if(summary!=null&&summary.getId()!=null){
+			if(summaryService.delSummary(summary.getId())){
+				return JsonUtil.toJsonObj(summary);
+			}else{
+				return JsonUtil.toJsonFail("更新失败");
+			}
+		}else{
+			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
+		}
 	}
 	
 
