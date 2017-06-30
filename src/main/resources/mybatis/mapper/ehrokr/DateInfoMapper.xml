@@ -40,7 +40,7 @@
 	</sql>
 	
 	
-	<select id="getClassDateByModel" resultMap="DateInfoResultMap">
+	<select id="getClassDateByModel" resultMap="DateTabResultMap">
 		select
 		<include refid="selectedDateTabColumns"></include>
 		from tb_date_tab
