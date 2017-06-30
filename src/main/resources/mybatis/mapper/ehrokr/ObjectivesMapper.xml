@@ -139,7 +139,6 @@
 			<if test="userId!=null">user_id,</if>
 			<if test="codeNum!=null">code_num,</if>
 			<if test="complete!=null and complete!=''">complete,</if>
-			complete
 			create_time,
 			modify_time
 		)
