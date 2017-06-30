@@ -25,7 +25,7 @@ public class SecurityFilter implements Filter {
 	}
 
 	
-	@Override
+	/*@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
@@ -66,8 +66,8 @@ public class SecurityFilter implements Filter {
 			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------");
 		}
 	}
-	
-	/*@Override
+	*/
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
@@ -101,7 +101,7 @@ public class SecurityFilter implements Filter {
 			
 			LoggerUtil.info("-----------------接口【"+hsrq.getRequestURI()+"执行时间： "+(System.currentTimeMillis()-startTime)+"ns】----------------");
 		}
-	}*/
+	}
 
 	@Override
 	public void destroy() {
