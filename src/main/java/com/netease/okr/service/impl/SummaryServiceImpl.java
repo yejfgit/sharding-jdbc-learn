@@ -1,5 +1,6 @@
 package com.netease.okr.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.netease.okr.dao.SummaryDao;
 import com.netease.okr.enums.AppendixTypeEnum;
 import com.netease.okr.enums.DateModelEnum;
 import com.netease.okr.mapper.okr.DateInfoMapper;
+import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
@@ -122,9 +124,12 @@ public class SummaryServiceImpl implements SummaryService {
 			if(c>0){
 				//删除其他总结
 				summaryOtherService.delSummaryOtherList(summaryId);
+				//删除目标总结
 				objectivesDao.deleteAllObjectivesSummaryOfUser(userId);
+				//删除关键结果评分
 				keyResultDao.deleteAllKeyResultScoreOfUser(userId);
-				
+				//删除附件信息
+				appendixService.deleteAppendixList(summaryId);
 			}
 		}else{
 			return false;
@@ -136,13 +141,15 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	//更新我的总结目标内容
 	private Boolean updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
-
+		
+		List<Appendix> appendixList = new ArrayList<Appendix>();
 		for(Objectives objectives:objectivesList){
 			if(objectives.getId()==null) {
 				LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
 			}
 			objectivesDao.updateObjectives(objectives);
-			appendixService.updateAppendixList(summary.getId(),AppendixTypeEnum.TYPE1.getId(),objectives.getAppendixList());
+			
+			appendixList.addAll(objectives.getAppendixList());
 			
 			//更新关键结果
 			List<KeyResult> keyResultList  = objectives.getKeyResultList();
@@ -150,6 +157,8 @@ public class SummaryServiceImpl implements SummaryService {
 				updateKeyResultSummary(summary,keyResultList);
 			}
 		}
+		
+		appendixService.updateAppendixList(summary.getId(),AppendixTypeEnum.TYPE1.getId(),appendixList);
 		
 		return true;
 		

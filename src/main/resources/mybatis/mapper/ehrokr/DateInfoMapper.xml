@@ -48,7 +48,7 @@
 		order by display 
 	</select>
 	
-	<select id="getClassDateById" resultMap="DateInfoResultMap">
+	<select id="getClassDateById" resultMap="DateTabResultMap">
 		select
 		<include refid="selectedDateTabColumns"></include>
 		from tb_date_tab

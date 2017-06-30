@@ -102,7 +102,7 @@
 	<select id="getAppendixRelList" resultMap="AppendixRelResultMap">
 		select
 		<include refid="selectedAppendixRelColumns"></include>
-		from tb_appendix
+		from tb_appendix_rel
 		where rel_id=#{relId}
 	</select>
 	
