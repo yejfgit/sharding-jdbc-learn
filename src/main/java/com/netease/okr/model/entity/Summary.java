@@ -26,6 +26,8 @@ public class Summary extends BaseEntity implements Serializable {
 	
 	
 	private List<Objectives> objectivesList;
+	
+	private List<SummaryOther> summaryOtherList;
 
 	public void setName(String name){
 		this.name = name;
@@ -82,6 +84,14 @@ public class Summary extends BaseEntity implements Serializable {
 
 	public void setObjectivesList(List<Objectives> objectivesList) {
 		this.objectivesList = objectivesList;
+	}
+
+	public List<SummaryOther> getSummaryOtherList() {
+		return summaryOtherList;
+	}
+
+	public void setSummaryOtherList(List<SummaryOther> summaryOtherList) {
+		this.summaryOtherList = summaryOtherList;
 	}
 
 }

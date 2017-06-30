@@ -11,10 +11,6 @@
 		<result property="name" column="name" />
 		<!---->
 		<result property="content" column="content" />
-		<!--总结时间-->
-		<result property="dateTabId" column="date_tab_id" />
-		<!---->
-		<result property="userId" column="user_id" />
 		
 		<result property="summaryId" column="summary_id" />
 		<!---->
@@ -29,8 +25,6 @@
 		id,
 		name,
 		content,
-		date_tab_id,
-		user_id,
 		summary_id,
 		modify_time,
 		create_time
@@ -57,9 +51,14 @@
 		 DELETE FROM tb_summary_other
 		 WHERE id = #{id}
 	</delete>
+	
+	<delete id="deleteBySummaryId" parameterType="java.lang.Integer">
+		 DELETE FROM tb_summary_other
+		 WHERE summary_id = #{summaryId}
+	</delete>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSummaryOther" parameterType="com.netease.okr.model.entity.SummaryOther">
+	<insert id="insertSummaryOther" parameterType="com.netease.okr.model.entity.SummaryOther" useGeneratedKeys="true" keyProperty="id">
 		 INSERT INTO tb_summary_other
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
@@ -70,12 +69,6 @@
 			</if>
 			<if test="content != null">
 				 content,
-			</if>
-			<if test="dateTabId != null">
-				 date_tab_id,
-			</if>
-			<if test="userId != null">
-				 user_id,
 			</if>
 			<if test="summaryId != null">
 				 summary_id,
@@ -94,12 +87,6 @@
 			<if test="content!=null">
 				 #{content},
 			</if>
-			<if test="dateTabId!=null">
-				 #{dateTabId},
-			</if>
-			<if test="userId!=null">
-				 #{userId},
-			</if>
 			<if test="summaryId != null">
 				  #{summaryId},
 			</if>
@@ -117,12 +104,6 @@
 			</if>
 			<if test="content != null">
 				 content = #{content},
-			</if>
-			<if test="dateTabId != null">
-				 date_tab_id = #{dateTabId},
-			</if>
-			<if test="userId != null">
-				 user_id = #{userId},
 			</if>
 			modify_time =now()
 

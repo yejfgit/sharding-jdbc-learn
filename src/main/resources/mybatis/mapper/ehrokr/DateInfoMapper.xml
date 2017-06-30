@@ -48,6 +48,13 @@
 		order by display 
 	</select>
 	
+	<select id="getClassDateById" resultMap="DateInfoResultMap">
+		select
+		<include refid="selectedDateTabColumns"></include>
+		from tb_date_tab
+		where id=#{id}
+	</select>
+	
 	<select id="getAllDateInfo" resultMap="DateInfoResultMap">
 		select
 		<include refid="selectedDateInfoColumns"></include>

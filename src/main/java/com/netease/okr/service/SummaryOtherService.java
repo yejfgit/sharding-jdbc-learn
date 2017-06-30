@@ -8,7 +8,11 @@ public interface SummaryOtherService {
 
 	public List<SummaryOther> getSummaryOtherList(Integer summaryId);
 
-	public Boolean addSummaryOtherList(List<SummaryOther> summaryOtherList);
+	public Boolean addSummaryOtherList(Integer summaryId,List<SummaryOther> summaryOtherList);
+
+	public Boolean updateSummaryOtherList(Integer summaryId, List<SummaryOther> summaryOtherList);
+
+	public Boolean delSummaryOtherList(Integer summaryId);
 
 
 }

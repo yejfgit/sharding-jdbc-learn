@@ -37,6 +37,12 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	}
 	
 	@Override
+	public Integer deleteAllKeyResultScoreOfUser(Integer userId){
+		return keyResultMapper.deleteAllKeyResultScoreOfUser(userId);
+	}
+	
+	
+	@Override
 	public Integer getKeyResultNumOfStart(Integer objectivesId){
 		return keyResultMapper.getKeyResultNumOfStart(objectivesId);
 	}

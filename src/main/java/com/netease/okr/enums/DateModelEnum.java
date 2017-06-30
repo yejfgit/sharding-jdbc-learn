@@ -28,6 +28,15 @@ public enum DateModelEnum {
         }
         return null;
     }
+    
+    public static String getRemarkOfId(int id) {
+    	DateModelEnum doc = codeOf(id);
+    	if(doc==null){
+    		return "";
+    	}else{
+    		return doc.getName();
+    	}
+    }
 
     public String getName() {
         return name;

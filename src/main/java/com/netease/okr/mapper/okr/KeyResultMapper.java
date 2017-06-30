@@ -43,6 +43,8 @@ public interface KeyResultMapper {
 	 */
 	public Integer getNextCodeNum(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
 	
+	public Integer deleteAllKeyResultScoreOfUser(@Param(value = "userId") Integer userId)  throws DataAccessException;
+	
 	
 	/**
 	 * 查询已开始的关键事件数量

@@ -673,7 +673,7 @@ public class BuildMybatisModelUtil {
         //---------------  insert方法（匹配有值的字段）
         bw.write("\t<!-- 添加 （匹配有值的字段）-->");
         bw.newLine();
-        bw.write("\t<insert id=\"insert" + beanName + "\" parameterType=\"" +bean_package+"."+beanName + "\">");
+        bw.write("\t<insert id=\"insert" + beanName + "\" parameterType=\"" +bean_package+"."+beanName + "\" useGeneratedKeys=\"true\" keyProperty=\"id\">");
         bw.newLine();
         bw.write("\t\t INSERT INTO " + tableName);
         bw.newLine();
