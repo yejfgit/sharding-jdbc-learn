@@ -15,15 +15,6 @@
 	</resultMap>
 	
 	
-	<resultMap type="com.netease.okr.model.entity.Appendix" id="AppendixRelResultMap">
-		<id column="id" property="id"/>
-		<result column="appendix_id" property="appendixId"/>
-		<result column="rel_id" property="relId"/>
-		<result column="type" property="type"/>
-		<result column="modify_time" property="modifyTime"  />
-		<result column="create_time" property="createTime"  />
-	</resultMap>
-	
 	<sql id="selectedAppendixColumns">
 		id,
 		week_report_id,
@@ -49,6 +40,7 @@
 		from tb_appendix
 		where id=#{id}
 	</select>
+	
 	
 	
 	<insert id="addAppendix" parameterType="com.netease.okr.model.entity.Appendix" useGeneratedKeys="true" keyProperty="id">
@@ -90,19 +82,34 @@
 	
 	
 	<!-- ******************************AppendixRel************************************ -->
+	
+	<resultMap type="com.netease.okr.model.entity.Appendix" id="AppendixRelResultMap">
+		<id column="id" property="id"/>
+		<result column="appendix_id" property="appendixId"/>
+		<result column="rel_id" property="relId"/>
+		<result column="type" property="type"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		<result column="name" property="name"  />
+		<result column="url" property="url"  />
+	</resultMap>
+	
 	<sql id="selectedAppendixRelColumns">
-		id,
-		appendix_id,
-		rel_id,
-		type,
-		modify_time,
-		create_time
+		t.id,
+		t.appendix_id,
+		t.rel_id,
+		t.type,
+		t.modify_time,
+		t.create_time,
+		ta.name,
+		ta.url
 	</sql>
 	
 	<select id="getAppendixRelList" resultMap="AppendixRelResultMap">
 		select
 		<include refid="selectedAppendixRelColumns"></include>
-		from tb_appendix_rel
+		from tb_appendix_rel t
+		LEFT JOIN tb_appendix ta on t .appendix_id= ta.id
 		where rel_id=#{relId}
 	</select>
 	

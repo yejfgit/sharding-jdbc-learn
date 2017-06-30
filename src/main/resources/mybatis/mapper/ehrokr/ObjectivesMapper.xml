@@ -19,6 +19,7 @@
 		<result column="complete" property="complete"  />
 		
 		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByoId"></collection>
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelList"></collection>
 	</resultMap>
 	
 	<!--查询不包含已完成和已终止的事件-->
