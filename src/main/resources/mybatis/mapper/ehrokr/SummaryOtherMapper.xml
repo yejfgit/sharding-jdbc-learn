@@ -17,6 +17,8 @@
 		<result property="modifyTime" column="modify_time" />
 		<!---->
 		<result property="createTime" column="create_time" />
+		
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelList"></collection>
 	</resultMap>
 
 
