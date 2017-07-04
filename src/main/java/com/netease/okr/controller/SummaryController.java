@@ -59,7 +59,7 @@ public class SummaryController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/summary/getSummaryId", method = RequestMethod.GET)
+	@RequestMapping(value = "/summary/getSummaryById", method = RequestMethod.GET)
 	public JsonResponse getSummaryById(Integer id) {
 		
 		
