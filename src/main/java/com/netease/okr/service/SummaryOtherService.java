@@ -14,5 +14,7 @@ public interface SummaryOtherService {
 
 	public Boolean delSummaryOtherList(Integer summaryId);
 
+	public Boolean delSummaryOtherById(Integer id);
+
 
 }
