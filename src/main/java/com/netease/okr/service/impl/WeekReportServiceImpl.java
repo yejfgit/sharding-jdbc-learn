@@ -366,4 +366,10 @@ public class WeekReportServiceImpl implements WeekReportService {
 		
 		return keyResultIds;
 	}
+	
+	
+	@Override
+	public void updateRedis(){
+		weekReportDao.updateRedis();
+	}
 }

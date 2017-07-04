@@ -156,18 +156,6 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 		return weekReportMapper.getWeekReportById(id);
 	}
 	
-	/**
-	 * 
-	 * 更新redis 周报数量
-	 * */
-	private Integer updateWeekReportCountOfRedis(){
-		User user = (User) RedisUserContextUtil.getUserContext().getUser();
-		Integer userId = user.getId();
-		Integer weekReportCount = weekReportMapper.getWeekReportCount(userId);
-		RedisClient.set(RedisConstant.WEEK_REPORT_COUNT_KEY + userId, weekReportCount.toString());
-		RedisClient.expire(RedisConstant.WEEK_REPORT_COUNT_KEY + userId, RedisConstant.WEEK_REPORT_COUNT_EXPIRE);
-		return weekReportCount;
-	}
 	
 	/**
 	 * 
@@ -189,14 +177,33 @@ public class WeekReportDaoImpl extends SqlSessionDaoSupport implements WeekRepor
 			up.setWeekReportId(weekReport.getId());
 			userMapper.updateUser(up);
 			
-			
 			//更新redis是否有最新周报
 			Integer userId = user.getId();
 			RedisClient.set(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, ConstantsUtil.HAS_NEW_WEEK_REPORT.toString());
 			RedisClient.expire(RedisConstant.HAS_NEW_WEEK_REPORT_KEY + userId, RedisConstant.HAS_NEW_WEEK_REPORT_EXPIRE);
 		}
 		
-		
 	}
+	
+	
+	/**
+	 * 
+	 * 更新redis 周报数量
+	 * */
+	private Integer updateWeekReportCountOfRedis(){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		Integer userId = user.getId();
+		Integer weekReportCount = weekReportMapper.getWeekReportCount(userId);
+		RedisClient.set(RedisConstant.WEEK_REPORT_COUNT_KEY + userId, weekReportCount.toString());
+		RedisClient.expire(RedisConstant.WEEK_REPORT_COUNT_KEY + userId, RedisConstant.WEEK_REPORT_COUNT_EXPIRE);
+		return weekReportCount;
+	}
+	
+	@Override
+	public void updateRedis(){
+		updateWeekReportCountOfRedis();
+	}
+	
+	
 
 }

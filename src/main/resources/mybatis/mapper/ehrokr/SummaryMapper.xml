@@ -69,11 +69,14 @@
 			<if test="id != null">
 				 id,
 			</if>
-			<if test="name != null">
+			<if test="name != null and name != '' ">
 				 name,
 			</if>
 			<if test="dateTabId != null">
 				 date_tab_id,
+			</if>
+			<if test="userId != null">
+				 user_id,
 			</if>
 			 modify_time,
 			 create_time
@@ -83,11 +86,14 @@
 			<if test="id!=null">
 				 #{id},
 			</if>
-			<if test="name!=null">
+			<if test="name!=null and name != '' ">
 				 #{name},
 			</if>
 			<if test="dateTabId!=null">
 				 #{dateTabId},
+			</if>
+			<if test="userId != null">
+				 #{userId},
 			</if>
 			 now(),
 			 now()
@@ -98,7 +104,7 @@
 	<update id="updateById" parameterType="com.netease.okr.model.entity.Summary">
 		 UPDATE tb_summary
  		 <set> 
-			<if test="name != null">
+			<if test="name != null and name != ''">
 				 name = #{name},
 			</if>
 			<if test="dateTabId != null">
