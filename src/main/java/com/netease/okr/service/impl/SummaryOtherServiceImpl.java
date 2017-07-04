@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.netease.okr.dao.SummaryOtherDao;
 import com.netease.okr.enums.AppendixTypeEnum;
-import com.netease.okr.mapper.okr.AppendixMapper;
-import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.SummaryOther;
 import com.netease.okr.service.AppendixService;
 import com.netease.okr.service.SummaryOtherService;
@@ -97,6 +95,28 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			LoggerUtil.error("updateSummaryOtherList error", e);
+			return false;
+		}
+		
+
+		return true;
+	}
+	
+	
+	@Override
+	public Boolean delSummaryOtherById(Integer id) {
+
+		if(id==null) {
+			LoggerUtil.info("delSummaryOtherById id null");
+			return false;
+		}
+		try {
+			appendixService.deleteAppendixList(id);
+			summaryOtherDao.deleteById(id);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error("delSummaryOtherById error", e);
 			return false;
 		}
 		
