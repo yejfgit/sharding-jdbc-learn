@@ -1,6 +1,5 @@
 package com.netease.okr.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.netease.okr.dao.SummaryDao;
 import com.netease.okr.enums.AppendixTypeEnum;
 import com.netease.okr.enums.DateModelEnum;
 import com.netease.okr.mapper.okr.DateInfoMapper;
-import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
@@ -64,6 +62,13 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 	
 	@Override
+	public Integer getSummaryCountOfDate(Integer dateTabId){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		return summaryDao.getSummaryCountOfDate(dateTabId, user.getId());
+		
+	}
+	
+	@Override
 	public Boolean addSummary(Summary summary){
 		
 		if(setSummaryData(summary)){
@@ -100,10 +105,7 @@ public class SummaryServiceImpl implements SummaryService {
 				summaryOtherService.updateSummaryOtherList(summary.getId(),summary.getSummaryOtherList());
 				
 				//更新目标
-				List<Objectives> objectivesList = summary.getObjectivesList();
-				if(objectivesList!=null&&objectivesList.size()>0){
-					updateObjectivesSummary(summary,objectivesList);
-				}
+				updateObjectivesSummary(summary,summary.getObjectivesList());
 				
 			}
 		}else{
@@ -128,8 +130,8 @@ public class SummaryServiceImpl implements SummaryService {
 				objectivesDao.deleteAllObjectivesSummaryOfUser(userId);
 				//删除关键结果评分
 				keyResultDao.deleteAllKeyResultScoreOfUser(userId);
-				//删除附件信息
-				appendixService.deleteAppendixList(summaryId);
+				//删除目标附件信息
+				delObjectivesSummaryAppendix(userId);
 			}
 		}else{
 			return false;
@@ -139,42 +141,62 @@ public class SummaryServiceImpl implements SummaryService {
 		
 	}
 	
-	//更新我的总结目标内容
-	private Boolean updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
-		
-		List<Appendix> appendixList = new ArrayList<Appendix>();
-		for(Objectives objectives:objectivesList){
-			if(objectives.getId()==null) {
-				LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
-			}
-			objectivesDao.updateObjectives(objectives);
+	//删除我的总结目标内容附件信息
+	private Boolean delObjectivesSummaryAppendix(Integer userId){
+		try {
+			List<Objectives> objectivesList = objectivesDao.getMyOkrList(userId);
 			
-			appendixList.addAll(objectives.getAppendixList());
-			
-			//更新关键结果
-			List<KeyResult> keyResultList  = objectives.getKeyResultList();
-			if(keyResultList!=null&&keyResultList.size()>0){
-				updateKeyResultSummary(summary,keyResultList);
+			for(Objectives objectives:objectivesList){
+				if(objectives.getId()==null) {
+					LoggerUtil.info("删除我的总结目标内容附件信息未获取ID:"+JSON.toJSONString(objectives));
+				}
+				appendixService.deleteAppendixList(objectives.getId(), AppendixTypeEnum.TYPE1.getId());
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error(" delObjectivesSummaryAppendix error ", e);
+			return false;
 		}
 		
-		appendixService.updateAppendixList(summary.getId(),AppendixTypeEnum.TYPE1.getId(),appendixList);
 		
 		return true;
 		
 	}
 	
-	//更新我的总结关键结果得分
-	private Boolean updateKeyResultSummary(Summary summary,List<KeyResult> keyResultList){
-
-		for(KeyResult keyResult:keyResultList){
-			if(keyResult.getId()==null) {
-				LoggerUtil.info("添加我的总结关键结果未获取ID:"+JSON.toJSONString(keyResult));
+	
+	//更新我的总结目标内容
+	private void updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
+		
+		if(objectivesList!=null&&objectivesList.size()>0){
+			for(Objectives objectives:objectivesList){
+				if(objectives.getId()==null) {
+					LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
+					continue;
+				}
+				objectivesDao.updateObjectives(objectives);
+				
+				//更新关键结果
+				updateKeyResultSummary(summary,objectives.getKeyResultList());
+				
+				appendixService.updateAppendixList(objectives.getId(),AppendixTypeEnum.TYPE1.getId(),objectives.getAppendixList());
 			}
-			keyResultDao.updateKeyResult(keyResult);
 		}
 		
-		return true;
+	}
+	
+	//更新我的总结关键结果得分
+	private void updateKeyResultSummary(Summary summary,List<KeyResult> keyResultList){
+		
+		//更新关键结果
+		if(keyResultList!=null&&keyResultList.size()>0){
+			for(KeyResult keyResult:keyResultList){
+				if(keyResult.getId()==null) {
+					LoggerUtil.info("添加我的总结关键结果未获取ID:"+JSON.toJSONString(keyResult));
+					continue;
+				}
+				keyResultDao.updateKeyResult(keyResult);
+			}
+		}
 		
 	}
 		

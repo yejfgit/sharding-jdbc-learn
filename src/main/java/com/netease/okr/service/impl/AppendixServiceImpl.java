@@ -33,6 +33,7 @@ public class AppendixServiceImpl implements AppendixService {
 				return false;
 			}
 			
+			//设置信息
 			for(Appendix appendix:appendixList){
 				appendix.setAppendixId(appendix.getId());
 				appendix.setType(type);
@@ -53,13 +54,13 @@ public class AppendixServiceImpl implements AppendixService {
 	
 	
 	/**
-	 * 添加附件
+	 * 删除附件
 	 * */
 	@Override
-	public Boolean deleteAppendixList(Integer relId){
+	public Boolean deleteAppendixList(Integer relId,Integer type){
 		try {
 			
-			List<Appendix> appendixList = appendixMapper.getAppendixRelList(relId);
+			List<Appendix> appendixList = appendixMapper.getAppendixRelList(relId,type);
 			
 			if(appendixList!=null&&appendixList.size()>0){
 				for(Appendix appendix:appendixList){

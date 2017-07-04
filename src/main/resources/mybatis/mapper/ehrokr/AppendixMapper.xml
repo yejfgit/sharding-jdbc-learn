@@ -110,7 +110,7 @@
 		<include refid="selectedAppendixRelColumns"></include>
 		from tb_appendix_rel t
 		LEFT JOIN tb_appendix ta on t .appendix_id= ta.id
-		where rel_id=#{relId}
+		where rel_id=#{relId} and type=#{type}
 	</select>
 	
 	<insert id="addAppendixRel" parameterType="java.util.List">
