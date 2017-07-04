@@ -25,7 +25,7 @@ public interface AppendixMapper {
 	public List<Appendix> getAppendixByWeekReportId(@Param(value = "weekReportId") Integer weekReportId)  throws DataAccessException;
 	
 	
-	public List<Appendix> getAppendixRelList(@Param(value = "relId") Integer relId)  throws DataAccessException;
+	public List<Appendix> getAppendixRelList(@Param(value = "relId") Integer relId,@Param(value = "type") Integer type)  throws DataAccessException;
 	
 	
 	/**

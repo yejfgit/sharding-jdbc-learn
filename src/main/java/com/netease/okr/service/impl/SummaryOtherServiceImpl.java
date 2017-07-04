@@ -84,12 +84,15 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 		}
 		try {
 			List<SummaryOther> summaryOtherList = summaryOtherDao.getSummaryOtherList(summaryId);
+			
+			//删除附件信息
 			if(summaryOtherList!=null&&summaryOtherList.size()>0){
 				for(SummaryOther summaryOther:summaryOtherList){
-					appendixService.deleteAppendixList(summaryOther.getId());
+					appendixService.deleteAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId());
 				}
 			}
 			
+			//删除其他总结
 			summaryOtherDao.deleteBySummaryId(summaryId);
 			
 		} catch (Exception e) {
@@ -111,7 +114,7 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 			return false;
 		}
 		try {
-			appendixService.deleteAppendixList(id);
+			appendixService.deleteAppendixList(id,AppendixTypeEnum.TYPE2.getId());
 			summaryOtherDao.deleteById(id);
 			
 		} catch (Exception e) {

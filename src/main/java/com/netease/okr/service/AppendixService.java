@@ -8,5 +8,5 @@ public interface AppendixService {
 
 	public Boolean updateAppendixList(Integer relId,Integer type, List<Appendix> appendixList);
 
-	public Boolean deleteAppendixList(Integer relId);
+	public Boolean deleteAppendixList(Integer relId, Integer type);
 }
