@@ -16,5 +16,7 @@ public interface SummaryService {
 
 	public Summary getSummaryById(Integer id);
 
+	public Integer getSummaryCountOfDate(Integer dateTabId);
+
 
 }

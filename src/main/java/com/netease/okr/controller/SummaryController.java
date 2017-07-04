@@ -78,6 +78,26 @@ public class SummaryController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
+	@RequestMapping(value = "/summary/ifHasCreateSummary", method = RequestMethod.POST)
+	public JsonResponse ifHasCreateSummary(@RequestBody Summary summary) {
+		
+		
+		if(summary!=null&&summary.getDateTabId()!=null){
+			Integer c = summaryService.getSummaryCountOfDate(summary.getDateTabId());
+
+			return JsonUtil.toJsonObj(c);
+		}else{
+			return JsonUtil.toJsonFail("查询dateTabId为空!"+JSON.toJSONString(summary));
+		}
+		
+	}
+	
+	
+	/**
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping(value = "/summary/getOkrSummaryList", method = RequestMethod.GET)
 	public JsonResponse getOkrSummaryList(Integer userId) {
 		

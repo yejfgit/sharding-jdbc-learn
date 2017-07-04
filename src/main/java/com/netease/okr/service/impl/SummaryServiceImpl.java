@@ -1,6 +1,5 @@
 package com.netease.okr.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.netease.okr.dao.SummaryDao;
 import com.netease.okr.enums.AppendixTypeEnum;
 import com.netease.okr.enums.DateModelEnum;
 import com.netease.okr.mapper.okr.DateInfoMapper;
-import com.netease.okr.model.entity.Appendix;
 import com.netease.okr.model.entity.DateInfo;
 import com.netease.okr.model.entity.KeyResult;
 import com.netease.okr.model.entity.Objectives;
@@ -64,6 +62,13 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 	
 	@Override
+	public Integer getSummaryCountOfDate(Integer dateTabId){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		return summaryDao.getSummaryCountOfDate(dateTabId, user.getId());
+		
+	}
+	
+	@Override
 	public Boolean addSummary(Summary summary){
 		
 		if(setSummaryData(summary)){
@@ -100,10 +105,7 @@ public class SummaryServiceImpl implements SummaryService {
 				summaryOtherService.updateSummaryOtherList(summary.getId(),summary.getSummaryOtherList());
 				
 				//更新目标
-				List<Objectives> objectivesList = summary.getObjectivesList();
-				if(objectivesList!=null&&objectivesList.size()>0){
-					updateObjectivesSummary(summary,objectivesList);
-				}
+				updateObjectivesSummary(summary,summary.getObjectivesList());
 				
 			}
 		}else{
@@ -163,38 +165,38 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	
 	//更新我的总结目标内容
-	private Boolean updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
+	private void updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
 		
-		for(Objectives objectives:objectivesList){
-			if(objectives.getId()==null) {
-				LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
+		if(objectivesList!=null&&objectivesList.size()>0){
+			for(Objectives objectives:objectivesList){
+				if(objectives.getId()==null) {
+					LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
+					continue;
+				}
+				objectivesDao.updateObjectives(objectives);
+				
+				//更新关键结果
+				updateKeyResultSummary(summary,objectives.getKeyResultList());
+				
+				appendixService.updateAppendixList(objectives.getId(),AppendixTypeEnum.TYPE1.getId(),objectives.getAppendixList());
 			}
-			objectivesDao.updateObjectives(objectives);
-			
-			//更新关键结果
-			List<KeyResult> keyResultList  = objectives.getKeyResultList();
-			if(keyResultList!=null&&keyResultList.size()>0){
-				updateKeyResultSummary(summary,keyResultList);
-			}
-			
-			appendixService.updateAppendixList(objectives.getId(),AppendixTypeEnum.TYPE1.getId(),objectives.getAppendixList());
 		}
-		
-		return true;
 		
 	}
 	
 	//更新我的总结关键结果得分
-	private Boolean updateKeyResultSummary(Summary summary,List<KeyResult> keyResultList){
-
-		for(KeyResult keyResult:keyResultList){
-			if(keyResult.getId()==null) {
-				LoggerUtil.info("添加我的总结关键结果未获取ID:"+JSON.toJSONString(keyResult));
-			}
-			keyResultDao.updateKeyResult(keyResult);
-		}
+	private void updateKeyResultSummary(Summary summary,List<KeyResult> keyResultList){
 		
-		return true;
+		//更新关键结果
+		if(keyResultList!=null&&keyResultList.size()>0){
+			for(KeyResult keyResult:keyResultList){
+				if(keyResult.getId()==null) {
+					LoggerUtil.info("添加我的总结关键结果未获取ID:"+JSON.toJSONString(keyResult));
+					continue;
+				}
+				keyResultDao.updateKeyResult(keyResult);
+			}
+		}
 		
 	}
 		

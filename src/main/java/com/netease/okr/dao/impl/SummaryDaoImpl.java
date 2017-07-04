@@ -17,52 +17,59 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public class SummaryDaoImpl extends SqlSessionDaoSupport implements SummaryDao{
+public class SummaryDaoImpl extends SqlSessionDaoSupport implements SummaryDao {
 
-	 @Autowired
-	 private SummaryMapper summaryMapper;
+	@Autowired
+	private SummaryMapper summaryMapper;
 
 	/**
 	 * 
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	 @Override
-	 public Summary  selectById (Integer id){
-		 return summaryMapper.selectById(id);
-	 }
-	 
-	 @Override
-	 public List<Summary>  getSummaryList (Integer userId){
-		 return summaryMapper.getSummaryList(userId);
-	 }
+	@Override
+	public Summary selectById(Integer id) {
+		return summaryMapper.selectById(id);
+	}
+
+	@Override
+	public List<Summary> getSummaryList(Integer userId) {
+		return summaryMapper.getSummaryList(userId);
+	}
 
 	/**
 	 * 
 	 * 删除（根据主键ID删除）
 	 * 
 	 **/
-	 @Override
-	 public int deleteById (Integer id){
-		 return summaryMapper.deleteById(id);
-	 }
+	@Override
+	public int deleteById(Integer id) {
+		return summaryMapper.deleteById(id);
+	}
 
 	/**
 	 * 
 	 * 添加
 	 * 
 	 **/
-	 @Override
-	 public int insertSummary(Summary summary) {
-		 return summaryMapper.insertSummary(summary);
-	 }
+	@Override
+	public int insertSummary(Summary summary) {
+		return summaryMapper.insertSummary(summary);
+	}
+
 	/**
 	 * 
 	 * 修改（根据主键ID修改）
 	 * 
 	 **/
-	 @Override
-	 public int updateById (Summary summary) {
-		 return summaryMapper.updateById(summary);
-	 }
+	@Override
+	public int updateById(Summary summary) {
+		return summaryMapper.updateById(summary);
+	}
+	
+	
+	@Override
+	public int getSummaryCountOfDate(Integer dateTabId, Integer userId) {
+		return summaryMapper.getSummaryCountOfDate(dateTabId, userId);
+	}
 }

@@ -10,37 +10,38 @@ import com.netease.okr.model.entity.Summary;
  * 
  **/
 
- public interface SummaryDao{
-
+public interface SummaryDao {
 
 	/**
 	 * 
 	 * 查询（根据主键ID查询）
 	 * 
 	 **/
-	 public Summary  selectById (Integer id);
+	public Summary selectById(Integer id);
 
 	/**
 	 * 
 	 * 删除（根据主键ID删除）
 	 * 
 	 **/
-	 public int deleteById (Integer id);
+	public int deleteById(Integer id);
 
 	/**
 	 * 
 	 * 添加
 	 * 
 	 **/
-	 public int insertSummary( Summary summary );
+	public int insertSummary(Summary summary);
 
 	/**
 	 * 
 	 * 修改（根据主键ID修改）
 	 * 
 	 **/
-	 public int updateById ( Summary summary );
+	public int updateById(Summary summary);
 
-	 public List<Summary> getSummaryList(Integer userId); 
+	public List<Summary> getSummaryList(Integer userId);
+
+	public int getSummaryCountOfDate(Integer dateTabId, Integer userId);
 
 }

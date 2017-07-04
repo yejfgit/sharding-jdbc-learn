@@ -55,6 +55,12 @@
 		 WHERE t.user_id = #{userId}
 		 order by year desc
 	</select>
+	
+	<select id="getSummaryCountOfDate"  resultType="java.lang.Integer" >
+		 SELECT
+		 count(1)
+		 FROM tb_summary where date_tab_id = #{dateTabId} and user_id=#{userId}
+	</select>
 
 	<!--删除：根据主键ID删除-->
 	<delete id="deleteById" parameterType="java.lang.Integer">
