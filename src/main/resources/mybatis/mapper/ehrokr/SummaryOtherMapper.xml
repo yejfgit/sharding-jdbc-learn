@@ -11,14 +11,14 @@
 		<result property="name" column="name" />
 		<!---->
 		<result property="content" column="content" />
-		
+		<result property="contentDetail" column="content_detail" />
 		<result property="summaryId" column="summary_id" />
 		<!---->
 		<result property="modifyTime" column="modify_time" />
 		<!---->
 		<result property="createTime" column="create_time" />
 		
-		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelList"></collection>
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelListOfSummaryOther"></collection>
 	</resultMap>
 
 
@@ -27,6 +27,7 @@
 		id,
 		name,
 		content,
+		content_detail,
 		summary_id,
 		modify_time,
 		create_time
@@ -66,11 +67,14 @@
 			<if test="id != null">
 				 id,
 			</if>
-			<if test="name != null">
+			<if test="name != null  and name!='' ">
 				 name,
 			</if>
-			<if test="content != null">
+			<if test="content!=null  and content!='' ">
 				 content,
+			</if>
+			<if test="contentDetail!=null and contentDetail!='' ">
+				 content_detail,
 			</if>
 			<if test="summaryId != null">
 				 summary_id,
@@ -83,11 +87,14 @@
 			<if test="id!=null">
 				 #{id},
 			</if>
-			<if test="name!=null">
+			<if test="name!=null and name!='' ">
 				 #{name},
 			</if>
-			<if test="content!=null">
+			<if test="content!=null  and content!='' ">
 				 #{content},
+			</if>
+			<if test="contentDetail!=null and contentDetail!='' ">
+				 #{contentDetail},
 			</if>
 			<if test="summaryId != null">
 				  #{summaryId},
@@ -101,11 +108,14 @@
 	<update id="updateById" parameterType="com.netease.okr.model.entity.SummaryOther">
 		 UPDATE tb_summary_other
  		 <set> 
-			<if test="name != null">
+			<if test="name != null and name!=''">
 				 name = #{name},
 			</if>
-			<if test="content != null">
+			<if test="content!=null  and content!='' ">
 				 content = #{content},
+			</if>
+			<if test="contentDetail!=null and contentDetail!='' ">
+				content_detail = #{contentDetail},
 			</if>
 			modify_time =now()
 

@@ -18,7 +18,6 @@
 		<result column="create_time" property="createTime"  />
 		
 		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultListByoId"></collection>
-		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="id" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelList"></collection>
 	</resultMap>
 	
 	<!--查询不包含已完成和已终止的事件-->
@@ -173,6 +172,46 @@
 	<!-- ***************************objectives_summary***************************** -->
 	
 	
+	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesSummaryResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
+		<result column="objectives_code" property="objectivesCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		<result column="complete" property="complete"  />
+		<result column="complete_detail" property="completeDetail"  />
+		<result column="summary_id" property="summaryId"  />
+		<result column="objectivesSummaryId" property="objectivesSummaryId"  />
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultScoreListByObjectivesId"></collection>
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="objectivesSummaryId" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelListOfObjectivesSummary"></collection>
+	</resultMap>
+	
+	<!-- 查询员工的okr总结详情-->
+	<select id="getSummaryOkrDetail" resultMap="ObjectivesSummaryResultMap">
+		select 
+		tj.id,
+		tj.objectives_name,
+		tj.objectives_dsc,
+		tj.objectives_detail,
+		tj.objectives_code,
+		tj.user_id,
+		tj.is_valid,
+		tj.code_num,
+		tj.modify_time,
+		tj.create_time,
+		ts.complete,
+		ts.complete_detail,
+		ts.summary_id,
+		ts.id objectivesSummaryId
+		from tb_objectives_summary ts
+		LEFT JOIN tb_objectives tj on ts.objectives_id = tj.id
+		where ts.summary_id = #{summaryId};
+	</select>
 	
 	<delete id="deleteObjectivesSummary">
 		delete from tb_objectives_summary where summary_id = #{summaryId}
@@ -184,6 +223,7 @@
 			<if test="objectivesId!=null ">objectives_id,</if>
 			<if test="summaryId!=null ">summary_id,</if>
 			<if test="complete!=null and complete!=''">complete,</if>
+			<if test="completeDetail!=null and completeDetail!=''">complete_detail,</if>
 			create_time,
 			modify_time
 		)
@@ -192,6 +232,7 @@
 			<if test="objectivesId!=null ">#{objectivesId},</if>
 			<if test="summaryId!=null ">#{summaryId},</if>
 			<if test="complete!=null and complete!=''">#{complete},</if>
+			<if test="completeDetail!=null and completeDetail!=''">#{completeDetail},</if>
 			now(),
 			now()
 		)

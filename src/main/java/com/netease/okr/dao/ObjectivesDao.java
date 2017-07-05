@@ -31,5 +31,7 @@ public interface ObjectivesDao {
 
 	public Integer deleteObjectivesSummary(Integer summaryId);
 
+	public List<Objectives> getSummaryOkrDetail(Integer summaryId);
+
 
 }

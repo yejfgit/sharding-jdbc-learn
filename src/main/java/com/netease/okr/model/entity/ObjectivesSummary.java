@@ -16,6 +16,8 @@ public class ObjectivesSummary extends BaseEntity implements Serializable  {
 	private Integer summaryId;
 	
 	private String complete;
+	
+	private String completeDetail;
 
 	public Integer getId() {
 		return id;
@@ -47,6 +49,14 @@ public class ObjectivesSummary extends BaseEntity implements Serializable  {
 
 	public void setComplete(String complete) {
 		this.complete = complete;
+	}
+
+	public String getCompleteDetail() {
+		return completeDetail;
+	}
+
+	public void setCompleteDetail(String completeDetail) {
+		this.completeDetail = completeDetail;
 	}
 	
 

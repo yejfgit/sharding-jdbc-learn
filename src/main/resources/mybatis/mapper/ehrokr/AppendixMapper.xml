@@ -113,6 +113,24 @@
 		where rel_id=#{relId} and type=#{type}
 	</select>
 	
+	<select id="getAppendixRelListOfSummaryOther" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixRelColumns"></include>
+		from tb_summary_other ts
+		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
+		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
+		where t.type=2 and ts.id=#{summaryOtherId}
+	</select>
+	
+	<select id="getAppendixRelListOfObjectivesSummary" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixRelColumns"></include>
+		from tb_objectives_summary ts
+		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
+		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
+		where t.type=1 and ts.id=#{objectivesSummaryId}
+	</select>
+	
 	<insert id="addAppendixRel" parameterType="java.util.List">
 		insert into tb_appendix_rel(appendix_id, rel_id,type, create_time, modify_time) values 
 		<foreach collection="list" item="item" index="index" separator=",">

@@ -20,6 +20,8 @@ public class SummaryOther implements Serializable {
 	/****/
 	private String content;
 	
+	private String contentDetail;
+	
 	private Integer summaryId;
 
 	/****/
@@ -87,6 +89,14 @@ public class SummaryOther implements Serializable {
 
 	public void setSummaryId(Integer summaryId) {
 		this.summaryId = summaryId;
+	}
+
+	public String getContentDetail() {
+		return contentDetail;
+	}
+
+	public void setContentDetail(String contentDetail) {
+		this.contentDetail = contentDetail;
 	}
 
 }

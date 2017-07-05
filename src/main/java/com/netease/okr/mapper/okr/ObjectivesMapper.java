@@ -54,7 +54,7 @@ public interface ObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
@@ -91,7 +91,7 @@ public interface ObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
@@ -102,6 +102,9 @@ public interface ObjectivesMapper {
 	public Integer addObjectivesSummary(ObjectivesSummary objectivesSummary)  throws DataAccessException;
 	
 	public List<ObjectivesSummary> getObjectivesSummarylistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public List<Objectives> getSummaryOkrDetail(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
 	
 	
 }

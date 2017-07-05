@@ -35,6 +35,8 @@ public interface KeyResultMapper {
 	public List<KeyResult> getKeyResultListByWeekReportId(@Param(value = "weekReportId") Integer weekReportId)  throws DataAccessException;
 	
 	
+	public List<KeyResult> getKeyResultScoreListByObjectivesId(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	
 	
 	/**
 	 * @author yejf
