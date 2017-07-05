@@ -55,6 +55,25 @@ public class SummaryController extends BaseController {
 	
 	
 	/**
+	 * 查询okr总结详情
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/getSummaryOkrDetail", method = RequestMethod.GET)
+	public JsonResponse getSummaryOkrDetail(Integer summaryId) {
+		
+		if(summaryId==null){
+			return JsonUtil.toJsonFail("查询summaryId为空");
+		}
+		
+		List<Objectives> objectivesList = summaryService.getSummaryOkrDetail(summaryId);
+		
+		return JsonUtil.toJsonObj(objectivesList);
+	}
+	
+	
+	/**
 	 * @param 
 	 * @return
 	 */

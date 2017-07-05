@@ -27,6 +27,9 @@ public interface AppendixMapper {
 	
 	public List<Appendix> getAppendixRelList(@Param(value = "relId") Integer relId,@Param(value = "type") Integer type)  throws DataAccessException;
 	
+	public List<Appendix> getAppendixRelListOfSummaryOther(@Param(value = "summaryOtherId") Integer summaryOtherId)  throws DataAccessException;
+	
+	public List<Appendix> getAppendixRelListOfObjectivesSummary(@Param(value = "objectivesSummaryId") Integer objectivesSummaryId)  throws DataAccessException;
 	
 	/**
 	 * @author yejf

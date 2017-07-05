@@ -31,7 +31,7 @@ public interface GroupObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
@@ -60,7 +60,7 @@ public interface GroupObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */

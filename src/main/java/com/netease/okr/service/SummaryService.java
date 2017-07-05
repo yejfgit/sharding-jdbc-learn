@@ -2,6 +2,7 @@ package com.netease.okr.service;
 
 import java.util.List;
 
+import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.Summary;
 
 public interface SummaryService {
@@ -17,6 +18,8 @@ public interface SummaryService {
 	public Summary getSummaryById(Integer id);
 
 	public Integer getSummaryCountOfDate(Integer dateTabId);
+
+	public List<Objectives> getSummaryOkrDetail(Integer summaryId);
 
 
 }

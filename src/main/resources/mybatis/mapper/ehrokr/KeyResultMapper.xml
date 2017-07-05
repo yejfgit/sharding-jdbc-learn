@@ -132,6 +132,24 @@
 	
 	<!-- ******************************** tb_key_keysult_score ***************************-->
 	
+	<!-- 根据目标id查询关键事件-->
+	<select id="getKeyResultScoreListByObjectivesId" resultType="com.netease.okr.model.entity.KeyResult">
+		select
+		t.id,
+		t.key_result_name,
+		t.key_result_code,
+		t.objectives_id,
+		t.status,
+		t.code_num,
+		t.is_valid,
+		t.is_week,
+		t.modify_time,
+		t.create_time,
+		ts.score
+		from tb_key_result_score ts
+		LEFT JOIN tb_key_result t on t.id = ts.key_result_id
+		where t.objectives_id = #{objectivesId}
+	</select>
 	
 	<delete id="deleteKeyResultScore">
 		delete from tb_key_result_score where summary_id = #{summaryId}
