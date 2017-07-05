@@ -148,7 +148,7 @@
 		)
 		values(
 			#{id},
-			<if test="keyResultIdd!=null ">#{keyResultId},</if>
+			<if test="keyResultId!=null ">#{keyResultId},</if>
 			<if test="summaryId!=null ">#{summaryId},</if>
 			<if test="score!=null and score!=''">#{score},</if>
 			now(),

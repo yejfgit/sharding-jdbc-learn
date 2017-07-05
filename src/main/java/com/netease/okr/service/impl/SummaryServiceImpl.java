@@ -71,7 +71,6 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	@Override
 	public Boolean addSummary(Summary summary){
-		
 		if(setSummaryData(summary)){
 			int c = summaryDao.insertSummary(summary);
 			
@@ -80,7 +79,7 @@ public class SummaryServiceImpl implements SummaryService {
 				summaryOtherService.addSummaryOtherList(summary.getId(),summary.getSummaryOtherList());
 				
 				//更新目标
-				updateObjectivesSummary(summary,summary.getObjectivesList());
+				updateObjectivesSummary(summary.getId(),summary.getObjectivesList());
 				
 			}
 		}else{
@@ -95,6 +94,7 @@ public class SummaryServiceImpl implements SummaryService {
 	@Override
 	public Boolean updateSummary(Summary summary){
 		
+
 		if(summary!=null&&summary.getId()!=null){
 			int c = summaryDao.updateById(summary);
 			
@@ -103,12 +103,13 @@ public class SummaryServiceImpl implements SummaryService {
 				summaryOtherService.updateSummaryOtherList(summary.getId(),summary.getSummaryOtherList());
 				
 				//更新目标
-				updateObjectivesSummary(summary,summary.getObjectivesList());
+				updateObjectivesSummary(summary.getId(),summary.getObjectivesList());
 				
 			}
 		}else{
 			return false;
 		}
+
 		
 		return true;
 		
@@ -133,6 +134,8 @@ public class SummaryServiceImpl implements SummaryService {
 		}else{
 			return false;
 		}
+
+		
 		
 		return true;
 		
@@ -140,21 +143,15 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	//删除我的总结目标内容附件信息
 	private Boolean delObjectivesSummaryAppendix(Integer summaryId){
-		try {
-			List<ObjectivesSummary> objectivesSummarys = objectivesDao.getObjectivesSummarylistBySummaryId(summaryId);
-			
-			for(ObjectivesSummary objectivesSummary:objectivesSummarys){
-				if(objectivesSummary.getId()==null) {
-					LoggerUtil.info("删除我的总结目标内容附件信息未获取ID:"+JSON.toJSONString(objectivesSummary));
-				}
-				appendixService.deleteAppendixList(objectivesSummary.getId(), AppendixTypeEnum.TYPE1.getId());
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error(" delObjectivesSummaryAppendix error ", e);
-			return false;
-		}
+
+		List<ObjectivesSummary> objectivesSummarys = objectivesDao.getObjectivesSummarylistBySummaryId(summaryId);
 		
+		for(ObjectivesSummary objectivesSummary:objectivesSummarys){
+			if(objectivesSummary.getId()==null) {
+				LoggerUtil.info("删除我的总结目标内容附件信息未获取ID:"+JSON.toJSONString(objectivesSummary));
+			}
+			appendixService.deleteAppendixList(objectivesSummary.getId(), AppendixTypeEnum.TYPE1.getId());
+		}
 		
 		return true;
 		
@@ -162,21 +159,26 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	
 	//更新我的总结目标内容
-	private void updateObjectivesSummary(Summary summary,List<Objectives> objectivesList){
+	private void updateObjectivesSummary(Integer summaryId,List<Objectives> objectivesList){
 
 		if(objectivesList!=null&&objectivesList.size()>0){
+			//清除数据再保存
+			objectivesDao.deleteObjectivesSummary(summaryId);
+			keyResultDao.deleteKeyResultScore(summaryId);
+			
+			//保存目标总结和关键结果得分
 			for(Objectives objectives:objectivesList){
 				if(objectives.getId()==null) {
 					LoggerUtil.info("添加我的总结目标未获取ID:"+JSON.toJSONString(objectives));
 					continue;
 				}
-				ObjectivesSummary objectivesSummary = objectivesDao.updateObjectivesSummary(summary.getId(),objectives);
+				ObjectivesSummary objectivesSummary = objectivesDao.updateObjectivesSummary(summaryId,objectives);
 				if(objectivesSummary!=null&&objectivesSummary.getId()!=null){
 					appendixService.updateAppendixList(objectivesSummary.getId(),AppendixTypeEnum.TYPE1.getId(),objectives.getAppendixList());
 				}
 
 				//更新关键结果
-				updateKeyResultSummary(summary,objectives.getKeyResultList());
+				updateKeyResultSummary(summaryId,objectives.getKeyResultList());
 				
 				
 			}
@@ -185,7 +187,7 @@ public class SummaryServiceImpl implements SummaryService {
 	}
 	
 	//更新我的总结关键结果得分
-	private void updateKeyResultSummary(Summary summary,List<KeyResult> keyResultList){
+	private void updateKeyResultSummary(Integer summaryId,List<KeyResult> keyResultList){
 		
 		//更新关键结果
 		if(keyResultList!=null&&keyResultList.size()>0){
@@ -194,7 +196,7 @@ public class SummaryServiceImpl implements SummaryService {
 					LoggerUtil.info("添加我的总结关键结果未获取ID:"+JSON.toJSONString(keyResult));
 					continue;
 				}
-				keyResultDao.updateKeyResultScore(summary.getId(),keyResult);
+				keyResultDao.updateKeyResultScore(summaryId,keyResult);
 			}
 		}
 		

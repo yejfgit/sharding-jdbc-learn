@@ -31,19 +31,13 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 	public Boolean addSummaryOtherList(Integer summaryId,List<SummaryOther> summaryOtherList) {
 
 		if(summaryOtherList==null||summaryOtherList.size()<1) return false;
-		try {
-			for(SummaryOther summaryOther:summaryOtherList){
-				
-				summaryOther.setSummaryId(summaryId);
-				summaryOtherDao.insertSummaryOther(summaryOther);
-				appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error("addSummaryOtherList error", e);
-			return false;
-		}
 		
+		for(SummaryOther summaryOther:summaryOtherList){
+			
+			summaryOther.setSummaryId(summaryId);
+			summaryOtherDao.insertSummaryOther(summaryOther);
+			appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
+		}
 
 		return true;
 	}
@@ -53,23 +47,16 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 	public Boolean updateSummaryOtherList(Integer summaryId,List<SummaryOther> summaryOtherList) {
 
 		if(summaryOtherList==null||summaryOtherList.size()<1) return false;
-		try {
-			for(SummaryOther summaryOther:summaryOtherList){
-				if(summaryOther.getId()!=null){
-					summaryOtherDao.updateById(summaryOther);
-				}else{
-					summaryOther.setSummaryId(summaryId);
-					summaryOtherDao.insertSummaryOther(summaryOther);
-				}
-				
-				appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
+		for(SummaryOther summaryOther:summaryOtherList){
+			if(summaryOther.getId()!=null){
+				summaryOtherDao.updateById(summaryOther);
+			}else{
+				summaryOther.setSummaryId(summaryId);
+				summaryOtherDao.insertSummaryOther(summaryOther);
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error("updateSummaryOtherList error", e);
-			return false;
+			
+			appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
 		}
-		
 
 		return true;
 	}
@@ -82,25 +69,17 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 			LoggerUtil.info("delSummaryOtherList summaryId null");
 			return false;
 		}
-		try {
-			List<SummaryOther> summaryOtherList = summaryOtherDao.getSummaryOtherList(summaryId);
-			
-			//删除附件信息
-			if(summaryOtherList!=null&&summaryOtherList.size()>0){
-				for(SummaryOther summaryOther:summaryOtherList){
-					appendixService.deleteAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId());
-				}
+		List<SummaryOther> summaryOtherList = summaryOtherDao.getSummaryOtherList(summaryId);
+		
+		//删除附件信息
+		if(summaryOtherList!=null&&summaryOtherList.size()>0){
+			for(SummaryOther summaryOther:summaryOtherList){
+				appendixService.deleteAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId());
 			}
-			
-			//删除其他总结
-			summaryOtherDao.deleteBySummaryId(summaryId);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error("updateSummaryOtherList error", e);
-			return false;
 		}
 		
+		//删除其他总结
+		summaryOtherDao.deleteBySummaryId(summaryId);
 
 		return true;
 	}
@@ -113,16 +92,9 @@ public class SummaryOtherServiceImpl implements SummaryOtherService {
 			LoggerUtil.info("delSummaryOtherById id null");
 			return false;
 		}
-		try {
-			appendixService.deleteAppendixList(id,AppendixTypeEnum.TYPE2.getId());
-			summaryOtherDao.deleteById(id);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error("delSummaryOtherById error", e);
-			return false;
-		}
 		
+		appendixService.deleteAppendixList(id,AppendixTypeEnum.TYPE2.getId());
+		summaryOtherDao.deleteById(id);
 
 		return true;
 	}
