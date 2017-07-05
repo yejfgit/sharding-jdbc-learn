@@ -187,7 +187,7 @@
 		<result column="complete_detail" property="completeDetail"  />
 		<result column="summary_id" property="summaryId"  />
 		<result column="objectivesSummaryId" property="objectivesSummaryId"  />
-		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="id" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultScoreListByObjectivesId"></collection>
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="{objectivesId=id,summaryId=summary_id}" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultScoreListByObjectivesId"></collection>
 		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="objectivesSummaryId" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelListOfObjectivesSummary"></collection>
 	</resultMap>
 	

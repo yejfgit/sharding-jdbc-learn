@@ -151,7 +151,7 @@
 		<include refid="selectedKeyResultScoreColumns"></include>
 		from tb_key_result_score ts
 		LEFT JOIN tb_key_result t on t.id = ts.key_result_id
-		where t.objectives_id = #{objectivesId}
+		where t.objectives_id = #{objectivesId} and summary_id = #{summaryId}
 	</select>
 	
 	<delete id="deleteKeyResultScore">
