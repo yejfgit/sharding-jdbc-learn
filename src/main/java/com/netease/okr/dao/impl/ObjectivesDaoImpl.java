@@ -108,6 +108,7 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 				objectivesSummary.setObjectivesId(objectives.getId());
 				objectivesSummary.setSummaryId(summaryId);
 				objectivesSummary.setComplete(objectives.getComplete());
+				objectivesSummary.setCompleteDetail(objectives.getCompleteDetail());
 				objectivesMapper.addObjectivesSummary(objectivesSummary);
 				return objectivesSummary;
 			}else{
