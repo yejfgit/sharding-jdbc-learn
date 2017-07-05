@@ -145,7 +145,7 @@
 		t.is_week,
 		t.modify_time,
 		t.create_time,
-		tk.score
+		ts.score
 		from tb_key_result_score ts
 		LEFT JOIN tb_key_result t on t.id = ts.key_result_id
 		where t.objectives_id = #{objectivesId}
