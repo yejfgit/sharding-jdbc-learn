@@ -134,15 +134,15 @@
 	
 	<sql id="selectedKeyResultScoreColumns">
 		t.id,
-		t.key_result_name,
-		t.key_result_code,
-		t.objectives_id,
-		t.status,
-		t.code_num,
-		t.is_valid,
-		t.is_week,
-		t.modify_time,
-		t.create_time,
+		t.key_result_name keyResultName,
+		t.key_result_code keyResultCode,
+		t.objectives_id objectivesId,
+		t.status status,
+		t.code_num codeNum,
+		t.is_valid isValid,
+		t.is_week isWeek,
+		t.modify_time modifyTime,
+		t.create_time createTime,
 		ts.score
 	</sql>
 	
