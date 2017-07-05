@@ -75,7 +75,7 @@ public class ObjectivesServiceImpl extends SqlSessionDaoSupport implements Objec
 	private void setKeyResultScoreDetail(Integer summaryId,List<KeyResult> keyResultList){
 		if(keyResultList!=null&&keyResultList.size()>0){
 			for(KeyResult keyResult:keyResultList){
-				KeyResultScore keyResultScore = keyResultDao.getObjectivesSummary(summaryId, keyResult.getId());
+				KeyResultScore keyResultScore = keyResultDao.getKeyResultScore(summaryId, keyResult.getId());
 				if(keyResultScore!=null){
 					keyResult.setScore(keyResultScore.getScore());
 				}
