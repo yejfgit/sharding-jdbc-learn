@@ -170,6 +170,12 @@ public class SummaryController extends BaseController {
 		LoggerUtil.info("addSummary start:"+JSON.toJSONString(summary));
 		try {
 			if(summary!=null&&summary.getDateTabId()!=null){
+				
+				Integer c = summaryService.getSummaryCountOfDate(summary.getDateTabId());
+				if(c>0){
+					return JsonUtil.toJsonFail("已经添加过的总结");
+				}
+				
 				if(summaryService.addSummary(summary)){
 					return JsonUtil.toJsonObj(summary);
 				}else{
