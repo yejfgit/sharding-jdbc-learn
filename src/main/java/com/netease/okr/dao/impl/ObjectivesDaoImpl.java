@@ -103,7 +103,6 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	public ObjectivesSummary updateObjectivesSummary(Integer summaryId,Objectives objectives){
 		try {
 			if(objectives!=null&&objectives.getId()!=null&&summaryId!=null){
-				objectivesMapper.deleteObjectivesSummary(summaryId);
 				
 				ObjectivesSummary objectivesSummary = new ObjectivesSummary();
 				objectivesSummary.setObjectivesId(objectives.getId());

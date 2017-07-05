@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.KeyResult;
+import com.netease.okr.model.entity.KeyResultScore;
 
 /**
  * @Description: mapper
@@ -93,7 +94,7 @@ public interface KeyResultMapper {
 	
 	public Integer deleteKeyResultScore(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
 	
-	public Integer addKeyResultScore(KeyResult keyResult)  throws DataAccessException;
+	public Integer addKeyResultScore(KeyResultScore keyResultScore)  throws DataAccessException;
 	
 	public List<KeyResult> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
 }

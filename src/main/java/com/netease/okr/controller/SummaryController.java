@@ -87,7 +87,7 @@ public class SummaryController extends BaseController {
 
 			return JsonUtil.toJsonObj(c);
 		}else{
-			return JsonUtil.toJsonFail("查询dateTabId为空!"+JSON.toJSONString(summary));
+			return JsonUtil.toJsonFail("查询dateTabId为空!");
 		}
 		
 	}
@@ -126,15 +126,22 @@ public class SummaryController extends BaseController {
 	public JsonResponse addSummary(@RequestBody Summary summary) {
 		
 		LoggerUtil.info("addSummary start:"+JSON.toJSONString(summary));
-		if(summary!=null&&summary.getDateTabId()!=null){
-			if(summaryService.addSummary(summary)){
-				return JsonUtil.toJsonObj(summary);
+		try {
+			if(summary!=null&&summary.getDateTabId()!=null){
+				if(summaryService.addSummary(summary)){
+					return JsonUtil.toJsonObj(summary);
+				}else{
+					return JsonUtil.toJsonFail("添加失败");
+				}
 			}else{
-				return JsonUtil.toJsonFail("添加失败");
+				return JsonUtil.toJsonFail("信息填写错误!");
 			}
-		}else{
-			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error("addSummary exception", e);
+			return JsonUtil.toJsonFail("添加数据异常!");
 		}
+		
 	}
 	
 	
@@ -147,14 +154,21 @@ public class SummaryController extends BaseController {
 	public JsonResponse updateSummary(@RequestBody Summary summary) {
 		
 		LoggerUtil.info("updateSummary start:"+JSON.toJSONString(summary));
-		if(summary!=null&&summary.getId()!=null&&summary.getDateTabId()!=null){
-			if(summaryService.updateSummary(summary)){
-				return JsonUtil.toJsonObj(summary);
+		
+		try {
+			if(summary!=null&&summary.getId()!=null&&summary.getDateTabId()!=null){
+				if(summaryService.updateSummary(summary)){
+					return JsonUtil.toJsonObj(summary);
+				}else{
+					return JsonUtil.toJsonFail("更新失败");
+				}
 			}else{
-				return JsonUtil.toJsonFail("更新失败");
+				return JsonUtil.toJsonFail("信息填写错误!");
 			}
-		}else{
-			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error("updateSummary exception", e);
+			return JsonUtil.toJsonFail("添加数据异常!");
 		}
 	}
 	
@@ -168,14 +182,21 @@ public class SummaryController extends BaseController {
 	public JsonResponse delSummary(@RequestBody Summary summary) {
 		
 		LoggerUtil.info("delSummary start:"+JSON.toJSONString(summary));
-		if(summary!=null&&summary.getId()!=null){
-			if(summaryService.delSummary(summary.getId())){
-				return JsonUtil.toJsonObj(summary);
+		
+		try {
+			if(summary!=null&&summary.getId()!=null){
+				if(summaryService.delSummary(summary.getId())){
+					return JsonUtil.toJsonObj(summary);
+				}else{
+					return JsonUtil.toJsonFail("更新失败");
+				}
 			}else{
-				return JsonUtil.toJsonFail("更新失败");
+				return JsonUtil.toJsonFail("信息填写错误!");
 			}
-		}else{
-			return JsonUtil.toJsonFail("信息填写错误!"+JSON.toJSONString(summary));
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error("delSummary exception", e);
+			return JsonUtil.toJsonFail("添加数据异常!");
 		}
 	}
 	

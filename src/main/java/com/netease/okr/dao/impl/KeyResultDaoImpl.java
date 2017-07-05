@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.mapper.okr.KeyResultMapper;
 import com.netease.okr.model.entity.KeyResult;
-import com.netease.okr.util.LoggerUtil;
+import com.netease.okr.model.entity.KeyResultScore;
 
 @Repository
 public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultDao {
@@ -75,18 +75,16 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	
 	@Override
 	public Integer updateKeyResultScore(Integer summaryId,KeyResult keyResult){
-		try {
-			if(keyResult!=null&&keyResult.getId()!=null&&summaryId!=null){
-				keyResultMapper.deleteKeyResultScore(summaryId);
-				keyResultMapper.addKeyResultScore(keyResult);
-			}
+		
+		if(keyResult!=null&&keyResult.getId()!=null&&summaryId!=null){
 			
-			return 1;
-		} catch (Exception e) {
-			// TODO: handle exception
-			LoggerUtil.error(" updateKeyResultScore exception ", e);
-			return 0;
+			KeyResultScore keyResultScore = new KeyResultScore();
+			keyResultScore.setKeyResultId(keyResult.getId());
+			keyResultScore.setSummaryId(summaryId);
+			keyResultScore.setScore(keyResult.getScore());
+			keyResultMapper.addKeyResultScore(keyResultScore);
 		}
+		return 1;
 		
 	}
 	
