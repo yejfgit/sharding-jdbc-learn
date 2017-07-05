@@ -21,6 +21,8 @@
 		<result property="year" column="year" />
 		
 		<result property="dateClass" column="date_class" />
+		
+		<result property="type" column="type" />
 	</resultMap>
 
 
@@ -33,7 +35,8 @@
 		t.modify_time,
 		t.create_time,
 		tt.year,
-		tt.date_class
+		tt.date_class,
+		tt.type
 	</sql>
 
 
