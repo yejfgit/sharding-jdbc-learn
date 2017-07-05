@@ -43,9 +43,6 @@ public interface KeyResultMapper {
 	 */
 	public Integer getNextCodeNum(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
 	
-	public Integer deleteAllKeyResultScoreOfUser(@Param(value = "userId") Integer userId)  throws DataAccessException;
-	
-	
 	/**
 	 * 查询已开始的关键事件数量
 	 * @author yejf
@@ -93,4 +90,10 @@ public interface KeyResultMapper {
 	 */
 	public Integer updateKeyResultStatus(List<KeyResult> keyResults)  throws DataAccessException;
 	
+	
+	public Integer deleteKeyResultScore(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public Integer addKeyResultScore(KeyResult keyResult)  throws DataAccessException;
+	
+	public List<KeyResult> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
 }

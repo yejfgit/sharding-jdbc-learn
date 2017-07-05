@@ -43,7 +43,7 @@
 		 <include refid="Base_Column_List" />
 		 FROM tb_summary t
 		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
-		 WHERE id = #{id}
+		 WHERE t.id = #{id}
 	</select>
 	
 	

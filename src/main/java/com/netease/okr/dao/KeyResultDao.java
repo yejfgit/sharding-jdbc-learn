@@ -22,7 +22,11 @@ public interface KeyResultDao {
 
 	public Integer deleteKeyResultByoId(Integer objectivesId);
 
-	public Integer deleteAllKeyResultScoreOfUser(Integer userId);
+	public Integer updateKeyResultScore(Integer summaryId, KeyResult keyResult);
+
+	public List<KeyResult> getKeyResultScorelistBySummaryId(Integer summaryId);
+
+	public Integer deleteKeyResultScore(Integer summaryId);
 
 
 }
