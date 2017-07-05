@@ -105,6 +105,8 @@ public interface ObjectivesMapper {
 	
 	public List<Objectives> getSummaryOkrDetail(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
 	
+	public ObjectivesSummary getObjectivesSummary(@Param(value = "summaryId") Integer summaryId,@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	
 	
 	
 }

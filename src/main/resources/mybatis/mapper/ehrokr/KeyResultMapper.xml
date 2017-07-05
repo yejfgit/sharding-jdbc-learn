@@ -132,9 +132,7 @@
 	
 	<!-- ******************************** tb_key_keysult_score ***************************-->
 	
-	<!-- 根据目标id查询关键事件-->
-	<select id="getKeyResultScoreListByObjectivesId" resultType="com.netease.okr.model.entity.KeyResult">
-		select
+	<sql id="selectedKeyResultScoreColumns">
 		t.id,
 		t.key_result_name,
 		t.key_result_code,
@@ -146,6 +144,11 @@
 		t.modify_time,
 		t.create_time,
 		ts.score
+	</sql>
+	
+	<select id="getKeyResultScoreListByObjectivesId" resultType="com.netease.okr.model.entity.KeyResult">
+		select
+		<include refid="selectedKeyResultScoreColumns"></include>
 		from tb_key_result_score ts
 		LEFT JOIN tb_key_result t on t.id = ts.key_result_id
 		where t.objectives_id = #{objectivesId}
@@ -174,7 +177,14 @@
 		)
 	</insert>
 	
-	<select id="getObjectivesSummarylistBySummaryId" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+	<select id="getKeyResultScore" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+		select
+		id,key_result_id keyResultId,summary_id summaryId,score,modify_time modifyTime,create_time createTime
+		from tb_key_result_score
+		where summary_id=#{summaryId} and key_result_id=#{keyResultId} limit 1
+	</select>
+	
+	<select id="getKeyResultScorelistBySummaryId" resultType="com.netease.okr.model.entity.ObjectivesSummary">
 		select
 		id,key_result_id keyResultId,summary_id summaryId,score,modify_time modifyTime,create_time createTime
 		from tb_key_result_score

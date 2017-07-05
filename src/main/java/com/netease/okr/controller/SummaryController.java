@@ -15,6 +15,7 @@ import com.netease.okr.common.JsonResponse;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.Summary;
 import com.netease.okr.model.entity.security.User;
+import com.netease.okr.service.ObjectivesService;
 import com.netease.okr.service.OkrService;
 import com.netease.okr.service.SummaryService;
 import com.netease.okr.util.JsonUtil;
@@ -30,6 +31,9 @@ public class SummaryController extends BaseController {
 	
 	@Autowired
 	private OkrService okrService;
+	
+	@Autowired
+	protected ObjectivesService objectivesService;
 	
 	/**
 	 * @param 
@@ -55,7 +59,7 @@ public class SummaryController extends BaseController {
 	
 	
 	/**
-	 * 查询okr总结详情
+	 * 查询okr总结编辑页面
 	 * @param 
 	 * @return
 	 */
@@ -67,7 +71,26 @@ public class SummaryController extends BaseController {
 			return JsonUtil.toJsonFail("查询summaryId为空");
 		}
 		
-		List<Objectives> objectivesList = summaryService.getSummaryOkrDetail(summaryId);
+		List<Objectives> objectivesList = objectivesService.getSummaryOkrDetail(summaryId);
+		
+		return JsonUtil.toJsonObj(objectivesList);
+	}
+	
+	
+	/**
+	 * 查询okr总结查看页面
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/getEditSummaryOkrDetail", method = RequestMethod.GET)
+	public JsonResponse getEditSummaryOkrDetail(Integer summaryId) {
+		
+		if(summaryId==null){
+			return JsonUtil.toJsonFail("查询summaryId为空");
+		}
+		
+		List<Objectives> objectivesList = objectivesService.getEditSummaryOkrDetail(summaryId);
 		
 		return JsonUtil.toJsonObj(objectivesList);
 	}

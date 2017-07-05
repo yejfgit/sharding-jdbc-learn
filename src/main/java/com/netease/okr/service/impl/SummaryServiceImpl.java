@@ -45,11 +45,6 @@ public class SummaryServiceImpl implements SummaryService {
 	@Autowired
 	private KeyResultDao keyResultDao;
 	
-
-	@Override
-	public List<Objectives> getSummaryOkrDetail(Integer summaryId) {
-		return objectivesDao.getSummaryOkrDetail(summaryId);
-	}
 	
 	@Override
 	public List<Summary> getSummaryList(Integer userId){
