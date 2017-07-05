@@ -98,5 +98,8 @@ public interface KeyResultMapper {
 	
 	public Integer addKeyResultScore(KeyResultScore keyResultScore)  throws DataAccessException;
 	
-	public List<KeyResult> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	public List<KeyResultScore> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public KeyResultScore getKeyResultScore(@Param(value = "summaryId") Integer summaryId,@Param(value = "keyResultId") Integer keyResultId)  throws DataAccessException;
+	
 }

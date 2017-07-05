@@ -139,6 +139,10 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 		return objectivesMapper.getSummaryOkrDetail(summaryId);
 	}
 	
+	@Override
+	public ObjectivesSummary getObjectivesSummary(Integer summaryId,Integer objectivesId) {
+		return objectivesMapper.getObjectivesSummary(summaryId,objectivesId);
+	}
 	
 	
 	/**

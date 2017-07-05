@@ -191,9 +191,7 @@
 		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="objectivesSummaryId" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelListOfObjectivesSummary"></collection>
 	</resultMap>
 	
-	<!-- 查询员工的okr总结详情-->
-	<select id="getSummaryOkrDetail" resultMap="ObjectivesSummaryResultMap">
-		select 
+	<sql id="selectedObjectivesSummaryColumns">
 		tj.id,
 		tj.objectives_name,
 		tj.objectives_dsc,
@@ -208,9 +206,15 @@
 		ts.complete_detail,
 		ts.summary_id,
 		ts.id objectivesSummaryId
+	</sql>
+	
+	<!-- 查询员工的okr总结查看页面详情-->
+	<select id="getSummaryOkrDetail" resultMap="ObjectivesSummaryResultMap">
+		select 
+		<include refid="selectedObjectivesSummaryColumns"></include>
 		from tb_objectives_summary ts
 		LEFT JOIN tb_objectives tj on ts.objectives_id = tj.id
-		where ts.summary_id = #{summaryId};
+		where ts.summary_id = #{summaryId}
 	</select>
 	
 	<delete id="deleteObjectivesSummary">
@@ -237,9 +241,17 @@
 			now()
 		)
 	</insert>
+	
+	<select id="getObjectivesSummary" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+		select
+		id,objectives_id objectivesId,summary_id summaryId,complete,complete_detail completeDetail,modify_time modifyTime,create_time createTime
+		from tb_objectives_summary
+		where objectives_id=#{objectivesId} and summary_id=#{summaryId} limit 1
+	</select>
+	
 	<select id="getObjectivesSummarylistBySummaryId" resultType="com.netease.okr.model.entity.ObjectivesSummary">
 		select
-		id,objectives_id objectivesId,summary_id summaryId,complete,modify_time modifyTime,create_time createTime
+		id,objectives_id objectivesId,summary_id summaryId,complete,complete_detail completeDetail,modify_time modifyTime,create_time createTime
 		from tb_objectives_summary
 		where summary_id=#{summaryId}
 	</select>

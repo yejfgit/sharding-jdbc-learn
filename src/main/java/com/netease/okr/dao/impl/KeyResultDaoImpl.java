@@ -95,8 +95,14 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	}
 	
 	@Override
-	public List<KeyResult> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId){
+	public List<KeyResultScore> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId){
 		return keyResultMapper.getKeyResultScorelistBySummaryId(summaryId);
 		
 	}
+	@Override
+	public KeyResultScore getKeyResultScore(Integer summaryId,Integer keyResultId){
+		return keyResultMapper.getKeyResultScore(summaryId,keyResultId);
+		
+	}
+	
 }

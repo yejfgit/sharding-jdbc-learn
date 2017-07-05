@@ -33,5 +33,6 @@ public interface ObjectivesDao {
 
 	public List<Objectives> getSummaryOkrDetail(Integer summaryId);
 
+	public ObjectivesSummary getObjectivesSummary(Integer summaryId, Integer objectivesId);
 
 }

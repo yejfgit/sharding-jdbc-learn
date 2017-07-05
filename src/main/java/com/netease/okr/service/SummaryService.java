@@ -19,7 +19,4 @@ public interface SummaryService {
 
 	public Integer getSummaryCountOfDate(Integer dateTabId);
 
-	public List<Objectives> getSummaryOkrDetail(Integer summaryId);
-
-
 }
