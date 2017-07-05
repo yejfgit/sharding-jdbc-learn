@@ -15,7 +15,6 @@
 		<result column="code_num" property="codeNum"/>
 		<result column="modify_time" property="modifyTime"  />
 		<result column="create_time" property="createTime"  />
-		<result column="score" property="score"  />
 	</resultMap>
 	
 	<sql id="selectedKeyResultColumns">
@@ -28,8 +27,7 @@
 		t.is_valid,
 		t.is_week,
 		t.modify_time,
-		t.create_time,
-		t.score
+		t.create_time
 	</sql>
 	
 	<!-- 根据目标id查询关键事件-->
@@ -86,7 +84,6 @@
 			<if test="objectivesId!=null">objectives_id,</if>
 			<if test="status!=null">status,</if>
 			<if test="codeNum!=null">code_num,</if>
-			<if test="score!=null and score!=''">score,</if>
 			create_time,
 			modify_time
 		)
@@ -97,7 +94,6 @@
 			<if test="objectivesId!=null">#{objectivesId},</if>
 			<if test="status!=null">#{status},</if>
 			<if test="codeNum!=null">#{codeNum},</if>
-			<if test="score!=null and score!=''">#{score},</if>
 			now(),
 			now()
 		)
@@ -109,7 +105,6 @@
 			<if test="keyResultName!=null and keyResultName!=''">key_result_name = #{keyResultName},</if>
 			<if test="status!=null">status = #{status},</if>
 			<if test="isWeek!=null">is_week = #{isWeek},</if>
-			<if test="score!=null and score!=''">score = #{score},</if>
 			modify_time = now()
 		</set>
 		where id=#{id}
