@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.mapper.okr.ObjectivesMapper;
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.ObjectivesSummary;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.redis.RedisClient;
 import com.netease.okr.redis.RedisConstant;
+import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.RedisUserContextUtil;
 
@@ -50,11 +52,6 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	public Objectives getObjectivesInfoById(Integer id) {
 		return objectivesMapper.getObjectivesInfoById(id);
 	}
-	@Override
-	public Integer deleteAllObjectivesSummaryOfUser(Integer userId){
-		return objectivesMapper.deleteAllObjectivesSummaryOfUser(userId);
-	}
-	
 	
 	@Override
 	public Integer getNextCodeNum(Integer userId){
@@ -100,6 +97,45 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	public Integer updateObjectives(Objectives objectives){
 		return objectivesMapper.updateObjectives(objectives);
 	}
+	
+	
+	@Override
+	public ObjectivesSummary updateObjectivesSummary(Integer summaryId,Objectives objectives){
+		try {
+			if(objectives!=null&&objectives.getId()!=null&&summaryId!=null){
+				objectivesMapper.deleteObjectivesSummary(summaryId);
+				
+				ObjectivesSummary objectivesSummary = new ObjectivesSummary();
+				objectivesSummary.setObjectivesId(objectives.getId());
+				objectivesSummary.setSummaryId(summaryId);
+				objectivesSummary.setComplete(objectives.getComplete());
+				objectivesMapper.addObjectivesSummary(objectivesSummary);
+				return objectivesSummary;
+			}else{
+				return null;
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error(" updateObjectivesSummary exception ", e);
+			return null;
+		}
+		 
+	}
+	
+	
+	
+	@Override
+	public Integer deleteObjectivesSummary(Integer summaryId){
+		return objectivesMapper.deleteObjectivesSummary(summaryId);
+	}
+	
+	@Override
+	public List<ObjectivesSummary> getObjectivesSummarylistBySummaryId(Integer summaryId){
+		return objectivesMapper.getObjectivesSummarylistBySummaryId(summaryId);
+	}
+	
 	
 	/**
 	 * 

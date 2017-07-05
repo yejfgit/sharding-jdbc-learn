@@ -3,6 +3,7 @@ package com.netease.okr.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.mapper.okr.KeyResultMapper;
 import com.netease.okr.model.entity.KeyResult;
+import com.netease.okr.util.LoggerUtil;
 
 @Repository
 public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultDao {
@@ -35,12 +37,6 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 	public Integer getNextCodeNum(Integer objectivesId){
 		return keyResultMapper.getNextCodeNum(objectivesId);
 	}
-	
-	@Override
-	public Integer deleteAllKeyResultScoreOfUser(Integer userId){
-		return keyResultMapper.deleteAllKeyResultScoreOfUser(userId);
-	}
-	
 	
 	@Override
 	public Integer getKeyResultNumOfStart(Integer objectivesId){
@@ -74,5 +70,35 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 			return 0;
 		}
 		return keyResultMapper.updateKeyResultStatus(keyResults);
+	}
+	
+	
+	@Override
+	public Integer updateKeyResultScore(Integer summaryId,KeyResult keyResult){
+		try {
+			if(keyResult!=null&&keyResult.getId()!=null&&summaryId!=null){
+				keyResultMapper.deleteKeyResultScore(summaryId);
+				keyResultMapper.addKeyResultScore(keyResult);
+			}
+			
+			return 1;
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error(" updateKeyResultScore exception ", e);
+			return 0;
+		}
+		
+	}
+	
+	@Override
+	public Integer deleteKeyResultScore(Integer summaryId){
+		return keyResultMapper.deleteKeyResultScore(summaryId);
+		
+	}
+	
+	@Override
+	public List<KeyResult> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId){
+		return keyResultMapper.getKeyResultScorelistBySummaryId(summaryId);
+		
 	}
 }

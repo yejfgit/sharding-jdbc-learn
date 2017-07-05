@@ -50,6 +50,10 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private String complete;
 	
+	/**
+	 * 总结ID
+	 * */
+	private Integer summaryId;
 	
 	private List<KeyResult> keyResultList;
 	
@@ -130,6 +134,12 @@ public class Objectives extends BaseEntity implements Serializable  {
 	}
 	public void setComplete(String complete) {
 		this.complete = complete;
+	}
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
 	}
 	
 	

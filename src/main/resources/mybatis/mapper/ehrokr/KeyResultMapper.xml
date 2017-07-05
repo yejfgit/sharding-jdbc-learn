@@ -132,10 +132,40 @@
 	<delete id="deleteKeyResultByoId">
 		delete from tb_key_result where objectives_id=#{objectivesId}
 	</delete>
+
 	
 	
-	<update id="deleteAllKeyResultScoreOfUser">
-		update tb_key_result set score=null where objectives_id in (select id from tb_objectives where user_id=#{userId} )
-	</update>
+	<!-- ******************************** tb_key_keysult_score ***************************-->
+	
+	
+	<delete id="deleteKeyResultScore">
+		delete from tb_key_result_score where summary_id = #{summaryId}
+	</delete>
+	
+	<insert id="addKeyResultScore" parameterType="com.netease.okr.model.entity.KeyResultScore" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_key_result_score(
+			id,
+			<if test="keyResultId!=null ">key_result_id,</if>
+			<if test="summaryId!=null ">summary_id,</if>
+			<if test="score!=null and score!=''">score,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="keyResultIdd!=null ">#{keyResultId},</if>
+			<if test="summaryId!=null ">#{summaryId},</if>
+			<if test="score!=null and score!=''">#{score},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	<select id="getObjectivesSummarylistBySummaryId" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+		select
+		id,key_result_id keyResultId,summary_id summaryId,score,modify_time modifyTime,create_time createTime
+		from tb_key_result_score
+		where summary_id=#{summaryId}
+	</select>
 	
 </mapper>
