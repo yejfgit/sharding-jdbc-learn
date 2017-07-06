@@ -94,7 +94,7 @@ public class SummaryServiceImpl implements SummaryService {
 	public Boolean updateSummary(Summary summary){
 		
 
-		if(summary!=null&&summary.getId()!=null){
+		if(summary!=null&&summary.getId()!=null&&setSummaryData(summary)){
 			int c = summaryDao.updateById(summary);
 			
 			if(c>0){
@@ -211,7 +211,6 @@ public class SummaryServiceImpl implements SummaryService {
 			LoggerUtil.info("添加我的总结找不到时间数据");
 			return false;
 		}
-		summary.setDateTabId(dateInfo.getId());
 		summary.setUserId(user.getId());
 		
 		summary.setName(DateModelEnum.getRemarkOfId(dateInfo.getType())+"-"+dateInfo.getYear()+"年"+dateInfo.getDateClass());

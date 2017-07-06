@@ -94,7 +94,9 @@
 		<result column="url" property="url"  />
 	</resultMap>
 	
-	<sql id="selectedAppendixRelColumns">
+	
+	<!-- 查询附件关系id -->
+	<sql id="selectedAppendixRelIdColumns">
 		t.id,
 		t.appendix_id,
 		t.rel_id,
@@ -105,9 +107,20 @@
 		ta.url
 	</sql>
 	
+	<!-- 查询附件id -->
+	<sql id="selectedAppendixIdColumns">
+		ta.id,
+		t.rel_id,
+		t.type,
+		t.modify_time,
+		t.create_time,
+		ta.name,
+		ta.url
+	</sql>
+	
 	<select id="getAppendixRelList" resultMap="AppendixRelResultMap">
 		select
-		<include refid="selectedAppendixRelColumns"></include>
+		<include refid="selectedAppendixRelIdColumns"></include>
 		from tb_appendix_rel t
 		LEFT JOIN tb_appendix ta on t .appendix_id= ta.id
 		where rel_id=#{relId} and type=#{type}
@@ -115,7 +128,7 @@
 	
 	<select id="getAppendixRelListOfSummaryOther" resultMap="AppendixRelResultMap">
 		select
-		<include refid="selectedAppendixRelColumns"></include>
+		<include refid="selectedAppendixIdColumns"></include>
 		from tb_summary_other ts
 		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
 		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
@@ -124,7 +137,7 @@
 	
 	<select id="getAppendixRelListOfObjectivesSummary" resultMap="AppendixRelResultMap">
 		select
-		<include refid="selectedAppendixRelColumns"></include>
+		<include refid="selectedAppendixIdColumns"></include>
 		from tb_objectives_summary ts
 		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
 		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
