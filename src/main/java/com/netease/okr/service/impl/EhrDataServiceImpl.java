@@ -125,7 +125,7 @@ public class EhrDataServiceImpl implements EhrDateService {
 		//根据查询条件获取员工列表
 		EmpParam userParam = new EmpParam();
 		
-		if(!ConstantsUtil.HR_DEPT_CODE.equals(deptL1Id)) return null;
+		/*if(!ConstantsUtil.HR_DEPT_CODE.equals(deptL1Id)) return null;*/
 		
 		userParam.setDept1Id(deptL1Id);//一级部门为:D002
 
