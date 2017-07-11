@@ -33,7 +33,10 @@ public interface SummaryMapper {
 	 * 
 	 **/
 	public int deleteById(@Param("id") Integer id) throws DataAccessException;
-
+	
+	public int getSummaryCount(@Param("userId") Integer userId) throws DataAccessException;
+	
+	
 	/**
 	 * 
 	 * 添加

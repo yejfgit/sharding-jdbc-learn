@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.netease.okr.common.PageBean;
 import com.netease.okr.common.PageJsonResponse;
 import com.netease.okr.dao.ObjectivesDao;
+import com.netease.okr.dao.SummaryDao;
 import com.netease.okr.dao.UserDao;
 import com.netease.okr.dao.WeekReportDao;
 import com.netease.okr.model.entity.OkrNum;
@@ -28,9 +29,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ObjectivesDao objectivesDao;
 	
-	
 	@Autowired
 	private WeekReportDao weekReportDao;
+	
+	@Autowired
+	private SummaryDao summaryDao;
+	
 	
 	@Override
 	public User getUserByUNo(String uNo){
@@ -142,7 +146,8 @@ public class UserServiceImpl implements UserService {
 				Integer userId = user.getId();
 				
 				okrNum.setObjectivesNum(objectivesDao.getObjectivesCount(userId));
-				okrNum.setWeekReportNum(weekReportDao.getWeekReportCount(userId));
+				//okrNum.setWeekReportNum(weekReportDao.getWeekReportCount(userId));
+				okrNum.setSummaryNum(summaryDao.getSummaryCount(userId));
 				okrNum.setHasNewWeekReport(weekReportDao.hasNewWeekReport(userId));
 				
 			}

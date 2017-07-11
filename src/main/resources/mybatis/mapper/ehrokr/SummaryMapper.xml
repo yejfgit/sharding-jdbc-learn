@@ -49,6 +49,12 @@
 		 WHERE t.id = #{id}
 	</select>
 	
+	<!-- 获取员工目标数量-->
+	<select id="getSummaryCount" resultType="int">
+		select count(1) 
+		from tb_summary 
+		where user_id=#{userId}
+	</select>
 	
 	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="java.lang.Integer">
 		 SELECT

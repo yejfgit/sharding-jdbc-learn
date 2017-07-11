@@ -56,7 +56,12 @@ public class SummaryDaoImpl extends SqlSessionDaoSupport implements SummaryDao {
 	public int insertSummary(Summary summary) {
 		return summaryMapper.insertSummary(summary);
 	}
-
+	@Override
+	public int getSummaryCount(Integer userId) {
+		return summaryMapper.getSummaryCount(userId);
+	}
+	
+	
 	/**
 	 * 
 	 * 修改（根据主键ID修改）
