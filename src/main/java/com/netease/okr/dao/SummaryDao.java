@@ -44,4 +44,6 @@ public interface SummaryDao {
 
 	public int getSummaryCountOfDate(Integer dateTabId, Integer userId);
 
+	public int getSummaryCount(Integer userId);
+
 }
