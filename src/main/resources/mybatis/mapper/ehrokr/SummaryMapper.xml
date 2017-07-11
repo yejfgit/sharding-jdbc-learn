@@ -62,7 +62,7 @@
 		 FROM tb_summary t
 		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
 		 WHERE t.user_id = #{userId}
-		 order by year desc
+		 order by tt.year desc,t.modify_time desc
 	</select>
 	
 	<select id="getSummaryCountOfDate"  resultType="java.lang.Integer" >
