@@ -112,7 +112,7 @@ public class SummaryController extends BaseController {
 		
 		if(summaryList!=null&&summaryList.size()==1){
 			return JsonUtil.toJsonObj(summaryList.get(0));
-		}else if(summaryList==null){
+		}else if(summaryList!=null&&summaryList.size()==1){
 			return JsonUtil.toJsonObj(null);
 		}else{
 			return JsonUtil.toJsonFail("数据错误");
