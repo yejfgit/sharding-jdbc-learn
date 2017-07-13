@@ -210,13 +210,10 @@ public class SummaryServiceImpl implements SummaryService {
 		User user = (User) RedisUserContextUtil.getUserContext().getUser();
 		DateInfo dateInfo = dateInfoMapper.getClassDateById(summary.getDateTabId());
 		
-		if(dateInfo==null){
-			LoggerUtil.info("添加我的总结找不到时间数据");
-			return false;
+		if(dateInfo!=null){
+			summary.setName(DateModelEnum.getRemarkOfId(dateInfo.getType())+"-"+dateInfo.getYear()+"年"+dateInfo.getDateClass());
 		}
 		summary.setUserId(user.getId());
-		
-		summary.setName(DateModelEnum.getRemarkOfId(dateInfo.getType())+"-"+dateInfo.getYear()+"年"+dateInfo.getDateClass());
 		
 		return true;
 		
