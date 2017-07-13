@@ -196,7 +196,7 @@ public class SummaryController extends BaseController {
 		
 		LoggerUtil.info("addSummary start:"+JSON.toJSONString(summary));
 		try {
-			if(summary!=null&&summary.getDateTabId()!=null){
+			if(summary!=null){
 				
 				Integer c = summaryService.getSummaryCountOfDate(summary.getDateTabId());
 				if(c>0){
@@ -231,7 +231,7 @@ public class SummaryController extends BaseController {
 		LoggerUtil.info("updateSummary start:"+JSON.toJSONString(summary));
 		
 		try {
-			if(summary!=null&&summary.getId()!=null&&summary.getDateTabId()!=null){
+			if(summary!=null&&summary.getId()!=null){
 				if(summaryService.updateSummary(summary)){
 					return JsonUtil.toJsonObj(summary);
 				}else{
