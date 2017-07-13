@@ -33,8 +33,8 @@ public class SummaryDaoImpl extends SqlSessionDaoSupport implements SummaryDao {
 	}
 
 	@Override
-	public List<Summary> getSummaryList(Integer userId) {
-		return summaryMapper.getSummaryList(userId);
+	public List<Summary> getSummaryList(Summary summary) {
+		return summaryMapper.getSummaryList(summary);
 	}
 
 	/**

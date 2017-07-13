@@ -22,7 +22,7 @@ public interface SummaryMapper {
 	 **/
 	public Summary selectById(@Param("id") Integer id) throws DataAccessException;
 
-	public List<Summary> getSummaryList(@Param("userId") Integer userId) throws DataAccessException;
+	public List<Summary> getSummaryList(Summary summary) throws DataAccessException;
 
 	public int getSummaryCountOfDate(@Param("dateTabId") Integer dateTabId, @Param("userId") Integer userId)
 			throws DataAccessException;
