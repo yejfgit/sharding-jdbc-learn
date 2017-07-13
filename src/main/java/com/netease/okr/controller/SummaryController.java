@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.netease.okr.common.JsonResponse;
+import com.netease.okr.enums.StatusTypeEnum;
 import com.netease.okr.model.entity.Objectives;
 import com.netease.okr.model.entity.Summary;
 import com.netease.okr.model.entity.security.User;
@@ -49,9 +50,9 @@ public class SummaryController extends BaseController {
 		
 
 		if(userId!=null){
-			summaryList = summaryService.getSummaryList(userId);
+			summaryList = summaryService.getSummaryList(userId,StatusTypeEnum.STATUS1.getId());
 		}else{
-			summaryList = summaryService.getSummaryList(user.getId());
+			summaryList = summaryService.getSummaryList(user.getId(),StatusTypeEnum.STATUS1.getId());
 		}
 		
 		return JsonUtil.toJsonObj(summaryList);
@@ -96,6 +97,32 @@ public class SummaryController extends BaseController {
 	}
 	
 	
+	/**
+	 * 查询暂存总结
+	 * @param 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/summary/getSummaryTemporary", method = RequestMethod.GET)
+	public JsonResponse getSummaryTemporary() {
+		
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		
+		List<Summary> summaryList = summaryService.getSummaryList(user.getId(),StatusTypeEnum.STATUS0.getId());
+		
+		if(summaryList!=null&&summaryList.size()==1){
+			return JsonUtil.toJsonObj(summaryList.get(0));
+		}else if(summaryList==null){
+			return JsonUtil.toJsonObj(null);
+		}else{
+			return JsonUtil.toJsonFail("数据错误");
+		}
+		
+		
+	}
+	
+	
+
 	/**
 	 * @param 
 	 * @return

@@ -18,6 +18,8 @@
 		<!---->
 		<result property="createTime" column="create_time" />
 		
+		<result property="status" column="status" />
+		
 		<result property="year" column="year" />
 		
 		<result property="dateClass" column="date_class" />
@@ -34,6 +36,7 @@
 		t.user_id,
 		t.modify_time,
 		t.create_time,
+		t.status,
 		tt.year,
 		tt.date_class,
 		tt.type
@@ -56,12 +59,15 @@
 		where user_id=#{userId}
 	</select>
 	
-	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="java.lang.Integer">
+	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="com.netease.okr.model.entity.Summary">
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM tb_summary t
 		 LEFT JOIN tb_date_tab tt on tt.id = t.date_tab_id
 		 WHERE t.user_id = #{userId}
+		 <if test="status !=  ">
+			 and status = #{status}
+		</if>
 		 order by tt.year desc,t.modify_time desc
 	</select>
 	
@@ -93,6 +99,9 @@
 			<if test="userId != null">
 				 user_id,
 			</if>
+			<if test="status != null">
+				 status,
+			</if>
 			 modify_time,
 			 create_time
 
@@ -110,6 +119,9 @@
 			<if test="userId != null">
 				 #{userId},
 			</if>
+			<if test="status != null">
+				 #{status},
+			</if>
 			 now(),
 			 now()
 		 </trim>
@@ -124,6 +136,9 @@
 			</if>
 			<if test="dateTabId != null">
 				 date_tab_id = #{dateTabId},
+			</if>
+			<if test="status != null">
+				 status = #{status},
 			</if>
 			 modify_time = now()
 

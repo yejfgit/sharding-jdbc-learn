@@ -47,9 +47,12 @@ public class SummaryServiceImpl implements SummaryService {
 	
 	
 	@Override
-	public List<Summary> getSummaryList(Integer userId){
+	public List<Summary> getSummaryList(Integer userId,Integer status){
+		Summary summary = new Summary();
+		summary.setUserId(userId);
+		summary.setStatus(status);
 		
-		return summaryDao.getSummaryList(userId);
+		return summaryDao.getSummaryList(summary);
 		
 	}
 	

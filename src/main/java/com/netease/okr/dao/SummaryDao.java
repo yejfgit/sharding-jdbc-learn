@@ -40,7 +40,7 @@ public interface SummaryDao {
 	 **/
 	public int updateById(Summary summary);
 
-	public List<Summary> getSummaryList(Integer userId);
+	public List<Summary> getSummaryList(Summary summary);
 
 	public int getSummaryCountOfDate(Integer dateTabId, Integer userId);
 

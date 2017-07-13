@@ -14,6 +14,8 @@ public class Summary extends BaseEntity implements Serializable {
 
 	private Integer userId;
 	
+	private Integer status;
+	
 	/**
 	 * 年份
 	 * */
@@ -93,5 +95,15 @@ public class Summary extends BaseEntity implements Serializable {
 	public void setSummaryOtherList(List<SummaryOther> summaryOtherList) {
 		this.summaryOtherList = summaryOtherList;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
 
 }
