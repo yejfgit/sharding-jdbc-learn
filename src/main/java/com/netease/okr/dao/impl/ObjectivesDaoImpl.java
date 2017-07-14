@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.ObjectivesDao;
 import com.netease.okr.mapper.okr.ObjectivesMapper;
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.ObjectivesSummary;
 import com.netease.okr.model.entity.security.User;
 import com.netease.okr.redis.RedisClient;
 import com.netease.okr.redis.RedisConstant;
+import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.MyStringUtil;
 import com.netease.okr.util.RedisUserContextUtil;
 
@@ -95,6 +97,54 @@ public class ObjectivesDaoImpl extends SqlSessionDaoSupport implements Objective
 	public Integer updateObjectives(Objectives objectives){
 		return objectivesMapper.updateObjectives(objectives);
 	}
+	
+	
+	@Override
+	public ObjectivesSummary updateObjectivesSummary(Integer summaryId,Objectives objectives){
+		try {
+			if(objectives!=null&&objectives.getId()!=null&&summaryId!=null){
+				
+				ObjectivesSummary objectivesSummary = new ObjectivesSummary();
+				objectivesSummary.setObjectivesId(objectives.getId());
+				objectivesSummary.setSummaryId(summaryId);
+				objectivesSummary.setComplete(objectives.getComplete());
+				objectivesSummary.setCompleteDetail(objectives.getCompleteDetail());
+				objectivesMapper.addObjectivesSummary(objectivesSummary);
+				return objectivesSummary;
+			}else{
+				return null;
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			LoggerUtil.error(" updateObjectivesSummary exception ", e);
+			return null;
+		}
+		 
+	}
+	
+	
+	
+	@Override
+	public Integer deleteObjectivesSummary(Integer summaryId){
+		return objectivesMapper.deleteObjectivesSummary(summaryId);
+	}
+	
+	@Override
+	public List<ObjectivesSummary> getObjectivesSummarylistBySummaryId(Integer summaryId){
+		return objectivesMapper.getObjectivesSummarylistBySummaryId(summaryId);
+	}
+	@Override
+	public List<Objectives> getSummaryOkrDetail(Integer summaryId) {
+		return objectivesMapper.getSummaryOkrDetail(summaryId);
+	}
+	
+	@Override
+	public ObjectivesSummary getObjectivesSummary(Integer summaryId,Integer objectivesId) {
+		return objectivesMapper.getObjectivesSummary(summaryId,objectivesId);
+	}
+	
 	
 	/**
 	 * 

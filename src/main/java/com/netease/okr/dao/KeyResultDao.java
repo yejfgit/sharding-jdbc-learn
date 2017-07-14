@@ -3,6 +3,7 @@ package com.netease.okr.dao;
 import java.util.List;
 
 import com.netease.okr.model.entity.KeyResult;
+import com.netease.okr.model.entity.KeyResultScore;
 
 public interface KeyResultDao {
 
@@ -21,6 +22,14 @@ public interface KeyResultDao {
 	public Integer getKeyResultNumOfStart(Integer objectivesId);
 
 	public Integer deleteKeyResultByoId(Integer objectivesId);
+
+	public Integer updateKeyResultScore(Integer summaryId, KeyResult keyResult);
+
+	public List<KeyResultScore> getKeyResultScorelistBySummaryId(Integer summaryId);
+
+	public Integer deleteKeyResultScore(Integer summaryId);
+
+	public KeyResultScore getKeyResultScore(Integer summaryId, Integer keyResultId);
 
 
 }

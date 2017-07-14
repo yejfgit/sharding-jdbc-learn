@@ -3,6 +3,7 @@ package com.netease.okr.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.netease.okr.dao.KeyResultDao;
 import com.netease.okr.mapper.okr.KeyResultMapper;
 import com.netease.okr.model.entity.KeyResult;
+import com.netease.okr.model.entity.KeyResultScore;
 
 @Repository
 public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultDao {
@@ -69,4 +71,38 @@ public class KeyResultDaoImpl extends SqlSessionDaoSupport implements KeyResultD
 		}
 		return keyResultMapper.updateKeyResultStatus(keyResults);
 	}
+	
+	
+	@Override
+	public Integer updateKeyResultScore(Integer summaryId,KeyResult keyResult){
+		
+		if(keyResult!=null&&keyResult.getId()!=null&&summaryId!=null){
+			
+			KeyResultScore keyResultScore = new KeyResultScore();
+			keyResultScore.setKeyResultId(keyResult.getId());
+			keyResultScore.setSummaryId(summaryId);
+			keyResultScore.setScore(keyResult.getScore());
+			keyResultMapper.addKeyResultScore(keyResultScore);
+		}
+		return 1;
+		
+	}
+	
+	@Override
+	public Integer deleteKeyResultScore(Integer summaryId){
+		return keyResultMapper.deleteKeyResultScore(summaryId);
+		
+	}
+	
+	@Override
+	public List<KeyResultScore> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId){
+		return keyResultMapper.getKeyResultScorelistBySummaryId(summaryId);
+		
+	}
+	@Override
+	public KeyResultScore getKeyResultScore(Integer summaryId,Integer keyResultId){
+		return keyResultMapper.getKeyResultScore(summaryId,keyResultId);
+		
+	}
+	
 }

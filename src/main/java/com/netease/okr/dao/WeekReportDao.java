@@ -32,6 +32,8 @@ public interface WeekReportDao {
 
 	public Integer hasNewWeekReport(Integer userId);
 
+	public void updateRedis();
+
 
 
 }

@@ -3,6 +3,7 @@ package com.netease.okr.dao;
 import java.util.List;
 
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.ObjectivesSummary;
 
 public interface ObjectivesDao {
 
@@ -24,5 +25,14 @@ public interface ObjectivesDao {
 
 	public List<Objectives> getMyNormalOkrList(Integer userId);
 
+	public ObjectivesSummary updateObjectivesSummary(Integer summaryId, Objectives objectives);
+
+	public List<ObjectivesSummary> getObjectivesSummarylistBySummaryId(Integer summaryId);
+
+	public Integer deleteObjectivesSummary(Integer summaryId);
+
+	public List<Objectives> getSummaryOkrDetail(Integer summaryId);
+
+	public ObjectivesSummary getObjectivesSummary(Integer summaryId, Integer objectivesId);
 
 }

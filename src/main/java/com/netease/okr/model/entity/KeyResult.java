@@ -43,11 +43,21 @@ public class KeyResult  extends BaseEntity implements Serializable {
 	private Integer isWeek;
 	
 	/**
+	 * 评分
+	 * */
+	private String score;
+	
+	/**
 	 * code编号
 	 * */
 	private Integer codeNum;
 	
 	private Objectives objectives;
+	
+	/**
+	 * 总结ID
+	 * */
+	private Integer summaryId;
 
 	public Integer getId() {
 		return id;
@@ -134,6 +144,26 @@ public class KeyResult  extends BaseEntity implements Serializable {
 
 	public void setIsWeek(Integer isWeek) {
 		this.isWeek = isWeek;
+	}
+
+
+	public String getScore() {
+		return score;
+	}
+
+
+	public void setScore(String score) {
+		this.score = score;
+	}
+
+
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+
+
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
 	}
 
 }

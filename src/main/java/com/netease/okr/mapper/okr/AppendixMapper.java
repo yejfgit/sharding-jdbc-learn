@@ -25,6 +25,12 @@ public interface AppendixMapper {
 	public List<Appendix> getAppendixByWeekReportId(@Param(value = "weekReportId") Integer weekReportId)  throws DataAccessException;
 	
 	
+	public List<Appendix> getAppendixRelList(@Param(value = "relId") Integer relId,@Param(value = "type") Integer type)  throws DataAccessException;
+	
+	public List<Appendix> getAppendixRelListOfSummaryOther(@Param(value = "summaryOtherId") Integer summaryOtherId)  throws DataAccessException;
+	
+	public List<Appendix> getAppendixRelListOfObjectivesSummary(@Param(value = "objectivesSummaryId") Integer objectivesSummaryId)  throws DataAccessException;
+	
 	/**
 	 * @author yejf
 	 * @param id
@@ -42,6 +48,8 @@ public interface AppendixMapper {
 	 */
 	public Integer addAppendix(Appendix appendix)  throws DataAccessException;
 	
+	public Integer addAppendixRel(@Param(value = "list") List<Appendix> list)  throws DataAccessException;
+	
 	/**
 	 * @author yejf
 	 * @param id
@@ -49,6 +57,10 @@ public interface AppendixMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer deleteAppendix(@Param(value = "id") Integer id)  throws DataAccessException;
+	
+	public Integer deleteAppendixRel(@Param(value = "relId") Integer relId,@Param(value = "type") Integer type)  throws DataAccessException;
+	
+	public Integer deleteAppendixRelById(@Param(value = "id") Integer id)  throws DataAccessException;
 	
 	
 	/**

@@ -1,0 +1,105 @@
+package com.netease.okr.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.netease.okr.dao.SummaryOtherDao;
+import com.netease.okr.enums.AppendixTypeEnum;
+import com.netease.okr.model.entity.SummaryOther;
+import com.netease.okr.service.AppendixService;
+import com.netease.okr.service.SummaryOtherService;
+import com.netease.okr.util.LoggerUtil;
+
+@Service
+public class SummaryOtherServiceImpl implements SummaryOtherService {
+
+	@Autowired
+	private SummaryOtherDao summaryOtherDao;
+	
+	@Autowired
+	private AppendixService appendixService;
+	
+	@Override
+	public List<SummaryOther> getSummaryOtherList(Integer summaryId) {
+		return summaryOtherDao.getSummaryOtherList(summaryId);
+	}
+	
+	
+	@Override
+	public Boolean addSummaryOtherList(Integer summaryId,List<SummaryOther> summaryOtherList) {
+
+		if(summaryOtherList==null||summaryOtherList.size()<1) return false;
+		
+		for(SummaryOther summaryOther:summaryOtherList){
+			
+			summaryOther.setSummaryId(summaryId);
+			summaryOtherDao.insertSummaryOther(summaryOther);
+			appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
+		}
+
+		return true;
+	}
+	
+	
+	@Override
+	public Boolean updateSummaryOtherList(Integer summaryId,List<SummaryOther> summaryOtherList) {
+
+		if(summaryOtherList==null||summaryOtherList.size()<1) return false;
+		for(SummaryOther summaryOther:summaryOtherList){
+			if(summaryOther.getId()!=null){
+				summaryOtherDao.updateById(summaryOther);
+			}else{
+				summaryOther.setSummaryId(summaryId);
+				summaryOtherDao.insertSummaryOther(summaryOther);
+			}
+			
+			appendixService.updateAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId(),summaryOther.getAppendixList());
+		}
+
+		return true;
+	}
+	
+	
+	@Override
+	public Boolean delSummaryOtherList(Integer summaryId) {
+
+		if(summaryId==null) {
+			LoggerUtil.info("delSummaryOtherList summaryId null");
+			return false;
+		}
+		List<SummaryOther> summaryOtherList = summaryOtherDao.getSummaryOtherList(summaryId);
+		
+		//删除附件信息
+		if(summaryOtherList!=null&&summaryOtherList.size()>0){
+			for(SummaryOther summaryOther:summaryOtherList){
+				appendixService.deleteAppendixList(summaryOther.getId(),AppendixTypeEnum.TYPE2.getId());
+			}
+		}
+		
+		//删除其他总结
+		summaryOtherDao.deleteBySummaryId(summaryId);
+
+		return true;
+	}
+	
+	
+	@Override
+	public Boolean delSummaryOtherById(Integer id) {
+
+		if(id==null) {
+			LoggerUtil.info("delSummaryOtherById id null");
+			return false;
+		}
+		
+		appendixService.deleteAppendixList(id,AppendixTypeEnum.TYPE2.getId());
+		summaryOtherDao.deleteById(id);
+
+		return true;
+	}
+	
+	
+	
+
+}

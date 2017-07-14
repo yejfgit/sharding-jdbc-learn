@@ -161,11 +161,101 @@
 		</set>
 		where id=#{id}
 	</update>
-	
-	
+
 	<delete id="deleteObjectives">
 		delete from tb_objectives where id=#{id}
 	</delete>
 	
+	
+	
+	
+	<!-- ***************************objectives_summary***************************** -->
+	
+	
+	<resultMap type="com.netease.okr.model.entity.Objectives" id="ObjectivesSummaryResultMap">
+		<id column="id" property="id"/>
+		<result column="objectives_name" property="objectivesName"/>
+		<result column="objectives_dsc" property="objectivesDsc"/>
+		<result column="objectives_detail" property="objectivesDetail"/>
+		<result column="objectives_code" property="objectivesCode"/>
+		<result column="user_id" property="userId"/>
+		<result column="is_valid" property="isValid"/>
+		<result column="code_num" property="codeNum"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		<result column="complete" property="complete"  />
+		<result column="complete_detail" property="completeDetail"  />
+		<result column="summary_id" property="summaryId"  />
+		<result column="objectivesSummaryId" property="objectivesSummaryId"  />
+		<collection property="keyResultList" ofType="com.netease.okr.model.entity.KeyResult" column="{objectivesId=id,summaryId=summary_id}" select="com.netease.okr.mapper.okr.KeyResultMapper.getKeyResultScoreListByObjectivesId"></collection>
+		<collection property="appendixList" ofType="com.netease.okr.model.entity.Appendix" column="objectivesSummaryId" select="com.netease.okr.mapper.okr.AppendixMapper.getAppendixRelListOfObjectivesSummary"></collection>
+	</resultMap>
+	
+	<sql id="selectedObjectivesSummaryColumns">
+		tj.id,
+		tj.objectives_name,
+		tj.objectives_dsc,
+		tj.objectives_detail,
+		tj.objectives_code,
+		tj.user_id,
+		tj.is_valid,
+		tj.code_num,
+		tj.modify_time,
+		tj.create_time,
+		ts.complete,
+		ts.complete_detail,
+		ts.summary_id,
+		ts.id objectivesSummaryId
+	</sql>
+	
+	<!-- 查询员工的okr总结查看页面详情-->
+	<select id="getSummaryOkrDetail" resultMap="ObjectivesSummaryResultMap">
+		select 
+		<include refid="selectedObjectivesSummaryColumns"></include>
+		from tb_objectives_summary ts
+		LEFT JOIN tb_objectives tj on ts.objectives_id = tj.id
+		where ts.summary_id = #{summaryId}
+	</select>
+	
+	<delete id="deleteObjectivesSummary">
+		delete from tb_objectives_summary where summary_id = #{summaryId}
+	</delete>
+	
+	<insert id="addObjectivesSummary" parameterType="com.netease.okr.model.entity.ObjectivesSummary" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_objectives_summary(
+			id,
+			<if test="objectivesId!=null ">objectives_id,</if>
+			<if test="summaryId!=null ">summary_id,</if>
+			<if test="complete!=null and complete!=''">complete,</if>
+			<if test="completeDetail!=null and completeDetail!=''">complete_detail,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="objectivesId!=null ">#{objectivesId},</if>
+			<if test="summaryId!=null ">#{summaryId},</if>
+			<if test="complete!=null and complete!=''">#{complete},</if>
+			<if test="completeDetail!=null and completeDetail!=''">#{completeDetail},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	<select id="getObjectivesSummary" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+		select
+		id,objectives_id objectivesId,summary_id summaryId,complete,complete_detail completeDetail,modify_time modifyTime,create_time createTime
+		from tb_objectives_summary
+		where objectives_id=#{objectivesId} and summary_id=#{summaryId} limit 1
+	</select>
+	
+	<select id="getObjectivesSummarylistBySummaryId" resultType="com.netease.okr.model.entity.ObjectivesSummary">
+		select
+		id,objectives_id objectivesId,summary_id summaryId,complete,complete_detail completeDetail,modify_time modifyTime,create_time createTime
+		from tb_objectives_summary
+		where summary_id=#{summaryId}
+	</select>
+	
+
 	
 </mapper>

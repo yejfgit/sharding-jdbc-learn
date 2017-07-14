@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.Objectives;
+import com.netease.okr.model.entity.ObjectivesSummary;
 
 /**
  * @Description: mapper
@@ -51,12 +52,9 @@ public interface ObjectivesMapper {
 	 */
 	public Objectives getObjectivesInfoById(@Param(value = "id") Integer id)  throws DataAccessException;
 	
-	
-	
-	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
@@ -93,11 +91,22 @@ public interface ObjectivesMapper {
 	
 	/**
 	 * @author yejf
-	 * @param Objectives
+	 * @param ObjectivesDTO
 	 * @return Integer
 	 * @throws DataAccessException
 	 */
 	public Integer updateObjectives(Objectives objectives)  throws DataAccessException;
+	
+	public Integer deleteObjectivesSummary(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public Integer addObjectivesSummary(ObjectivesSummary objectivesSummary)  throws DataAccessException;
+	
+	public List<ObjectivesSummary> getObjectivesSummarylistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public List<Objectives> getSummaryOkrDetail(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public ObjectivesSummary getObjectivesSummary(@Param(value = "summaryId") Integer summaryId,@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	
 	
 	
 }

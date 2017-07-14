@@ -3,6 +3,7 @@ package com.netease.okr.mapper.okr;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.DateInfo;
@@ -50,6 +51,12 @@ public interface DateInfoMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer getDateId(DateInfo dateInfo)  throws DataAccessException;
+	
+	
+	public List<DateInfo> getClassDateByModel(@Param(value = "type") Integer type)  throws DataAccessException;
+	
+	public DateInfo getClassDateById(@Param(value = "id") Integer id)  throws DataAccessException;
+	
 	
 	
 	

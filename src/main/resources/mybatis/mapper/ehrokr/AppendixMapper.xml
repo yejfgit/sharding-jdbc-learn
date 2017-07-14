@@ -14,6 +14,7 @@
 		<result column="create_time" property="createTime"  />
 	</resultMap>
 	
+	
 	<sql id="selectedAppendixColumns">
 		id,
 		week_report_id,
@@ -41,6 +42,7 @@
 	</select>
 	
 	
+	
 	<insert id="addAppendix" parameterType="com.netease.okr.model.entity.Appendix" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_appendix(
 			id,
@@ -62,7 +64,6 @@
 		)
 	</insert>
 	
-	
 	<update id="updateAppendix" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" separator=";">
 			update tb_appendix set week_report_id = #{item.weekReportId}  where id = #{item.id}
@@ -70,13 +71,102 @@
 		 
 	</update>
 	
+	<delete id="deleteAppendixByWeekReportId">
+		delete from tb_appendix where week_report_id=#{weekReportId}
+	</delete>
+	
 	<delete id="deleteAppendix">
 		delete from tb_appendix where id=#{id}
 	</delete>
 	
-	<delete id="deleteAppendixByWeekReportId">
-		delete from tb_appendix where week_report_id=#{weekReportId}
+	
+	
+	<!-- ******************************AppendixRel************************************ -->
+	
+	<resultMap type="com.netease.okr.model.entity.Appendix" id="AppendixRelResultMap">
+		<id column="id" property="id"/>
+		<result column="appendix_id" property="appendixId"/>
+		<result column="rel_id" property="relId"/>
+		<result column="type" property="type"/>
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+		<result column="name" property="name"  />
+		<result column="url" property="url"  />
+	</resultMap>
+	
+	
+	<!-- 查询附件关系id -->
+	<sql id="selectedAppendixRelIdColumns">
+		t.id,
+		t.appendix_id,
+		t.rel_id,
+		t.type,
+		t.modify_time,
+		t.create_time,
+		ta.name,
+		ta.url
+	</sql>
+	
+	<!-- 查询附件id -->
+	<sql id="selectedAppendixIdColumns">
+		ta.id,
+		t.rel_id,
+		t.type,
+		t.modify_time,
+		t.create_time,
+		ta.name,
+		ta.url
+	</sql>
+	
+	<select id="getAppendixRelList" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixRelIdColumns"></include>
+		from tb_appendix_rel t
+		LEFT JOIN tb_appendix ta on t .appendix_id= ta.id
+		where rel_id=#{relId} and type=#{type}
+	</select>
+	
+	<select id="getAppendixRelListOfSummaryOther" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixIdColumns"></include>
+		from tb_summary_other ts
+		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
+		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
+		where t.type=2 and ts.id=#{summaryOtherId}
+	</select>
+	
+	<select id="getAppendixRelListOfObjectivesSummary" resultMap="AppendixRelResultMap">
+		select
+		<include refid="selectedAppendixIdColumns"></include>
+		from tb_objectives_summary ts
+		LEFT JOIN tb_appendix_rel t on ts.id = t.rel_id
+		LEFT JOIN tb_appendix ta on t.appendix_id= ta.id
+		where t.type=1 and ts.id=#{objectivesSummaryId}
+	</select>
+	
+	<insert id="addAppendixRel" parameterType="java.util.List">
+		insert into tb_appendix_rel(appendix_id, rel_id,type, create_time, modify_time) values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			 (
+			 #{item.appendixId},
+			 #{item.relId},
+			 #{item.type},
+			 now(),
+			 now()
+			 )
+		</foreach>
+	</insert>
+	
+	
+	<delete id="deleteAppendixRel">
+		delete from tb_appendix_rel where rel_id=#{relId} and type=#{type}
 	</delete>
+	
+	<delete id="deleteAppendixRelById">
+		delete from tb_appendix_rel where id=#{id}
+	</delete>
+	
+	
 	
 	
 </mapper>

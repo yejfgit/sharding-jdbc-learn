@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import com.netease.okr.model.entity.KeyResult;
+import com.netease.okr.model.entity.KeyResultScore;
 
 /**
  * @Description: mapper
@@ -34,6 +35,8 @@ public interface KeyResultMapper {
 	public List<KeyResult> getKeyResultListByWeekReportId(@Param(value = "weekReportId") Integer weekReportId)  throws DataAccessException;
 	
 	
+	public List<KeyResult> getKeyResultScoreListByObjectivesId(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
+	
 	
 	/**
 	 * @author yejf
@@ -42,7 +45,6 @@ public interface KeyResultMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer getNextCodeNum(@Param(value = "objectivesId") Integer objectivesId)  throws DataAccessException;
-	
 	
 	/**
 	 * 查询已开始的关键事件数量
@@ -90,5 +92,14 @@ public interface KeyResultMapper {
 	 * @throws DataAccessException
 	 */
 	public Integer updateKeyResultStatus(List<KeyResult> keyResults)  throws DataAccessException;
+	
+	
+	public Integer deleteKeyResultScore(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public Integer addKeyResultScore(KeyResultScore keyResultScore)  throws DataAccessException;
+	
+	public List<KeyResultScore> getKeyResultScorelistBySummaryId(@Param(value = "summaryId") Integer summaryId)  throws DataAccessException;
+	
+	public KeyResultScore getKeyResultScore(@Param(value = "summaryId") Integer summaryId,@Param(value = "keyResultId") Integer keyResultId)  throws DataAccessException;
 	
 }

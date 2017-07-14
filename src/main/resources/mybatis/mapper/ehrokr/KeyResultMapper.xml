@@ -127,6 +127,68 @@
 	<delete id="deleteKeyResultByoId">
 		delete from tb_key_result where objectives_id=#{objectivesId}
 	</delete>
+
 	
+	
+	<!-- ******************************** tb_key_keysult_score ***************************-->
+	
+	<sql id="selectedKeyResultScoreColumns">
+		t.id,
+		t.key_result_name keyResultName,
+		t.key_result_code keyResultCode,
+		t.objectives_id objectivesId,
+		t.status status,
+		t.code_num codeNum,
+		t.is_valid isValid,
+		t.is_week isWeek,
+		t.modify_time modifyTime,
+		t.create_time createTime,
+		ts.score
+	</sql>
+	
+	<select id="getKeyResultScoreListByObjectivesId" resultType="com.netease.okr.model.entity.KeyResult">
+		select
+		<include refid="selectedKeyResultScoreColumns"></include>
+		from tb_key_result_score ts
+		LEFT JOIN tb_key_result t on t.id = ts.key_result_id
+		where t.objectives_id = #{objectivesId} and summary_id = #{summaryId}
+	</select>
+	
+	<delete id="deleteKeyResultScore">
+		delete from tb_key_result_score where summary_id = #{summaryId}
+	</delete>
+	
+	<insert id="addKeyResultScore" parameterType="com.netease.okr.model.entity.KeyResultScore" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_key_result_score(
+			id,
+			<if test="keyResultId!=null ">key_result_id,</if>
+			<if test="summaryId!=null ">summary_id,</if>
+			<if test="score!=null and score!=''">score,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			#{id},
+			<if test="keyResultId!=null ">#{keyResultId},</if>
+			<if test="summaryId!=null ">#{summaryId},</if>
+			<if test="score!=null and score!=''">#{score},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	<select id="getKeyResultScore" resultType="com.netease.okr.model.entity.KeyResultScore">
+		select
+		id,key_result_id keyResultId,summary_id summaryId,score,modify_time modifyTime,create_time createTime
+		from tb_key_result_score
+		where summary_id=#{summaryId} and key_result_id=#{keyResultId} limit 1
+	</select>
+	
+	<select id="getKeyResultScorelistBySummaryId" resultType="com.netease.okr.model.entity.KeyResultScore">
+		select
+		id,key_result_id keyResultId,summary_id summaryId,score,modify_time modifyTime,create_time createTime
+		from tb_key_result_score
+		where summary_id=#{summaryId}
+	</select>
 	
 </mapper>

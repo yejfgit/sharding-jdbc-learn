@@ -45,8 +45,28 @@ public class Objectives extends BaseEntity implements Serializable  {
 	 * */
 	private Integer codeNum;
 	
+	/**
+	 * 完成情况
+	 * */
+	private String complete;
+	
+	private String completeDetail;
+	/**
+	 * 总结ID
+	 * */
+	private Integer summaryId;
+	
+	/**
+	 * 总结内容ID
+	 * */
+	private Integer objectivesSummaryId;
 	
 	private List<KeyResult> keyResultList;
+	
+	/**
+	 * 附件list
+	 * */
+	private List<Appendix> appendixList;
 	
 	
 	public Integer getId() {
@@ -108,6 +128,36 @@ public class Objectives extends BaseEntity implements Serializable  {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public List<Appendix> getAppendixList() {
+		return appendixList;
+	}
+	public void setAppendixList(List<Appendix> appendixList) {
+		this.appendixList = appendixList;
+	}
+	public String getComplete() {
+		return complete;
+	}
+	public void setComplete(String complete) {
+		this.complete = complete;
+	}
+	public Integer getSummaryId() {
+		return summaryId;
+	}
+	public void setSummaryId(Integer summaryId) {
+		this.summaryId = summaryId;
+	}
+	public String getCompleteDetail() {
+		return completeDetail;
+	}
+	public void setCompleteDetail(String completeDetail) {
+		this.completeDetail = completeDetail;
+	}
+	public Integer getObjectivesSummaryId() {
+		return objectivesSummaryId;
+	}
+	public void setObjectivesSummaryId(Integer objectivesSummaryId) {
+		this.objectivesSummaryId = objectivesSummaryId;
 	}
 	
 	

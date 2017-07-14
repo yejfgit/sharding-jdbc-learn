@@ -19,6 +19,8 @@ public interface WeekReportService {
 
 	public WeekReport getWeekReportById(Integer id);
 
+	public void updateRedis();
+
 
 
 }
