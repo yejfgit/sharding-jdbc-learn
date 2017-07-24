@@ -198,7 +198,7 @@ public class SummaryController extends BaseController {
 		try {
 			if(summary!=null){
 				
-				Integer c = summaryService.getSummaryCountOfDate(summary.getDateTabId());
+				Integer c = summaryService.getAllSummaryCountOfDate(summary.getDateTabId());
 				if(c>0){
 					return JsonUtil.toJsonFail("已经添加过的总结");
 				}

@@ -56,7 +56,7 @@
 	<select id="getSummaryCount" resultType="int">
 		select count(1) 
 		from tb_summary 
-		where user_id=#{userId}
+		where user_id=#{userId} and status = 1
 	</select>
 	
 	<select id="getSummaryList"  resultMap="summaryResultMap" parameterType="com.netease.okr.model.entity.Summary">
@@ -74,7 +74,10 @@
 	<select id="getSummaryCountOfDate"  resultType="java.lang.Integer" >
 		 SELECT
 		 count(1)
-		 FROM tb_summary where date_tab_id = #{dateTabId} and user_id=#{userId}
+		 FROM tb_summary where date_tab_id = #{dateTabId} and user_id=#{userId} 
+		 <if test="status != null  ">
+			 and status = #{status}
+		</if>
 	</select>
 
 	<!--删除：根据主键ID删除-->

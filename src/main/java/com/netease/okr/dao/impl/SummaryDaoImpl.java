@@ -74,7 +74,7 @@ public class SummaryDaoImpl extends SqlSessionDaoSupport implements SummaryDao {
 	
 	
 	@Override
-	public int getSummaryCountOfDate(Integer dateTabId, Integer userId) {
-		return summaryMapper.getSummaryCountOfDate(dateTabId, userId);
+	public int getSummaryCountOfDate(Integer dateTabId, Integer userId,Integer status) {
+		return summaryMapper.getSummaryCountOfDate(dateTabId, userId,status);
 	}
 }

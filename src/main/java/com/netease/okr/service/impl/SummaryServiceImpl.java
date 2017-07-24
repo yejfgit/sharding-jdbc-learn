@@ -21,6 +21,7 @@ import com.netease.okr.model.entity.security.User;
 import com.netease.okr.service.AppendixService;
 import com.netease.okr.service.SummaryOtherService;
 import com.netease.okr.service.SummaryService;
+import com.netease.okr.util.ConstantsUtil;
 import com.netease.okr.util.LoggerUtil;
 import com.netease.okr.util.RedisUserContextUtil;
 
@@ -64,10 +65,23 @@ public class SummaryServiceImpl implements SummaryService {
 		
 	}
 	
+	/**
+	 * 查询所有的总结数据量
+	 * */
+	@Override
+	public Integer getAllSummaryCountOfDate(Integer dateTabId){
+		User user = (User) RedisUserContextUtil.getUserContext().getUser();
+		return summaryDao.getSummaryCountOfDate(dateTabId, user.getId(),null);
+		
+	}
+	
+	/**
+	 * 查询已经发布的总结数据量
+	 * */
 	@Override
 	public Integer getSummaryCountOfDate(Integer dateTabId){
 		User user = (User) RedisUserContextUtil.getUserContext().getUser();
-		return summaryDao.getSummaryCountOfDate(dateTabId, user.getId());
+		return summaryDao.getSummaryCountOfDate(dateTabId, user.getId(),ConstantsUtil.OPREATE_TYPE_RELEASE_STATUS);
 		
 	}
 	
