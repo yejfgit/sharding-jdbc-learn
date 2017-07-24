@@ -24,7 +24,7 @@ public interface SummaryMapper {
 
 	public List<Summary> getSummaryList(Summary summary) throws DataAccessException;
 
-	public int getSummaryCountOfDate(@Param("dateTabId") Integer dateTabId, @Param("userId") Integer userId)
+	public int getSummaryCountOfDate(@Param("dateTabId") Integer dateTabId, @Param("userId") Integer userId, @Param("status") Integer status)
 			throws DataAccessException;
 
 	/**

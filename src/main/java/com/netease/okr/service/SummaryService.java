@@ -18,4 +18,6 @@ public interface SummaryService {
 
 	public Integer getSummaryCountOfDate(Integer dateTabId);
 
+	public Integer getAllSummaryCountOfDate(Integer dateTabId);
+
 }
