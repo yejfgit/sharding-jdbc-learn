@@ -20,8 +20,7 @@
 	<task:annotation-driven />
 
 	<!-- 使用Annotation自动注册Bean,扫描@Controller和定时任务 -->
-	<context:component-scan base-package="com.netease.okr.quartz.job" />
-	<context:component-scan base-package="com.netease.okr.controller" />
+	<context:component-scan base-package="com.netease.learn.controller" />
 
 	<!-- annotation默认的方法映射适配器 -->
 	<bean id="handlerMapping"
