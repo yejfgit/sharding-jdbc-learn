@@ -2,22 +2,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.netease</groupId>
-	<artifactId>ehrokr</artifactId>
+	<artifactId>sharding-jdbc-learning</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ehrokr Maven Webapp</name>
+	<name>learn Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<webAppName>ehrokr</webAppName>
+		<webAppName>learn</webAppName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.1.5.RELEASE</org.springframework-version>
 		<org.springframework.security-version>3.2.6.RELEASE</org.springframework.security-version>
-		<sharding-jdbc-version>1.4.1</sharding-jdbc-version>
+		<sharding-jdbc-versio>1.5.0</sharding-jdbc-versio>
 		<org.apache.lucene>6.5.0</org.apache.lucene>
 		<org.apache.solr>6.5.0</org.apache.solr>
+		<commons-dbcp-version>1.4</commons-dbcp-version>
+        <mysql-connector-java-version>5.1.30</mysql-connector-java-version>
 	</properties>
-
+ 
 	<dependencies>
 		<!-- Spring Framework -->
 		<dependency>
@@ -361,19 +363,50 @@
 			<version>1.9.10</version>
 		</dependency>
 
-		<!-- import sharding-jdbc core -->
+		<!-- import sharding-jdbc core -->		
 		<dependency>
-			<groupId>com.dangdang</groupId>
-			<artifactId>sharding-jdbc-core</artifactId>
-			<version>${sharding-jdbc-version}</version>
-		</dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>${sharding-jdbc-versio}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-transaction</artifactId>
+            <version>${sharding-jdbc-versio}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-config-yaml</artifactId>
+            <version>${sharding-jdbc-versio}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-config-spring</artifactId>
+            <version>${sharding-jdbc-versio}</version>
+        </dependency>
 
 		<dependency>
-			<groupId>com.dangdang</groupId>
-			<artifactId>sharding-jdbc-config-spring</artifactId>
-			<version>${sharding-jdbc-version}</version>
-		</dependency>
-
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java-version}</version>
+        </dependency>
+		
+		<dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+	
 		<dependency>
 			<groupId>org.fusesource.mqtt-client</groupId>
 			<artifactId>mqtt-client</artifactId>
@@ -419,32 +452,19 @@
 		    <version>${org.apache.lucene}</version>
 		</dependency>
 
-		<!-- NOS -->
-		<dependency>
-			<groupId>com.netease.cloud</groupId>
-			<artifactId>nos-sdk-java</artifactId>
-			<version>1.2.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.netease</groupId>
-			<artifactId>ehrSDK</artifactId>
-			<version>0.0.1.2</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>21.0</version>
 		</dependency>
-		
-		<!--zk-->
-        <dependency>
-            <groupId>org.apache.zookeeper</groupId>
-            <artifactId>zookeeper</artifactId>
-            <version>3.4.9</version>
-        </dependency>
+	
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.14.8</version>
+		    <scope>provided</scope>
+		</dependency>
 
 
 	</dependencies>

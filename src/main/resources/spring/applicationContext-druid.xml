@@ -19,8 +19,8 @@
 		scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>com.netease.okr.service.*</value>
-				<value>com.netease.okr.dao.*</value>
+				<value>com.netease.learn.service.*</value>
+				<value>com.netease.learn.dao.*</value>
 			</list>
 		</property>
 	</bean>

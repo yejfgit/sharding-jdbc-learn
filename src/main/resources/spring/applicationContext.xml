@@ -9,7 +9,7 @@
 	<description>Spring public configuration file</description>
 	
 	<!-- Annotation way configuration -->
-	<context:component-scan base-package="com.netease.okr" />
+	<context:component-scan base-package="com.netease.learn" />
 	
 
 	<!-- Defines the properties path which related to the environment closely. -->
@@ -18,24 +18,11 @@
 		<property name="locations">
 			<list>
 				<value>classpath:database.properties</value>
-				<value>classpath:config.properties</value>
-				<value>classpath:nos.properties</value>
-				<value>classpath:redis.properties</value>
-				<value>classpath:mq.properties</value>
 			</list>
 		</property>
 	</bean>
 	
 	
-	<!-- NOS配置 -->
-	<!-- nos配置 -->
-	<bean id="nosService" class="com.netease.okr.service.impl.NosBaseServiceImpl">
-		<property name="accessKey" value="${nos.id}" />
-		<property name="username" value="${nos.username}" />
-		<property name="bucketName" value="${nos.bucketName}" />
-		<property name="secretKey" value="${nos.secret}" />
-		<property name="nosHostName" value="${nos.url}" />
-	</bean>
 	
 	<bean id="messageSource"   
 	    class="org.springframework.context.support.ResourceBundleMessageSource">  

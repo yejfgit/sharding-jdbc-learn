@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.netease.okr.service.UserService;
+import com.netease.learn.service.UserService;
 
 /**
  * @author yejf
@@ -26,7 +26,7 @@ public class LoginTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void test() {
-		System.out.println(userService.getUserByUNo("H9299"));
+		//System.out.println(userService.getUserByUNo("H9299"));
 	}
 
 }

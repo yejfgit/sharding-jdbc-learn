@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.learn.mapper.UserMapper">
+	
+	
+	<resultMap id="UserResultMap" type="com.netease.learn.model.User" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="modify_time" property="modifyTime"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+
+	<sql id="selectedUserColumns">
+		id,
+		name,
+		modify_time,
+		create_time
+	</sql>
+
+	<select id="getUserById" resultMap="UserResultMap">
+		select 
+		<include refid="selectedUserColumns"></include>
+		from tb_user
+		where id=#{id}
+	</select>
+	
+	
+	
+	<insert id="addUser" parameterType="com.netease.learn.model.User" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_user(
+			<if test="name!=null and name!=''">name,</if>
+			create_time,
+			modify_time
+		)
+		values(
+			<if test="name!=null and name!=''">#{name},</if>
+			now(),
+			now()
+		)
+	</insert>
+	
+	
+	<update id="updateUser" parameterType="com.netease.learn.model.User">
+		update tb_user
+		<set> 
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			modify_time = now()
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="delUser">
+		delete from tb_user where id=#{id}
+	</delete>
+	
+	
+	
+</mapper>
